@@ -1,0 +1,18 @@
+Koki:
+  name: Koki Yanagawa
+  department: sales
+  email: koki@example.com
+  password_digest: <%= User.digest('password') %>
+  admin: true
+  
+Lu:
+  name: Lucia Alarcon
+  department: sales
+  email: lu@example.gov
+  password_digest: <%= User.digest('password') %>  
+  
+Mike:
+  name: Michael McGrath
+  department: sales
+  email: mike@example.gov
+  password_digest: <%= User.digest('password') %>  
