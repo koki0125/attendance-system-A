@@ -11,7 +11,6 @@ $gray-medium-light: #eaeaea;
   box-sizing:         border-box;
 }
 
-
 /* sidebar */
 
 aside {
@@ -57,7 +56,7 @@ aside {
     float: left;
     padding: 0 10px;
     border-left: 1px solid $gray-lighter;
-    color: black;
+    color: gray;
     &:first-child {
       padding-left: 0;
       border: 0;
@@ -90,21 +89,7 @@ aside {
 /* universal */
 
 body {
-  
   padding-top: 60px;
-  /* 設定したい画像 */
-  background-image: url(/images/drive10-1000x625.jpg);
-  /* 画像を上下左右中央寄せ */
-  background-position: center center;
-  /* タイル状には並べないように指定 */
-  background-repeat: no-repeat;
-  /* コンテンツの高さが画像の高さより大きい時、動かないように固定 */
-  background-attachment: fixed;
-  /* 表示するディスプレイの大きさに基づいて、背景画像を縦横比を固定しながら調整 */
-  background-size: cover;
-  /* 画像が読み込まれる前の背景色の指定 */
-  background-color: #464646;
-
 }
 
 section {
@@ -117,8 +102,6 @@ textarea {
 
 .center {
   text-align: center;
-  height: 100%;
-  background: rgba(255,255,255,0.7);
   h1 {
     margin-bottom: 10px;
   }
@@ -149,14 +132,10 @@ h2 {
 p {
   font-size: 1.1em;
   line-height: 1.7em;
-  padding: 20px 50px;
 }
 
 
-
-
 /* header */
-
 
 #logo {
   float: left;
@@ -165,7 +144,7 @@ p {
   color: white;
   text-transform: uppercase;
   letter-spacing: -1px;
-  padding: 12px 0px;
+  padding-top: 9px;
   font-weight: bold;
   &:hover {
     color: white;
@@ -179,9 +158,9 @@ footer {
   margin-top: 45px;
   padding-top: 5px;
   border-top: 1px solid #eaeaea;
-  color: #fff;
+  color: #777;
   a {
-    color: #fff;
+    color: #555;
   }
   a:hover {
     color: #222;
@@ -263,3 +242,49 @@ input {
   }
 }
 
+/* microposts */
+
+.microposts {
+  list-style: none;
+  padding: 0;
+  li {
+    padding: 10px 0;
+    border-top: 1px solid #e8e8e8;
+  }
+  .user {
+    margin-top: 5em;
+    padding-top: 0;
+  }
+  .content {
+    display: block;
+    margin-left: 60px;
+    img {
+      display: block;
+      padding: 5px 0;
+    }
+  }
+  .timestamp {
+    color: $gray-light;
+    display: block;
+    margin-left: 60px;
+  }
+  .gravatar {
+    float: left;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
+}
+
+aside {
+  textarea {
+    height: 100px;
+    margin-bottom: 5px;
+  }
+}
+
+span.picture {
+  margin-top: 10px;
+  input {
+    border: 0;
+  }
+}
