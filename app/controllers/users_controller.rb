@@ -8,12 +8,11 @@ class UsersController < ApplicationController
     # @users = User.paginate(page: params[:page])
     
     # @words = Word.page(params[:page]).per(PER)   参考にkaminari paginateの
-    @users = User.where(activated: true).paginate(page: params[:page])
+    @users = User.paginate(page: params[:page])
   end
   
   def show
     @user = User.find(params[:id])
-    @microposts = @user.microposts.paginate(page: params[:page])
     #debugger
   end
   
