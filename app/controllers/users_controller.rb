@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     # @users = User.paginate(page: params[:page])
     
     # @words = Word.page(params[:page]).per(PER)   参考にkaminari paginateの
-    @users = User.paginate(page: params[:page])
+    @users = User.all.paginate(page: params[:page])
   end
   
   def show
