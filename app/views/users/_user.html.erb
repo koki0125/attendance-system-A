@@ -1,7 +1,7 @@
 <li>
-  <%= link_to user.name, users_edit_path %>
-  <!--<%#if current_user.admin? && !current_user?(user) %>-->
-  <!--  | <%=# link_to "削除する", user, method: :delete,
-  #                                data: { confirm: "本当によろしいですか?" } %>-->
-  <%# end %>
+  <%= link_to user.name, user %>
+  <% if current_user.admin? && !current_user?(user) %>
+    | <%= link_to "削除する", user, method: :delete,
+                                  data: { confirm: "本当によろしいですか?" } %>
+  <% end %>
 </li>

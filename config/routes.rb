@@ -8,10 +8,10 @@ Rails.application.routes.draw do
   get   '/login',   to: 'sessions#new'
   delete '/logout',  to: 'sessions#destroy'
   get    '/signup',  to: 'users#new'
-  get 'attendance/show'
-  get 'attendance/edit'
+  get 'attendance/:id/edit', to: 'attendances#edit'
+  get 'attendances/:id', to: 'attendances#show'
   get 'home/top'
-  get 'home/edit'
+  get 'home/edit',  to: 'home#edit'
 
     
 end
