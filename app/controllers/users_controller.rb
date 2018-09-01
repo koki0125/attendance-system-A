@@ -12,10 +12,12 @@ class UsersController < ApplicationController
   end
   
   def show
+    
     if logged_in?
       @user = current_user
     end
     @user = User.find(params[:id])
+    
   end
   
   def create

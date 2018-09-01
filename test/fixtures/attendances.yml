@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  started_time: 2018-08-29 03:47:04
+  finished_time: 2018-08-29 03:47:04
+
+two:
+  user: two
+  started_time: 2018-08-29 03:47:04
+  finished_time: 2018-08-29 03:47:04

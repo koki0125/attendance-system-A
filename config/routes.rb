@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
 
   resources :users
+  resources :attendances
   resources :password_resets,     only: [:new, :create, :edit, :update]
   
   root   'home#top'
@@ -8,8 +9,7 @@ Rails.application.routes.draw do
   get   '/login',   to: 'sessions#new'
   delete '/logout',  to: 'sessions#destroy'
   get    '/signup',  to: 'users#new'
-  get 'attendance/:id/edit', to: 'attendances#edit'
-  get 'attendances/:id', to: 'attendances#show'
+  
   get 'home/top'
   get 'home/edit',  to: 'home#edit'
 
