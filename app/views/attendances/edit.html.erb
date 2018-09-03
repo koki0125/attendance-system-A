@@ -1,2 +1,35 @@
-<h1>Attendances#edit</h1>
-<p>Find me in app/views/attendances/edit.html.erb</p>
+<% y = @date.year %>
+<% m = @date.month %>
+<% provide(:title, @user.name) %>
+<table class="table table-bordered">	
+<!-- ヘッドのテーブル部分 --> 
+    <thead>
+	    <tr>
+				<th>日付</th>
+				<th>曜日</th>
+				<th>出社</th>
+				<th>退社</th>
+				<th>在社時間</th>
+				<th>備考</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% days = (Date.new(y,m).all_month) %>
+			<% (@first_day..@last_day).each do |date| %>
+			<tr>
+				<td><%=date.month%>/<%=date.day%></td>
+        <td><%= %w(日 月 火 水 木 金 土)[date.wday]%></td>
+       	<!-- 出勤時間のフォーム  -->
+        <td>@</td>
+        <!-- 退社時間のフォーム  -->
+        <td>@</td>
+        <!-- 勤務時間の表示  -->
+        <td>@</td>
+        <!-- 備考のフォーム  -->
+        <td>@</td>
+			</tr>
+			<% end %>
+		</tbody>
+</table>
+<%= submit_tag "キャンセル", :class => "btn btn-sm btn-primary" %>
+<%= submit_tag "更新", :class => "btn btn-sm btn-primary" %>
