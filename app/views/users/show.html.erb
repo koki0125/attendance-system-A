@@ -7,7 +7,11 @@
     <table class="table table-bordered table-striped table-condensed">
         <thead>
             <tr>
-                <th>時間管理表</th>
+                <th>
+                <%= link_to "◀︎" , user_path(params:{id: @user.id, first_day: @first_day.prev_month }), class: "btn btn-sm btn-primary" %>
+                &emsp; <%= @first_day.year %>年<%= @first_day.month %>月  時間管理表 &emsp;
+                <%= link_to "▶︎" , user_path(params:{id: @user.id, first_day: @first_day.next_month }), class: "btn btn-sm btn-primary" %>
+                </th>
                 <th>指定勤務時間</th>
                 <th colspan="2">基本時間</th>
                 <th>初日 <%= @first_day %></th> 
@@ -47,10 +51,9 @@
         </thead>
         <tbody>
             <!-- レコード表示部分 each文 -->
-            <% days = (Date.new(y,m).all_month) %>
             <% (@first_day..@last_day).each do |date| %>
             <tr>
-                <td><%=date.month%>/<%=date.day%></td>
+                <td><%= date.month %>/<%= date.day %></td>
                 <td><%= %w(日 月 火 水 木 金 土)[date.wday]%></td>
                 <td>@</td>
                 <td>@</td>

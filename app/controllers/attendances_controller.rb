@@ -11,7 +11,7 @@ class AttendancesController < ApplicationController
     @date = Date.today
     
     # 曜日表示用に使用する
-    @youbi = %w[日 月 火 水 木 金 土]
+    @week = %w[日 月 火 水 木 金 土]
     
     # 既に表示月があれば、表示月を取得する
     if !params[:first_day].nil?

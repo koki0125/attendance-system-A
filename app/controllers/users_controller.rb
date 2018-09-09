@@ -19,10 +19,15 @@ class UsersController < ApplicationController
     
     @user = User.find(params[:id])
     
-    @date = Date.today
+    @date = DateTime.now
     
     # 曜日表示用に使用する
     @youbi = %w[日 月 火 水 木 金 土]
+    # 今月
+    @yearmonth = @date.strftime("%Y年%m月")
+    # 先月と来月
+    @perv_month = @date.prev_month.strftime("%Y年%m月")
+    @next_month = @date.next_month.strftime("%Y年%m月")
     
     # 既に表示月があれば、表示月を取得する
     if !params[:first_day].nil?
