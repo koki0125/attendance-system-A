@@ -8,6 +8,8 @@
         <thead>
             <tr>
                 <th colspan="2">
+                    <!--先月へ-->
+                   　<%=  %>
                 <%= link_to "◀︎" , user_path(params:{id: @user.id, first_day: @first_day.prev_month }), class: "btn btn-sm btn-primary" %>
                 &emsp; <%= @first_day.year %>年<%= @first_day.month %>月  時間管理表 &emsp;
                 <%= link_to "▶︎" , user_path(params:{id: @user.id, first_day: @first_day.next_month }), class: "btn btn-sm btn-primary" %>
@@ -20,8 +22,8 @@
                 <th>所属: <%= @user.department %></th>
                 <th>氏名: <%= @user.name %></th>
                 <th>コード</th>
-                <th> 873 </th>
-                <th>出勤日数 <%= @attendances_count %></th>
+                <th> 888 </th>
+                <th>出勤日数 <%#= @attendances_count %></th>
                 <th>締め <%= @last_day %></th>
             </tr>
         </thead>
@@ -34,6 +36,7 @@
     <table class="table table-bordered table-striped table-condensed">
         <thead>
             <tr>
+                <!--rowspan:縦結合、colspan：横結合-->
                 <th rowspan="2" >日付</th>
                 <th rowspan="2">曜日</th>
                 <th rowspan="1" colspan="3">出社</th>
@@ -79,7 +82,7 @@
                 </td>
                 <!--９項：在社時間表示（出社時間と退社時間がどちらもある）-->
                 <td>
-                  <%= working_hours(d.started_time,d.finished_time) if d.started_time.present? && d.finished_time.present?%>
+                  <%#= working_hours(d.started_time,d.finished_time) if d.started_time.present? && d.finished_time.present?%>
                 </td>
                 <td>@</td>
             </tr>
