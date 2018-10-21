@@ -13,7 +13,8 @@ Rails.application.routes.draw do
   post '/finishedtime_creat', to: 'users#finished_time'
   
   get 'home/top'
-  get 'home/edit',  to: 'home#edit'
+  get '/basic_info',  to: 'users#basic_info'
+  post'/basic_info_edit', to: 'users#basic_info_edit'
 
     
 end

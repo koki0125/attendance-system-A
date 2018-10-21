@@ -1,0 +1,24 @@
+<% provide(:title, '基本情報の修正') %>
+
+<h1>基本情報の修正</h1>
+
+<!--<h2>指定勤務時間</h2>-->
+
+<!--<h2>基本勤務時間</h2>-->
+<p><%= @user.name %></p>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <%= form_for(@user, url: basic_info_edit_path, method: :post) do |f| %>
+      <%= hidden_field_tag :id, @user.id %>
+      <%= render 'shared/error_messages', object: f.object %>
+
+      <%= f.label :基本時間 %>
+      <%= f.time_field :basic_time, class: 'form-control' %>
+
+      <%= f.label :指定勤務時間 %>
+      <%= f.time_field :specified_working_time, class: 'form-control'%>
+      
+      <%= f.submit "更新", class: "btn btn-primary" %>
+    <% end %>
+  </div>
+</div>

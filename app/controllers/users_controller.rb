@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   include UsersHelper
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
   before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: :destroy
+  before_action :admin_user,     only: [:index,:basic_info, :destroy]
   
   def index
     #@users = User.all
@@ -13,6 +13,9 @@ class UsersController < ApplicationController
     @users = User.all.paginate(page: params[:page])
   end
   
+  def new
+    @user = User.new
+  end
   
   def show
     
@@ -54,25 +57,26 @@ class UsersController < ApplicationController
     
     
       # 当月を昇順で取得し@daysへ代入　= @first_day =< >= @last_day
-        @days = @user.attendances.where('attendance_day >= ? and attendance_day <= ?', \
-        @first_day, @last_day).order('attendance_day')
+      @days = @user.attendances.where('attendance_day >= ? and attendance_day <= ?', \
+      @first_day, @last_day).order('attendance_day')
       # 在社時間の集計、ついでに出勤日数も
-  #     i = 0
-  #     @days.each do |d|
-  #       if started_time.present? && d.finished_time.present?
-  #         second = 0
-  #         second = times(d.started_time,d.finished_time)
-  #         @total_time = @total_time.to_i + second.to_i
-  #         i = i + 1
-  #       end
-      # end
+      i = 0
+      @days.each do |d|
+        if d.started_time.present? && d.finished_time.present?
+          second = 0
+          second = times(d.started_time,d.finished_time)
+          @total_time = @total_time.to_i + second.to_i
+          i = i + 1
+        end
+      end
      
-  #     # 出勤日数、どっち使ってもOK
-  #     @attendances_count = i
-  #     @attendances_sum = @days.where.not(started_time: nil, finished_time: nil).count
+      # 出勤日数、どっち使ってもOK
+      @attendances_count = i
+      @attendances_sum = @days.where.not(started_time: nil, finished_time: nil).count
     else
-    flash[:warning] = "他のユーザーの勤怠情報は閲覧できません。"
-    redirect_to current_user
+      flash[:warning] = "他のユーザーの勤怠情報は閲覧できません。"
+      redirect_to current_user 
+      return
     end
   end
   
@@ -83,7 +87,7 @@ class UsersController < ApplicationController
     @started_time.update_attributes(started_time: DateTime.new(DateTime.now.year,\
     DateTime.now.month, DateTime.now.day,DateTime.now.hour,DateTime.now.min,0))
     flash[:info] = "今日も１日元気に頑張りましょう！"
-    redirect_to @user
+    redirect_to @user 
   end
   
   # 退勤ボタン
@@ -94,15 +98,16 @@ class UsersController < ApplicationController
     DateTime.now.day,DateTime.now.hour,DateTime.now.min,0)
     @finished_time.update_attributes(finished_time: finishedtime)
     flash[:info] = "今日も一日お疲れ様でした！"
-    redirect_to @user
+    redirect_to @user 
   end
+
   
   def create
     @user = User.new(user_params)
     if @user.save
       log_in @user
       flash[:success] = "登録が完了しました"
-      redirect_back_or user
+      redirect_back_or @user 
     else
       render 'new'
     end
@@ -112,7 +117,8 @@ class UsersController < ApplicationController
   end
   
   def update
-    if @user.update_attributes(user_params)
+    if @user.update_attributes(:name, :email, :department, :password,
+                                   :department, :password_confirmation)
       flash[:success] = "プロフィールを更新しました"
       redirect_to @user
     else
@@ -125,12 +131,37 @@ class UsersController < ApplicationController
     flash[:success] = "ユーザーを削除しました"
     redirect_to users_url
   end
+  
+  def basic_info
+    if params[:id].nil?
+      @user  = User.find(current_user.id)
+    else
+      @user  = User.find(params[:id])
+    end
+  end
+  
+  def basic_info_edit
+    @user  = User.find(params[:id])
+    if @user.update_attributes(user_params)
+
+      flash[:success] = "基本情報を更新しました。"
+      redirect_to @user
+    else
+      redirect_to @user
+    end
+  end
+
 
   private
 
     def user_params
       params.require(:user).permit(:name, :email, :department, :password,
+                                   :basic_time, :specified_working_time,
                                    :password_confirmation)
+    end
+    
+    def search_params
+      params.require(:q).permit(:name_cont)
     end
 
     # beforeフィルター

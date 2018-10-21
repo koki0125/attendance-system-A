@@ -1,5 +1,3 @@
-<%# y = @date.year %>
-<%# m = @date.month %>
 <% provide(:title, @user.name) %>
 <div class="row">
 
@@ -14,8 +12,8 @@
                 &emsp; <%= @first_day.year %>年<%= @first_day.month %>月  時間管理表 &emsp;
                 <%= link_to "▶︎" , user_path(params:{id: @user.id, first_day: @first_day.next_month }), class: "btn btn-sm btn-primary" %>
                 </th>
-                <th>指定勤務時間</th>
-                <th colspan="2">基本時間</th>
+                <th>指定勤務時間　<%= basic_info_time(@user.specified_working_time) %></th>
+                <th colspan="2">基本時間 <%= basic_info_time(@user.basic_time) %></th>
                 <th>初日 <%= @first_day %></th> 
             </tr>
             <tr>
@@ -23,7 +21,7 @@
                 <th>氏名: <%= @user.name %></th>
                 <th>コード</th>
                 <th> 888 </th>
-                <th>出勤日数 <%#= @attendances_count %></th>
+                <th>出勤日数 <%= @attendances_count %></th>
                 <th>締め <%= @last_day %></th>
             </tr>
         </thead>
@@ -82,7 +80,7 @@
                 </td>
                 <!--９項：在社時間表示（出社時間と退社時間がどちらもある）-->
                 <td>
-                  <%#= working_hours(d.started_time,d.finished_time) if d.started_time.present? && d.finished_time.present?%>
+                  <%= working_hours(d.started_time,d.finished_time) if d.started_time.present? && d.finished_time.present?%>
                 </td>
                 <td>@</td>
             </tr>
@@ -90,7 +88,7 @@
             <!-- 最後の一行 -->      
             <tr>
     　　　　　　<!-- 総合勤務時間の表示  --> 
-                <td rowspan="1" colspan="2">@</td>
+                <td rowspan="1" colspan="2">総合勤務時間</td>
                 <td colspan="6"></td>
                 <td>在社時間の合計</td>
                 <!-- 在社時間の合計の表示  -->

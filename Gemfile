@@ -28,7 +28,7 @@ group :development do
   gem 'spring',                '2.0.2'
   gem 'spring-watcher-listen', '2.0.1'
   
-# エラー画面をわかりやすく整形してくれる
+  # エラー画面をわかりやすく整形してくれる
   gem 'better_errors'
   # better_errorsの画面上にirb/pry(PERL)を表示する
   gem 'binding_of_caller' 

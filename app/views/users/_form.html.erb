@@ -15,6 +15,15 @@
 
       <%= f.label :password_confirmation, "パスワード（確認用）" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
+      
+      
+      <!--登録時にデフォルトで下記２項目を入れる-->
+      <% f.label :基本時間 %>
+      <% f.time_field :basic_time, class: 'form-control', :value => Time.parse("2018/04/07 08:00") %>
+
+      <% f.label :指定勤務時間 %>
+      <% f.time_field :specified_working_time, class: 'form-control', :value => Time.parse("2018/04/07 08:00") %>
+      
 
       <%= f.submit yield(:button_text), class: "btn btn-primary" %>
     <% end %>
