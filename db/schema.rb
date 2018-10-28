@@ -31,8 +31,8 @@ ActiveRecord::Schema.define(version: 20181010183916) do
     t.string "department"
     t.string "remember_digest"
     t.boolean "admin", default: false, null: false
-    t.datetime "basic_time"
-    t.datetime "specified_working_time"
+    t.time "basic_time"
+    t.time "specified_working_time"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

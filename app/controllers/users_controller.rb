@@ -136,17 +136,19 @@ class UsersController < ApplicationController
     if params[:id].nil?
       @user  = User.find(current_user.id)
     else
-      @user  = User.find(params[:id])
+       @user  = User.find(params[:id])
     end
   end
   
   def basic_info_edit
     @user  = User.find(params[:id])
-    if @user.update_attributes(user_params)
+  
+    if @user.update_attributes!(user_params)
 
       flash[:success] = "基本情報を更新しました。"
       redirect_to @user
     else
+      flash[:danger] = "基本情報の更新に失敗しました。"
       redirect_to @user
     end
   end

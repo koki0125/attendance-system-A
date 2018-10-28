@@ -1,5 +1,15 @@
 <% provide(:title, '基本情報の修正') %>
-
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <h2><%= @user.errors.count %>件のエラーがあります。</h2>
+ 
+    <ul>
+    <% @user.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+    </ul>
+  </div>
+<% end %>
 <h1>基本情報の修正</h1>
 
 <!--<h2>指定勤務時間</h2>-->

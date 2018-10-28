@@ -1,22 +1,22 @@
 # ユーザー
-User.create!(name:  "柳川幸貴",
+User.create!(name:  "範馬勇次郎",
              email: "example@railstutorial.org",
              password:              "foobar",
              password_confirmation: "foobar",
              department: "管理者",
              admin:     true,
-             basic_time: Time.zone.parse("2018/04/07 7:30"),
-             specified_working_time: Time.zone.parse("2018/04/07 8:00")
+             basic_time: Time.zone.parse("7:30"),
+             specified_working_time: Time.zone.parse("8:00")
              )
              
-User.create!(name:  "テスト一般ユーザ用",
+User.create!(name:  "花山薫",
              email: "example2@railstutorial.org",
              password:              "foobar2",
              password_confirmation: "foobar2",
              department: "管理者",
              admin:     false,
-             basic_time: Time.parse("2018/04/07 07:30"),
-             specified_working_time: Time.parse("2018/04/07 08:00")
+             basic_time: Time.parse("07:30"),
+             specified_working_time: Time.parse("08:00")
              )
 
 99.times do |n|
@@ -28,7 +28,7 @@ User.create!(name:  "テスト一般ユーザ用",
                department: "sales",
                password:              password,
                password_confirmation: password,
-               basic_time: Time.zone.parse("2018/04/07 8:00"),
-               specified_working_time: Time.zone.parse("2018/04/07 7:00")
+               basic_time: Time.zone.parse("7:30"),
+               specified_working_time: Time.zone.parse("8:00")
                )
 end

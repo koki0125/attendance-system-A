@@ -10,7 +10,9 @@ class User < ApplicationRecord
                     format:     { with: VALID_EMAIL_REGEX },
                     uniqueness: { case_sensitive: false }
   has_secure_password
-  validates :password, presence: true, length: { minimum: 6 }
+  validates :password, presence: true, length: { minimum: 6 } ,allow_nil: true
+  validates :basic_time, presence: true
+  validates :specified_working_time, presence: true
   
   class << self
     # 渡された文字列のハッシュ値を返す
