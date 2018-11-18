@@ -20,9 +20,6 @@ class UsersController < ApplicationController
   def show
     
     @user = User.find(params[:id])
-    # if logged_in?
-    #   @user = current_user
-    # end
     
     if current_user.admin? || current_user.id == @user.id
       # 曜日表示用に使用する
@@ -156,6 +153,7 @@ class UsersController < ApplicationController
 
   private
 
+  # ストロングパラメーター
     def user_params
       params.require(:user).permit(:name, :email, :department, :password,
                                    :basic_time, :specified_working_time,

@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   get 'home/top'
   get '/basic_info',  to: 'users#basic_info'
   post'/basic_info_edit', to: 'users#basic_info_edit'
+  
+  post '/update_all', to: 'attendances#update_bunch'
 
     
 end
