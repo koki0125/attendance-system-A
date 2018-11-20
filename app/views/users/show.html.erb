@@ -6,7 +6,6 @@
             <tr>
                 <th colspan="2">
                     <!--先月へ-->
-                   　<%=  %>
                 <%= link_to "◀︎" , user_path(params:{id: @user.id, first_day: @first_day.prev_month }), class: "btn btn-sm btn-primary" %>
                 &emsp; <%= @first_day.year %>年<%= @first_day.month %>月  時間管理表 &emsp;
                 <%= link_to "▶︎" , user_path(params:{id: @user.id, first_day: @first_day.next_month }), class: "btn btn-sm btn-primary" %>
@@ -87,11 +86,12 @@
             <!-- 最後の一行 -->      
             <tr>
     　　　　　　<!-- 総合勤務時間の表示  --> 
-                <td rowspan="1" colspan="2">総合勤務時間</td>
+                <td rowspan="1" colspan="2">
+                    総合勤務時間  <%= basic_info_time(@user.basic_time).to_d * @attendances_sum if @user.basic_time.present? %>
+                </td>
                 <td colspan="6"></td>
-                <td>在社時間の合計</td>
-                <!-- 在社時間の合計の表示  -->
-                <td>@</td>
+                <td>在社時間の合計  <%= ((@total_time.to_d/ 60)/ 60).truncate(2) if @total_time.present? %></td>
+                <td></td>
             </tr>
         </tbody>
     </table>

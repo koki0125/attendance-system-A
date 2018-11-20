@@ -18,25 +18,23 @@ class UsersController < ApplicationController
   end
   
   def show
-    
+    # .find = id のみで探す場合
     @user = User.find(params[:id])
     
     if current_user.admin? || current_user.id == @user.id
-      # 曜日表示用に使用する
+      
+      
+      # 曜日表示用に使用する %w = 配列を作る
       @week = %w{日 月 火 水 木 金 土}
-
-      # @date = DateTime.current
-  #     # # 今月
-  #     # @yearmonth = @date.strftime("%Y年%m月")
-  #     # 先月と来月
-  #     # @perv_month = @date.prev_month.strftime("%Y年%m月")
-  #     # @next_month = @date.next_month.strftime("%Y年%m月")
      
       # 既に表示月があれば、表示月を取得する
+      # first_dayがnilでないなら
       if not params[:first_day].nil?
+        # Date.parse() 日時を表す文字列を解釈し、数値を返します
         @first_day = Date.parse(params[:first_day])
       else
         # 表示月が無ければ、今月分を表示
+        # .beginning_of_month = 今月の初めの日付を取得
         @first_day = Date.current.beginning_of_month
       end
       #最終日を取得する
@@ -71,10 +69,11 @@ class UsersController < ApplicationController
       @attendances_count = i
       @attendances_sum = @days.where.not(started_time: nil, finished_time: nil).count
     else
-      flash[:warning] = "他のユーザーの勤怠情報は閲覧できません。"
+      flash[:warning] = "他のユーザーの勤��情報は閲覧できません。"
       redirect_to current_user 
       return
     end
+    
   end
   
   # 出勤ボタン
@@ -116,7 +115,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(:name, :email, :department, :password,
                                    :department, :password_confirmation)
-      flash[:success] = "プロフィールを更新しました"
+      flash[:success] = "プロフィ��ルを更新しました"
       redirect_to @user
     else
       render 'edit'
