@@ -16,11 +16,5 @@
       <%= f.label :password_confirmation, "パスワード（確認用）" %>
       <%= f.password_field :password_confirmation, class: 'form-control' %>
       
-      
-      <!--登録時にデフォルトで下記２項目を入れる、デフォルト無理だった-->
-      
-
-      
-
       <%= f.submit yield(:button_text), class: "btn btn-primary" %>
     <% end %>
