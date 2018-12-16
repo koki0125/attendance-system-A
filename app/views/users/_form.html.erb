@@ -18,11 +18,13 @@
       
       
       <!--登録時にデフォルトで下記２項目を入れる、デフォルト無理だった-->
-      <%= f.label :基本時間 %>
-      <%= f.time_field :basic_time, class: 'form-control', :value => Time.parse("08:00") %>
-
-      <%= f.label :指定勤務時間 %>
-      <%= f.time_field :specified_working_time, class: 'form-control', :value => Time.parse("08:00") %>
+      <% if @user = admin_user? %>
+        <%= f.label :基本時間 %>
+        <%= f.time_field :basic_time, class: 'form-control', :value => Time.parse("08:00") %>
+  
+        <%= f.label :指定勤務時間 %>
+        <%= f.time_field :specified_working_time, class: 'form-control', :value => Time.parse("08:00") %>
+      <% end %>
       
 
       <%= f.submit yield(:button_text), class: "btn btn-primary" %>

@@ -104,10 +104,11 @@ class UsersController < ApplicationController
   end
    
   def edit
+    @user = User.find(params[:id])
   end
   
   def update
-    if @user.update_attributes(:name, :email, :department, :password, :basic_time, :specified_working_time, :password_confirmation)
+    if @user.update_attributes(user_params)
       flash[:success] = "プロフィールを更新しました"
       redirect_to @user
     else
