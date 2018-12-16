@@ -6,7 +6,6 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: [:index,:basic_info, :destroy]
   
   def index
-    @user = admin_user
     @users = User.all.paginate(page: params[:page])
   end
   
@@ -108,8 +107,7 @@ class UsersController < ApplicationController
   end
   
   def update
-    if @user.update_attributes(:name, :email, :department, :password,
-                                   :department, :password_confirmation)
+    if @user.update_attributes(:name, :email, :department, :password, :basic_time, :specified_working_time, :password_confirmation)
       flash[:success] = "プロフィールを更新しました"
       redirect_to @user
     else
