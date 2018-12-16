@@ -6,10 +6,7 @@ class UsersController < ApplicationController
   before_action :admin_user,     only: [:index,:basic_info, :destroy]
   
   def index
-    #@users = User.all
-    # @users = User.paginate(page: params[:page])
-    
-    # @words = Word.page(params[:page]).per(PER)   参考にkaminari paginateの
+    @user = admin_user
     @users = User.all.paginate(page: params[:page])
   end
   
@@ -20,7 +17,6 @@ class UsersController < ApplicationController
   def show
     # .find = id のみで探す場合
     @user = User.find(params[:id])
-    
     if current_user.admin? || current_user.id == @user.id
       
       
@@ -59,7 +55,7 @@ class UsersController < ApplicationController
       @days.each do |d|
         if d.started_time.present? && d.finished_time.present?
           second = 0
-          second = times(d.started_time,d.finished_time)
+          second = times(d.started_time,d.finished_time)  #times = users_helperで定義している
           @total_time = @total_time.to_i + second.to_i
           i = i + 1
         end
@@ -73,7 +69,6 @@ class UsersController < ApplicationController
       redirect_to current_user 
       return
     end
-    
   end
   
   # 出勤ボタン
@@ -115,7 +110,7 @@ class UsersController < ApplicationController
   def update
     if @user.update_attributes(:name, :email, :department, :password,
                                    :department, :password_confirmation)
-      flash[:success] = "プロフィ��ルを更新しました"
+      flash[:success] = "プロフィールを更新しました"
       redirect_to @user
     else
       render 'edit'
@@ -130,7 +125,7 @@ class UsersController < ApplicationController
   
   def basic_info
     if params[:id].nil?
-      @user  = User.find(current_user.id)
+       @user  = User.find(current_user.id)
     else
        @user  = User.find(params[:id])
     end

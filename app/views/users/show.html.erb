@@ -87,7 +87,7 @@
             <tr>
     　　　　　　<!-- 総合勤務時間の表示  --> 
                 <td rowspan="1" colspan="2">
-                    総合勤務時間  <%= basic_info_time(@user.basic_time).to_d * @attendances_sum if @user.basic_time.present? %>
+                    総合勤務時間  <%= basic_info_time(@user.basic_time).to_d * @attendances_count if @user.basic_time.present? %>
                 </td>
                 <td colspan="6"></td>
                 <td>在社時間の合計  <%= ((@total_time.to_d/ 60)/ 60).truncate(2) if @total_time.present? %></td>

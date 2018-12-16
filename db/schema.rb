@@ -35,5 +35,4 @@ ActiveRecord::Schema.define(version: 20181010183916) do
     t.time "specified_working_time"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
-
 end

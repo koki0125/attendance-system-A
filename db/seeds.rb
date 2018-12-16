@@ -13,7 +13,7 @@ User.create!(name:  "花山薫",
              email: "example2@railstutorial.org",
              password:              "foobar2",
              password_confirmation: "foobar2",
-             department: "管理者",
+             department: "頭",
              admin:     false,
              basic_time: Time.parse("07:30"),
              specified_working_time: Time.parse("08:00")
