@@ -1,19 +1,19 @@
 # ユーザー
-User.create!(name:  "範馬勇次郎",
+User.create!(name:  "舘ひろし",
              email: "example@railstutorial.org",
              password:              "foobar",
              password_confirmation: "foobar",
-             department: "管理者",
+             department: "管理者(admin)",
              admin:     true,
              basic_time: Time.zone.parse("7:30"),
              specified_working_time: Time.zone.parse("8:00")
              )
              
-User.create!(name:  "花山薫",
+User.create!(name:  "猫ひろし",
              email: "example2@railstutorial.org",
-             password:              "foobar2",
-             password_confirmation: "foobar2",
-             department: "頭",
+             password:              "foobar",
+             password_confirmation: "foobar",
+             department: "WAHAHA本舗",
              admin:     false,
              basic_time: Time.parse("07:30"),
              specified_working_time: Time.parse("08:00")
