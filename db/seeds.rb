@@ -30,5 +30,5 @@ User.create!(name:  "猫ひろし(一般ユーザー)",
                password_confirmation: password,
                basic_time: Time.zone.parse("7:30"),
                specified_working_time: Time.zone.parse("8:00")
-               )
+             )
 end
