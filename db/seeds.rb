@@ -15,8 +15,8 @@ User.create!(name:  "猫ひろし(一般ユーザー)",
              password_confirmation: "foobar",
              department: "WAHAHA本舗",
              admin:     false,
-             basic_time: Time.parse("07:30"),
-             specified_working_time: Time.parse("08:00")
+             basic_time: Time.parse("7:30"),
+             specified_working_time: Time.parse("8:00")
              )
 
 99.times do |n|
