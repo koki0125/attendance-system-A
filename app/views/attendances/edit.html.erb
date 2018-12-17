@@ -5,6 +5,30 @@
     <%= hidden_field_tag :id, @user.id %>
     <%= hidden_field_tag :first_day, @first_day %>
 
+  <!-- ヘッドのテーブル部分 -->    
+    <table class="table table-bordered table-striped table-condensed">
+        <thead>
+            <tr>
+                <th colspan="2">
+                    <!--先月へ-->
+                <%= link_to "◀︎" , edit_attendance_path(params:{id: @user.id, first_day: @first_day.prev_month }), class: "btn btn-sm btn-primary" %>
+                &emsp; <%= @first_day.year %>年<%= @first_day.month %>月  時間管理表 &emsp;
+                <%= link_to "▶︎" , edit_attendance_path(params:{id: @user.id, first_day: @first_day.next_month }), class: "btn btn-sm btn-primary" %>
+                </th>
+                <th>指定勤務時間　<%= basic_info_time(@user.specified_working_time) %></th>
+                <th colspan="2">基本時間 <%= basic_info_time(@user.basic_time) %></th>
+                <th>初日 <%= @first_day %></th> 
+            </tr>
+            <tr>
+                <th>所属: <%= @user.department %></th>
+                <th>氏名: <%= @user.name %></th>
+                <th>コード</th>
+                <th> 888 </th>
+                <th>出勤日数 <%= @attendances_count %></th>
+                <th>締め <%= @last_day %></th>
+            </tr>
+        </thead>
+    </table> 
 <!-- 最初の一行目    -->
     <table class="table table-bordered table-striped table-condensed">
     	<thead>
