@@ -141,6 +141,10 @@ class UsersController < ApplicationController
       redirect_to @user
     end
   end
+  
+  def working_employees_index
+    @users = User.all.paginate(page: params[:page])
+  end
 
 
   private
