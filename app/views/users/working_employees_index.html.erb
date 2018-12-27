@@ -1,5 +1,24 @@
 <% provide(:title, '出勤中社員一覧') %>
 <h1>出勤中社員一覧</h1>
+<div class="row">
+  <!-- ヘッドのテーブル部分 -->    
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>社員番号</th>
+        <th>名前</th>
+      </tr>
+    </thead>
+    <tbody>
+    <!--each文-->
+    
+      <tr>
+        <td><%= @users.first.employee_number %></td>
+        <td><%= @users.first.name %></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 <%= paginate @users %>
 
