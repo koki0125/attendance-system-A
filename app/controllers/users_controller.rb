@@ -144,6 +144,7 @@ class UsersController < ApplicationController
   
   def working_employees_index
     @users = User.all.paginate(page: params[:page])
+    # @user = User.find(params[:id])
   end
 
 

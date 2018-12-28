@@ -1,6 +1,7 @@
 <% provide(:title, '出勤中社員一覧') %>
 <h1>出勤中社員一覧</h1>
 <div class="row">
+  <%= paginate @users %>
   <!-- ヘッドのテーブル部分 -->    
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -11,19 +12,23 @@
     </thead>
     <tbody>
     <!--each文-->
-    
+    <% @users.each do |user| %>
       <tr>
-        <td><%= @users.first.employee_number %></td>
-        <td><%= @users.first.name %></td>
+        <%# if user.attendancestarted_time.today.presence && user.finished_time.today.nil %>
+        <td><%= user.employee_number %></td>
+        <td><%= user.name %></td>
+        <%# end %>
       </tr>
+    <% end %>
     </tbody>
   </table>
+  <%= paginate @users %>
 </div>
 
-<%= paginate @users %>
+<!--<%#= paginate @users %>-->
 
-<ul class="users">
-  <%= render @users %>
-</ul>
+<!--<ul class="users">-->
+<!--  <%#= render @users %>-->
+<!--</ul>-->
 
-<%= paginate @users %>
+<!--<%#= paginate @users %>-->
