@@ -12,12 +12,10 @@
     </thead>
     <tbody>
     <!--each文-->
-    <% @users.each do |user| %>
+    <% @we.each do |name, employee_number| %>
       <tr>
-        <%# if user.attendancestarted_time.today.presence && user.finished_time.today.nil %>
-        <td><%= user.employee_number %></td>
-        <td><%= user.name %></td>
-        <%# end %>
+        <td><%= employee_number %></td>
+        <td><%= name %></td>
       </tr>
     <% end %>
     </tbody>
