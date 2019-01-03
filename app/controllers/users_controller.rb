@@ -142,17 +142,17 @@ class UsersController < ApplicationController
     end
   end
   
+  #出勤中社員一覧
   def working_employees_index
     @users = User.all.paginate(page: params[:page])
     # @user = User.find(params[:id])
     @we = {}
       @users.each do |user|
-      if user.attendances.
-        any?{|a|
-          ( a.attendance_day == Date.today &&
-            !a.started_time.blank? && a.finished_time.blank? 
-            )
-          }
+      if user.attendances.any?{ |a|
+          (a.attendance_day == Date.today &&
+          !a.started_time.blank? && a.finished_time.blank? 
+          )
+        }
           ##空の@weハッシュに追加する、下記両方とも同じ意味
           # @we[user.name] = user.employee_number
           @we.store(user.name, user.employee_number)
