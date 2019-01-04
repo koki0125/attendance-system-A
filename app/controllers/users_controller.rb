@@ -1,10 +1,11 @@
 require "date"
 class UsersController < ApplicationController
   include UsersHelper
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: [:index,:basic_info, :destroy]
-  # before_action :superior_user,     only: [:index,:basic_info, :destroy]
+  before_action :logged_in_user, only: %i[index edit update destroy]
+  # before_action :correct_user,   only: %i[edit update]
+  before_action :admin_user,     only: %i[index basic_info destroy]
+  before_action :admin_user__current_user,  only: %i[edit update]
+  #before_action :superior_user,     only: %i[index basic_info destroy]
   
   
   def index
@@ -106,6 +107,7 @@ class UsersController < ApplicationController
   end
    
   def edit
+    @user = User.find(params[:id])
   end
   
   def update
@@ -192,5 +194,10 @@ class UsersController < ApplicationController
     # 上長かどうかを確認
     def superior_user
       redirect_to(root_url) unless current_user.superior?
+    end
+    
+    def admin_user__current_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user.admin?||current_user?(@user)
     end
 end
