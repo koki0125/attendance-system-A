@@ -10,7 +10,7 @@
         &emsp; <%= @first_day.year %>年<%= @first_day.month %>月  時間管理表 &emsp;
         <%= link_to "▶︎" , user_path(params:{id: @user.id, first_day: @first_day.next_month }), class: "btn btn-sm btn-primary" %>
         </th>
-        <th>指定勤務時間　<%= basic_info_time(@user.specified_working_time) %></th>
+        <th>指定勤務時間　<%#= basic_info_time(@user.specified_working_time) %></th>
         <th colspan="2">基本時間 <%= basic_info_time(@user.basic_time) %></th>
         <th>初日 <%= @first_day %></th> 
       </tr>

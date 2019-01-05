@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20181227003854) do
     t.string "remember_digest"
     t.boolean "admin", default: false, null: false
     t.time "basic_time"
-    t.time "specified_working_time"
     t.integer "employee_number"
     t.boolean "superior", default: false
     t.time "designated_start_time"
