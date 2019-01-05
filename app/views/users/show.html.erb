@@ -1,7 +1,7 @@
 <div class="row">
 
 <!-- ヘッドのテーブル部分 -->    
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-striped table-condensed users_show-table">
     <thead>
       <tr>
         <th>
@@ -33,16 +33,25 @@
   <%= link_to "勤怠を編集", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
 
   <!-- 最初の一行目    -->
-  <table class="table table-bordered table-striped table-condensed">
+  <table class="table table-bordered table-striped table-condensed users_show-table">
     <thead>
       <tr>
         <!--rowspan:縦結合、colspan：横結合-->
-        <th rowspan="2" >日付</th>
-        <th rowspan="2">曜日</th>
+        <th rowspan="3">残業申請</th>
+        <th rowspan="3">日付</th>
+        <th rowspan="3">曜日</th>
+        <th colspan="8">【実績】</th>
+        <th colspan="5">所定外勤務</th>
+      </tr>
+      <tr>
         <th rowspan="1" colspan="3">出社</th>
         <th rowspan="1" colspan="3">退社</th>
         <th rowspan="2">在社時間</th>
         <th rowspan="2">備考</th>
+        <th colspan="2">終了予定時間</th>
+        <th rowspan="2">時間外時間</th>
+        <th rowspan="2">業務処理内容</th>
+        <th rowspan="2">支持者確認㊞</th>
       </tr>
       <tr>
         <th>時</th>
@@ -51,6 +60,8 @@
         <th>時</th>
         <th>分</th>
         <th></th>
+        <th>時</th>
+        <th>分</th>
       </tr>
     </thead>
     <tbody>
@@ -58,6 +69,9 @@
     <!--# 在社時間の集計、ついでに出勤日数も-->
     <% @days.each do |d| %>
       <tr>
+        <!--０項：残業申請ボタン-->
+        <th><%= link_to "残業申請", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
+</th>
         <!--１項：日付-->
         <td><%= d.attendance_day.to_s(:day) %></td>
         <!--２項：曜日-->
@@ -85,16 +99,25 @@
           <%= working_hours(d.started_time,d.finished_time) if d.started_time.present? && d.finished_time.present?%>
         </td>
         <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
       </tr>
       <% end %>
       <!-- 最後の一行 -->      
       <tr>
+        <td></td>
     　　　<!-- 総合勤務時間の表示  --> 
-        <td rowspan="1" colspan="2">
-            総合勤務時間  <%= basic_info_time(@user.basic_time).to_d * @attendances_count if @user.basic_time.present? %>
-        </td>
+        <td rowspan="1" colspan="2">総合勤務時間:　<%= basic_info_time(@user.basic_time).to_d * @attendances_count if @user.basic_time.present? %></td>
         <td colspan="6"></td>
         <td>在社時間の合計  <%= ((@total_time.to_d/ 60)/ 60).truncate(2) if @total_time.present? %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
         <td></td>
       </tr>
     </tbody>
