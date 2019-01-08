@@ -4,11 +4,11 @@
   <%= form_tag csv_import_path, method: :post, multipart: true do |f| %>
     <div class="search_item">
       <%= text_field_tag 'filename',"", id: "filename", disabled: true %>
-      <%= file_field_tag 'emails_file', id: "file_input", style: "display: none;", onchange: "file_selected($(this));" %>
+      <%= file_field_tag 'csv_file', id: "file_input", style: "display: none;", onchange: "file_selected($(this));" %>
       <%= button_tag 'ファイル選択', class: %i(btn-primary csv_input_btn), type: 'button', onclick: "$('#file_input').click();" %>
     </div>
     <div>
-      <button type="submit" class="btn btn-primary">CSVインポート</button>
+      <button type="submit" class="btn btn-primary">CSVをインポート</button>
     </div>
   <% end %>
 </div>
