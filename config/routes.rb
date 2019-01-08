@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get    '/signup',  to: 'users#new'
   post '/startedtime_creat', to: 'users#started_time'
   post '/finishedtime_creat', to: 'users#finished_time'
-  
+  post '/csv_import', to: 'users#csv_import'
   get 'home/top'
   get '/basic_info/:id',  to: 'users#basic_info', as:"basic_info"
   post'/basic_info_edit/:id', to: 'users#basic_info_edit', as:"basic_info_edit"

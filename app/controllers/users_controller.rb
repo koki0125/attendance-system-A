@@ -1,4 +1,5 @@
 require "date"
+require "csv"
 class UsersController < ApplicationController
   include UsersHelper
   before_action :logged_in_user, only: %i[index edit update destroy]
@@ -162,6 +163,11 @@ class UsersController < ApplicationController
           @we.store(user.name, user.employee_number)
       end
     end
+  end
+  
+  # CSV入力
+  def csv_import
+    CSV.read
   end
 
 
