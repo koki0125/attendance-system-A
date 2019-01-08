@@ -167,7 +167,10 @@ class UsersController < ApplicationController
   
   # CSV入力
   def csv_import
-    CSV.read
+    # @user = User.find(params[:id])
+    # User.read(params[:file])
+    User.import(params[:file])
+    redirect_to @user
   end
 
 

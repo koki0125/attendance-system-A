@@ -44,4 +44,40 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
+  
+  # csv_importに使われる
+  # slice(ハッシュから指定した値だけを取り出す)
+  # self.をつけるとクラスメソッド、ないとインスタンスメソッドになる
+  def self.import(file)
+    CSV.foreach(file.path, headers: true) do |row|
+
+      obj = new #create?
+      obj.attributes = row.to_hash.slice(*updatable_attributes)
+
+      obj.save!
+    end
+  end
+  
+  # def self.import(file)
+  #   CSV.read(file.path, headers: true)
+  #     obj = new
+  #     obj.attributes = row.to_hash.slice(*updatable_attributes)
+
+  #     obj.save!
+  #   end
+  # end
+  
+    # def self.import(file)
+  #   CSV.table(file.path, headers: true)
+  #     obj = new
+  #     obj.attributes = row.to_hash.slice(*updatable_attributes)
+
+  #     obj.save!
+  #   end
+  # end
+
+  def self.updatable_attributes
+    # %i[name ]
+    user_params
+  end
 end
