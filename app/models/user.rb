@@ -49,35 +49,16 @@ class User < ApplicationRecord
   # slice(ハッシュから指定した値だけを取り出す)
   # self.をつけるとクラスメソッド、ないとインスタンスメソッドになる
   def self.import(file)
-    CSV.foreach(file.path, headers: true) do |row|
+    CSV.foreach(file.path, encoding: "Shift_JIS:UTF-8", headers: true) do |row|
 
-      obj = new #create?
+      obj = new 
       obj.attributes = row.to_hash.slice(*updatable_attributes)
 
       obj.save!
     end
   end
-  
-  # def self.import(file)
-  #   CSV.read(file.path, headers: true)
-  #     obj = new
-  #     obj.attributes = row.to_hash.slice(*updatable_attributes)
-
-  #     obj.save!
-  #   end
-  # end
-  
-    # def self.import(file)
-  #   CSV.table(file.path, headers: true)
-  #     obj = new
-  #     obj.attributes = row.to_hash.slice(*updatable_attributes)
-
-  #     obj.save!
-  #   end
-  # end
 
   def self.updatable_attributes
-    # %i[name ]
-    user_params
+    %i[id name email department employee_number uid basic_time designated_start_time designated_finish_time superior admin password]
   end
 end

@@ -169,7 +169,7 @@ class UsersController < ApplicationController
   def csv_import
     # @user = User.find(params[:id])
     # User.read(params[:file])
-    User.import(params[:file])
+    User.import(params[:csv_file])
     redirect_to @user
   end
 
