@@ -167,10 +167,14 @@ class UsersController < ApplicationController
   
   # CSV入力
   def csv_import
-    # @user = User.find(params[:id])
-    # User.read(params[:file])
-    User.import(params[:csv_file])
-    redirect_to @user
+    if params[:csv_file].blank?
+      flash[:danger] = "読み込むCSVファイルをセットしてください"
+      redirect_to users_path
+    else
+      User.import(params[:csv_file])
+      flash[:success] = "ユーザーが追加されました。"
+      redirect_to users_path
+    end
   end
 
 
