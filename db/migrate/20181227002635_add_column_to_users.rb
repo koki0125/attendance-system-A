@@ -4,7 +4,7 @@ class AddColumnToUsers < ActiveRecord::Migration[5.1]
     add_column :users, :superior, :boolean, default: false
     add_column :users, :designated_start_time, :time
     add_column :users, :designated_finish_time, :time
-    add_column :users, :uid, :integer
+    add_column :users, :uid, :string
     
   end
 end

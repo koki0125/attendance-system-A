@@ -169,12 +169,11 @@ class UsersController < ApplicationController
   def csv_import
     if params[:csv_file].blank?
       flash[:danger] = "読み込むCSVファイルをセットしてください"
-      redirect_to users_path
     else
       User.import(params[:csv_file])
       flash[:success] = "ユーザーが追加されました。"
-      redirect_to users_path
     end
+    redirect_to users_path
   end
 
 

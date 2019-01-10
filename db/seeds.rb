@@ -74,7 +74,7 @@ User.create!(name:  "五木ひろし(一般ユーザー)",
                superior:  false,
                designated_start_time: Time.zone.parse("10:00"),
                designated_finish_time: Time.zone.parse("18:00"),
-               uid: "#{n+1}.to_i",
+               uid: "#{n+1}.to_s",
                basic_time: Time.zone.parse("7:30"),
               # specified_working_time: Time.zone.parse("8:00")
              )
