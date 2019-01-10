@@ -57,10 +57,14 @@ class User < ApplicationRecord
     
     CSV.foreach(file.path, encoding: "Shift_JIS:UTF-8", headers: true) do |row|
 
-      row = new 
-      row.attributes = row.to_hash.slice(*updatable_attributes)
-      
-      row.save!
+      user = new(row.to_hash.slice(*updatable_attributes))
+      new_users.push(user)
+    end
+    
+    new_users.each do |user|
+      if !user.save
+        return "id#{user.id}のデータ保存時にエラーが発生しました"
+      end
     end
   end
 
