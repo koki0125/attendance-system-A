@@ -17,7 +17,9 @@ gem 'jquery-rails', '4.3.1'
 gem 'turbolinks',   '5.0.1'
 gem 'jbuilder',     '2.7.0'
 gem 'bootstrap-sass',          '3.3.7'
-# 下記CSVのための
+# for Bootstrap4
+gem 'bootstrap', '~> 4.1.1'
+# for csv_import 
 gem 'activerecord-import'
 gem 'csv'
 gem 'iconv'
