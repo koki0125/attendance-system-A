@@ -44,4 +44,31 @@ class User < ApplicationRecord
   def forget
     update_attribute(:remember_digest, nil)
   end
+  
+  # csv_importに使われる
+  # slice(ハッシュから指定した値だけを取り出す)
+  # self.をつけるとクラスメソッド、ないとインスタンスメソッドになる
+  def self.import(file)
+    
+    # 登録ユーザ配列
+    new_users = []
+    # 重複id
+    overlap_id = []
+    
+    CSV.foreach(file.path, encoding: "Shift_JIS:UTF-8", headers: true) do |row|
+
+      user = new(row.to_hash.slice(*updatable_attributes))
+      new_users.push(user)
+    end
+    
+    new_users.each do |user|
+      if !user.save
+        return "id#{user.id}のデータ保存時にエラーが発生しました"
+      end
+    end
+  end
+
+  def self.updatable_attributes
+    %i[id name email department employee_number uid basic_time designated_start_time designated_finish_time superior admin password]
+  end
 end
