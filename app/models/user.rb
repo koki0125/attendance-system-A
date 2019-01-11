@@ -58,7 +58,10 @@ class User < ApplicationRecord
     CSV.foreach(file.path, encoding: "Shift_JIS:UTF-8", headers: true) do |row|
 
       user = new(row.to_hash.slice(*updatable_attributes))
+      # %i時のupdatable_attributesの値=>[:id, :name, :email, :department, :employee_number, :uid, :basic_time, :designated_start_time, :designated_finish_time, :superior, :admin, :password]
+      # %w時のupdatable_attributesの値=>["id", "name", "email", "department", "employee_number", "uid", "basic_time", "designated_start_time", "designated_finish_time", "superior", "admin", "password"]
       new_users.push(user)
+      # debuggerで確認して見てください。
     end
     
     new_users.each do |user|
@@ -69,6 +72,11 @@ class User < ApplicationRecord
   end
 
   def self.updatable_attributes
-    %i[id name email department employee_number uid basic_time designated_start_time designated_finish_time superior admin password]
+    %w(id name email department employee_number uid basic_time designated_start_time designated_finish_time superior admin password)
+    # %記法での定義で、配列の中身がシ��ボル（:nameみたいな形）になってました。シンボルと文字列は別物と解釈されるので、60行目のslice(*updatable_attributes)で、配列が認識されていませんでした。
+    # 以下のサイトを参考に％記法を修正しました。
+    # https://qiita.com/hkengo/items/6ceae8fb970ad4b17b53#w%E3%82%84i%E3%82%92%E4%BD%BF%E3%81%86
+    # %i[id name email department employee_number uid basic_time designated_start_time designated_finish_time superior admin password]
   end
 end
+
