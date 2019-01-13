@@ -76,7 +76,7 @@
     <% @days.each do |d| %>
       <tr>
         <!--０項：残業申請ボタン-->
-        <th><%= link_to "残業申請", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
+        <th><%= link_to "残業申請", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), remote: true, class: "btn btn-sm btn-primary" %>
 </th>
         <!--１項：日付-->
         <td><%= d.attendance_day.to_s(:day) %></td>
@@ -88,7 +88,7 @@
         <!--５項：出社ボタン表示（当日かつ出社時間が存在しない場合）-->
         <td>
           <% if d.attendance_day == Date.current && d.started_time.nil? %>
-            <%= button_to "出社",startedtime_creat_path(@user,params:{id: @user.id}),{class: "btn btn-attendance btn-default"}%>
+            <%= button_to "出社",startedtime_create_path(@user,params:{id: @user.id}),{class: "btn btn-attendance btn-default"}%>
           <% end %>
         </td>
         <!--６〜７項：退社時間表示（データが存在する場合）-->
