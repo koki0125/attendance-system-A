@@ -69,6 +69,6 @@ class User < ApplicationRecord
   end
 
   def self.updatable_attributes
-    %i[id name email department employee_number uid basic_time designated_start_time designated_finish_time superior admin password]
+    %w[id name email department employee_number uid basic_time designated_start_time designated_finish_time superior admin password]
   end
 end
