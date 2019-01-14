@@ -89,7 +89,7 @@ aside {
 /* universal */
 
 body {
-  padding-top: 60px;
+  padding-top: 100px;
 }
 
 section {
@@ -286,5 +286,15 @@ span.picture {
   margin-top: 10px;
   input {
     border: 0;
+  }
+}
+
+.users_show-table {
+  th {
+  text-align: center;
+  }
+  tbody > tr > td {
+  text-align: center;
+  vertical-align: middle;
   }
 }

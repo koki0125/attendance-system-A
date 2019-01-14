@@ -1,9 +1,13 @@
 require "date"
+require "csv"
 class UsersController < ApplicationController
   include UsersHelper
-  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-  before_action :correct_user,   only: [:edit, :update]
-  before_action :admin_user,     only: [:index,:basic_info, :destroy]
+  before_action :logged_in_user, only: %i[index edit update destroy]
+  # before_action :correct_user,   only: %i[edit update]
+  before_action :admin_user,     only: %i[index basic_info destroy]
+  before_action :admin_user__current_user,  only: %i[edit update]
+  #before_action :superior_user,     only: %i[index basic_info destroy]
+  
   
   def index
     @users = User.all.paginate(page: params[:page])
@@ -104,6 +108,7 @@ class UsersController < ApplicationController
   end
    
   def edit
+    @user = User.find(params[:id])
   end
   
   def update
@@ -141,6 +146,36 @@ class UsersController < ApplicationController
       redirect_to @user
     end
   end
+  
+  #出勤中社員一覧
+  def working_employees_index
+    @users = User.all.paginate(page: params[:page])
+    # @user = User.find(params[:id])
+    @we = {}
+      @users.each do |user|
+      if user.attendances.any?{ |a|
+          (a.attendance_day == Date.today &&
+          !a.started_time.blank? && a.finished_time.blank? 
+          )
+        }
+          ##空の@weハッシュに追加する、下記両方とも同じ意味
+          # @we[user.name] = user.employee_number
+          @we.store(user.name, user.employee_number)
+      end
+    end
+  end
+  
+  # CSV入力
+  def csv_import
+    if params[:csv_file].blank?
+      flash[:danger] = "読み込むCSVファイルをセットしてください"
+    else
+      message = User.import(params[:csv_file])
+      flash[:notice] = message
+      flash[:success] = "ユーザーが追加されました。"
+    end
+    redirect_to users_path
+  end
 
 
   private
@@ -167,5 +202,15 @@ class UsersController < ApplicationController
     # 管理者かどうかを確認
     def admin_user
       redirect_to(root_url) unless current_user.admin?
+    end
+    
+    # 上長かどうかを確認
+    def superior_user
+      redirect_to(root_url) unless current_user.superior?
+    end
+    
+    def admin_user__current_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user.admin?||current_user?(@user)
     end
 end
