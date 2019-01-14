@@ -19,3 +19,13 @@
 body {
   padding-top: 100px;
 }
+
+.users_show-table {
+  th {
+  text-align: center;
+  }
+  tbody > tr > td {
+  text-align: center;
+  vertical-align: middle;
+  }
+}
