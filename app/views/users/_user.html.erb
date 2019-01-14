@@ -2,7 +2,7 @@
   <%= link_to user.name, user %>
   <% if current_user.admin? && !current_user?(user) %>
       <!--削除ボタン-->
-      <div class="">
+      <div>
       | <%= 
         link_to "削除", user, method: :delete,
         class: "btn btn-sm btn-primary",
