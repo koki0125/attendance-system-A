@@ -42,7 +42,7 @@ class AttendancesController < ApplicationController
     
     attendances_params.each do |id, time|
       attendance = Attendance.find(id)
-      
+
       #当日以降の編集はadminユーザのみ
       if attendance.attendance_day > Date.current && !current_user.admin?
     

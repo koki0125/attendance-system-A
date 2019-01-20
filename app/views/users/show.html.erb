@@ -99,6 +99,7 @@
           <% if d.attendance_day == Date.current && d.started_time.present? && d.finished_time.nil? %>
             <%= button_to "退社",finishedtime_creat_path(@user,params:{id: @user.id}), class: "btn btn-attendance btn-default"%>
           <% end %>
+          <div id="overtime_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
         </td>
         <!--９項：在社時間表示（出社時間と退社時間がどちらもある）-->
         <td>
