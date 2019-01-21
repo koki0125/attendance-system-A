@@ -64,6 +64,11 @@ class AttendancesController < ApplicationController
     redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
   end
 
+  def form_overtime
+    
+  end
+  
+  
   # プライベート
   private
   

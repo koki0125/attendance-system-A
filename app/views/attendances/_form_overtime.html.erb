@@ -1,3 +1,5 @@
+<div class="modal-dialog">
+  <div class="modal-content">
     <%= form_for(@user) do |f| %>
       <%= render 'shared/error_messages', object: f.object %>
 
@@ -18,3 +20,5 @@
       
       <%= f.submit yield(:button_text), class: "btn btn-primary" %>
     <% end %>
+  </div>
+</div>

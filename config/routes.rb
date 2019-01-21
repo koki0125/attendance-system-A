@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   
    # attendances
   post '/update_all', to: 'attendances#update_bunch'
-
+  get '/form_overtime', to: 'attendances#form_overtime'
   # bases
   get '/base_edit/',  to: 'bases#edit'
 end
