@@ -65,7 +65,7 @@ class AttendancesController < ApplicationController
   end
 
   def form_overtime
-    
+    @user = User.find(params[:id])
   end
   
   
