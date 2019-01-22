@@ -9,12 +9,39 @@
         data: { confirm: "本当によろしいですか?" } 
         %>
       </div>
-      <!--編集ボタン-->
-      <div class="well">
-        <%= 
-        link_to "編集", edit_user_path(user),
-        class: "btn btn-lg btn-primary"
-        %>
+<!--編集ボタン（アコーディオン）-->
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading well">
+            <h4 class="panel-title">
+              <a class="btn btn-lg btn-primary" data-toggle="collapse" data-parent="#accordion" href="#collapse3">編集</a>
+            </h4>
+          </div>
+          <div id="collapse3" class="panel-collapse collapse in">
+            <div class="panel-body">
+            <%= form_for(user) do |f| %>
+              <%= render 'shared/error_messages', object: f.object %>
+        
+              <%= f.label :ユーザー名 %>
+              <%= f.text_field :name, class: 'form-control' %>
+              
+              <%= f.label :メールアドレス %>
+              <%= f.email_field :email, class: 'form-control' %>
+        
+              <%= f.label :所属 %>
+              <%= f.text_field :department, class: 'form-control' %>
+              
+              <%= f.label :パスワード %>
+              <%= f.password_field :password, class: 'form-control' %>
+        
+              <%= f.label :password_confirmation, "パスワード（確認用）" %>
+              <%= f.password_field :password_confirmation, class: 'form-control' %>
+              
+              <%= f.submit (:編集する), class: "btn btn-primary" %>
+            <% end %>
+            </div>
+          </div>
+        </div>
       </div>
   <% end %>
 </li>
