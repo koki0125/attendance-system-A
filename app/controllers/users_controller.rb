@@ -184,7 +184,8 @@ class UsersController < ApplicationController
     def user_params
       params.require(:user).permit(:name, :email, :department, :password,
                                    :basic_time, :specified_working_time,
-                                   :password_confirmation)
+                                   :password_confirmation, :employee_number,
+                                   :designated_start_time, :designated_finish_time)
     end
     
     def search_params
