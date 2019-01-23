@@ -1,5 +1,5 @@
 <li>
-  <%= link_to user.name, user %>
+  <%= user.name %>
   <% if current_user.admin? && !current_user?(user) %>
       <!--削除ボタン-->
       <div>

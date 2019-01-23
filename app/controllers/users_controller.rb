@@ -3,7 +3,7 @@ require "csv"
 class UsersController < ApplicationController
   include UsersHelper
   before_action :logged_in_user, only: %i[index edit update destroy]
-  # before_action :correct_user,   only: %i[edit update]
+  before_action :correct_user,   only: %i[show]
   before_action :admin_user,     only: %i[index basic_info destroy]
   before_action :admin_user__current_user,  only: %i[edit update]
   #before_action :superior_user,     only: %i[index basic_info destroy]
@@ -112,10 +112,15 @@ class UsersController < ApplicationController
   end
   
   def update
+    # debugger
     if @user.update_attributes(user_params)
       flash[:success] = "プロフィールを更新しました"
-      redirect_to @user
-    else
+      if current_user.admin?
+        redirect_to users_path and return
+      end 
+      if @user == current_user
+        redirect_to @user and return
+      end
       render 'edit'
     end
   end
