@@ -76,9 +76,9 @@
     <% @days.each do |d| %>
       <tr>
         <!--０項：残業申請ボタン-->
-        <th>
-          <%= link_to "残業申請", form_overtime_path(params:{id: @user.id}), remote: true, class: "btn btn-sm btn-primary" %>
-        </th>
+        <td>
+          <%= link_to "残業申請", form_overtime_path(params:{id: @user.id, atendance_day: d.attendance_day }), remote: true, class: "btn btn-sm btn-primary" %>
+        </td>
         <!--１項：日付-->
         <td><%= d.attendance_day.to_s(:day) %></td>
         <!--２項：曜日-->

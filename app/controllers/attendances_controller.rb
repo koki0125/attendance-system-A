@@ -2,7 +2,7 @@ require "time"
 
 class AttendancesController < ApplicationController
 
-  # 勤怠編集画面 
+# 勤怠編集画面 
   def edit
     @user = User.find(params[:id])
     if current_user.admin? || current_user.id == @user.id
@@ -36,7 +36,7 @@ class AttendancesController < ApplicationController
     end
   end
 
-  # 勤怠編集画面ー更新ボタン
+# 勤怠編集画面ー更新ボタン
   def update_bunch
     @user = User.find(params[:id])
     
@@ -63,9 +63,12 @@ class AttendancesController < ApplicationController
     end #eachの締め
     redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
   end
-
+  
+# 残業申請モーダル
   def form_overtime
     @user = User.find(params[:id])
+    @week = %w{日 月 火 水 木 金 土}
+    @day = attendance_day
   end
   
   

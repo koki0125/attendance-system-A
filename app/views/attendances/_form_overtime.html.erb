@@ -1,24 +1,30 @@
 <div class="modal-dialog">
-  <div class="modal-content">
-    <%= form_for(@user) do |f| %>
-      <%= render 'shared/error_messages', object: f.object %>
-
-      <%= f.label :ユーザー名 %>
-      <%= f.text_field :name, class: 'form-control' %>
-      
-      <%= f.label :メールアドレス %>
-      <%= f.email_field :email, class: 'form-control' %>
-
-      <%= f.label :所属 %>
-      <%= f.text_field :department, class: 'form-control' %>
-      
-      <%= f.label :パスワード %>
-      <%= f.password_field :password, class: 'form-control' %>
-
-      <%= f.label :password_confirmation, "パスワード（確認用）" %>
-      <%= f.password_field :password_confirmation, class: 'form-control' %>
-      
-      <%= f.submit yield(:button_text), class: "btn btn-primary" %>
-    <% end %>
+  <div class="modal-content" style="padding:20px 0 30px;">
+    <h3 style="text-align:center;">【残業申請】</h3>
+    <table class="table table-bordered table-striped table-condensed users_show-table">
+      <thead>
+        <tr>
+          <th>日付</th>
+          <th>曜日</th>
+          <th>終了予定時間</th>
+          <th>翌日</th>
+          <th>業務処理内容</th>
+          <th>支持者確認印</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% debugger %>
+          <% @day.each do |d| %>
+          <td><%= d.attendance_day.to_s(:day) %></td>
+          <td><%= @week[d.attendance_day.wday] %></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <% end %>
+        </tr>  
+      </tbody>
+    </table>
   </div>
 </div>
