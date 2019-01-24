@@ -3,16 +3,20 @@
     <%= link_to "勤怠システム", root_path, id: "logo" %>
     <nav>
       <ul id="navnav" class="nav navbar-nav navbar-right">
-        <% if logged_in? %>
-          <li><%= link_to "トップへ", root_path %></li>
+      <% if logged_in? %>
+        
+          <!--<%# if not current_user.admin %>-->
+          <!--  <li><%#= link_to "勤怠表示", user_url(@user, params:{first_day: @first_day }) %></li>-->
+          <!--<%# end %>  -->
           <% if current_user.admin? %>
             <li><%= link_to "社員一覧", users_path %></li>
             <li><%= link_to "出勤中社員一覧", working_employees_index_path %></li>
             <li><%= link_to "拠点情報の修正", base_edit_path %></li>
-            <% if @user.presence %>
-              <li><%= link_to "基本情報の修正", basic_info_path(@user) %></li>
-            <% end %>
           <% end %>
+        <% if @user.presence %>
+          <li><%= link_to "トップへ", user_url(@user, params:{first_day: @first_day }) %></li>
+          <!--<li><%#= link_to "基本情報の修正", basic_info_path(@user) %></li>-->
+        <% end %>
           <li class="dropdown">
             <a href="#" id="dropdown_ac" class="dropdown-toggle" data-toggle="dropdown">
               アカウント <b class="caret"></b>
@@ -25,10 +29,10 @@
               </li>
             </ul>
           </li>
-        <% else %>
+      <% else %>
           <li><%= link_to "トップへ", root_path %></li>
           <li><%= link_to "ログイン", login_path %></li>
-        <% end %>
+      <% end %>
       </ul>
     </nav>
   </div>
