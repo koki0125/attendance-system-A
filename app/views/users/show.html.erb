@@ -77,7 +77,9 @@
       <tr>
         <!--０項：残業申請ボタン-->
         <td>
-          <%= link_to "残業申請", form_overtime_path(params:{id: @user.id, atendance_day: d.attendance_day }), remote: true, class: "btn btn-sm btn-primary" %>
+          <!--test のちに下記に変更-->
+          <%= link_to "残業申請", overtime_path(d, params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
+          <%#= link_to "残業申請", form_overtime_path(d, params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary", remote: true %>
         </td>
         <!--１項：日付-->
         <td><%= d.attendance_day.to_s(:day) %></td>
