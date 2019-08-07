@@ -105,7 +105,7 @@ class AttendancesController < ApplicationController
   private
   
     def attendances_params
-      params.permit(attendances: [:started_time, :finished_time])[:attendances]
+      params.permit(attendances: [:started_time, :finished_time, :detail])[:attendances]
     end
     
     def user_params
