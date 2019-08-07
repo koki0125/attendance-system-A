@@ -37,7 +37,7 @@
   <%= link_to "勤怠を編集", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
   <%= link_to "CSV出力", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
   <%= link_to "勤怠修正ログ（承認済み）", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
-  
+  <div id="overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <!-- 最初の一行目    -->
   <table class="table table-bordered table-striped table-condensed users_show-table">
     <thead>
@@ -76,8 +76,11 @@
     <% @days.each do |d| %>
       <tr>
         <!--０項：残業申請ボタン-->
-        <th><%= link_to "残業申請", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), remote: true, class: "btn btn-sm btn-primary" %>
-</th>
+        <td>
+          <!--test のちに下記に変更-->
+          <%= link_to "残業申請", overtime_path(d, params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
+          <%#= link_to "残業申請", form_overtime_path(d, params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary", remote: true %>
+        </td>
         <!--１項：日付-->
         <td><%= d.attendance_day.to_s(:day) %></td>
         <!--２項：曜日-->
@@ -103,7 +106,7 @@
         </td>
         <!--９項：在社時間表示（出社時間と退社時間がどちらもある）-->
         <td>
-          <%= working_hours(d.started_time,d.finished_time) if d.started_time.present? && d.finished_time.present?%>
+          <%= working_hours(d.started_time,d.finished_time) if d.started_time.present? && d.finished_time.present? %>
         </td>
         <td></td>
         <td></td>

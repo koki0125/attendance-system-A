@@ -2,7 +2,7 @@ require "time"
 
 class AttendancesController < ApplicationController
 
-  # 勤怠編集画面 
+# 勤怠編集画面 
   def edit
     @user = User.find(params[:id])
     if current_user.admin? || current_user.id == @user.id
@@ -36,7 +36,7 @@ class AttendancesController < ApplicationController
     end
   end
 
-  # 勤怠編集画面ー更新ボタン
+# 勤怠編集画面ー更新ボタン
   def update_bunch
     @user = User.find(params[:id])
     
@@ -63,7 +63,44 @@ class AttendancesController < ApplicationController
     end #eachの締め
     redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
   end
+  
+# 残業申請モーダル　のちにform_overtimeに変更
+  def overtime
+    @user = User.find(params[:id])
+    @week = %w{日 月 火 水 木 金 土}
+    # attendance_day = 
+    if current_user.id == @user.id
 
+      @week = %w{日 月 火 水 木 金 土}
+      
+      if not params[:first_day].nil?
+        @first_day = Date.parse(params[:first_day])
+      else
+        @first_day = Date.current.beginning_of_month
+      end
+      
+      @last_day = @first_day.end_of_month
+      
+      # 取得月の初日から終日まで繰り返し処理
+      (@first_day..@last_day).each do |day|
+        # attendancesテーブルに各日付のデータがあるか
+        if not @user.attendances.any? { |obj| obj.attendance_day == day }
+          # ない日付はインスタンスを生成して保存する
+          date = Attendance.new(user_id: @user.id, attendance_day: day)
+          date.save
+        end
+      end
+      
+      # 当月を昇順で取得し@daysへ代入
+      @days = @user.attendances.where('attendance_day >= ? and attendance_day <= ?', \
+      @first_day, @last_day).order('attendance_day')
+    else
+      flash[:warning] = "他のユーザーの勤怠情報は閲覧できません。"
+      redirect_to current_user
+    end
+  end
+  
+  
   # プライベート
   private
   

@@ -1,7 +1,7 @@
 <% provide(:title, '出勤中社員一覧') %>
 <h1>出勤中社員一覧</h1>
 <div class="row">
-  <%= paginate @users %>
+  <%= will_paginate(:previous_label => '前', :next_label => '次') %>
   <!-- ヘッドのテーブル部分 -->    
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -20,13 +20,5 @@
     <% end %>
     </tbody>
   </table>
-  <%= paginate @users %>
+  <%= will_paginate(:previous_label => '前', :next_label => '次') %>
 </div>
-
-<!--<%#= paginate @users %>-->
-
-<!--<ul class="users">-->
-<!--  <%#= render @users %>-->
-<!--</ul>-->
-
-<!--<%#= paginate @users %>-->

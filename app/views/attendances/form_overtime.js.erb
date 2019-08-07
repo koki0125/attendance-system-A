@@ -1,1 +1,3 @@
-<h1>残業申請モーダル</h1>
+<!--残業申請モーダル-->
+$("#overtime-modal").html("<%= escape_javascript(render 'form_overtime') %>")
+$("#overtime-modal").modal("show")
