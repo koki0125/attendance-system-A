@@ -77,7 +77,8 @@ class AttendancesController < ApplicationController
       @week = %w{日 月 火 水 木 金 土}
       
       
-    # form_with　で残業申請
+    # form_with　で残業申請を実装（特定の日付の、予定時間、翌日チェック、業務内容、上長選択）
+    
     
       # if not params[:first_day].nil?
       #   @first_day = Date.parse(params[:first_day])
