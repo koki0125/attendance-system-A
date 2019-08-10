@@ -17,9 +17,10 @@
         <tr>
           <%# debugger %>
           <%# @day.each do |d| %>
-            <%#= fields_for "attendances[]", d do |tf| %>
-            <td><%= d.attendance_day.to_s(:day) %></td>
-            <td><%#= @week[d.attendance_day.wday] %></td>
+          <!--残業日の指定（userの特定の残業日）-->
+            <%#= form_with model: @day do |f| %>
+            <td><%= @day[:attendance_day.to_s(:day)] %></td>
+            <td><%#= @week[f.wday] %></td>
             <td></td>
             <td></td>
             <td></td>

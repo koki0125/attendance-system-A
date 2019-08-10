@@ -74,12 +74,13 @@
     <!-- レコード表示部分 each文 -->
     <!--# 在社時間の集計、ついでに出勤日数も-->
     <% @days.each do |d| %>
+    <%# debugger %>
       <tr>
         <!--０項：残業申請ボタン-->
         <td>
           <!--test のちに下記に変更-->
-          <%= link_to "残業申請", overtime_path(d, params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
-          <%#= link_to "残業申請", form_overtime_path(d, params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary", remote: true %>
+          <%#= link_to "残業申請", overtime_path(d, params:{id: @user.id, first_day: @first_day, d: d}), class: "btn btn-sm btn-primary" %>
+          <%= link_to "残業申請", form_overtime_path(d, params:{id: @user.id, a_id: d }), class: "btn btn-sm btn-primary", remote: true %>
         </td>
         <!--１項：日付-->
         <td><%= d.attendance_day.to_s(:day) %></td>
