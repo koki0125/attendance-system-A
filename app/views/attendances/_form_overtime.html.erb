@@ -17,10 +17,10 @@
         <tr>
           <%# debugger %>
           <% @day.each do |d| %>
-            <%#= fields_for "attendances[]", d do |tf| %>
+            <%= form_with url: overtime_submit_each_path d do |f| %>
             <td><%= d.attendance_day.to_s(:day) %></td>
             <td><%= @week[d.attendance_day.wday] %></td>
-            <td></td>
+            <td><%#= f.time_field :expected_finish_time, class: 'form-control' %></td>
             <td></td>
             <td></td>
             <td></td>

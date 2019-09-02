@@ -68,43 +68,16 @@ class AttendancesController < ApplicationController
   def form_overtime
     # 表示用
     @user = User.find(params[:id])
-    # @week = %w{日 月 火 水 木 金 土}
+    @week = %w{日 月 火 水 木 金 土}
     # 特定の日付のID
     @day = Attendance.where(id: params[:a_id])
-
-    if current_user.id == @user.id
-
-      @week = %w{日 月 火 水 木 金 土}
-      
-      
     # form_with　で残業申請を実装（特定の日付の、予定時間、翌日チェック、業務内容、上長選択）
+  end
+
+#個別残業申請
+  def overtime_submit_each
     
     
-      # if not params[:first_day].nil?
-      #   @first_day = Date.parse(params[:first_day])
-      # else
-      #   @first_day = Date.current.beginning_of_month
-      # end
-      
-      # @last_day = @first_day.end_of_month
-      
-      # # 取得月の初日から終日まで繰り返し処理
-      # (@first_day..@last_day).each do |day|
-      #   # attendancesテーブルに各日付のデータがあるか
-      #   if not @user.attendances.any? { |obj| obj.attendance_day == day }
-      #     # ない日付はインスタンスを生成して保存する
-      #     date = Attendance.new(user_id: @user.id, attendance_day: day)
-      #     date.save
-      #   end
-      # end
-      
-      # # 当月を昇順で取得し@daysへ代入
-      # @days = @user.attendances.where('attendance_day >= ? and attendance_day <= ?', \
-      # @first_day, @last_day).order('attendance_day')
-    else
-      flash[:warning] = "他のユーザーの勤怠情報は閲覧できません。"
-      redirect_to current_user
-    end
   end
   
   
