@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181227003854) do
+ActiveRecord::Schema.define(version: 20190903085528) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id"
@@ -19,11 +19,12 @@ ActiveRecord::Schema.define(version: 20181227003854) do
     t.date "attendance_day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "expected_finish_time" #終了予定時間
-    t.datetime "overtime" #残業時間
-    t.string "detail"  #備考
-    t.string "reason" #業務処理内容
-    t.boolean "approval" #承認
+    t.datetime "expected_finish_time"
+    t.datetime "overtime"
+    t.string "detail"
+    t.string "reason"
+    t.boolean "approval"
+    t.integer "superior_id"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 

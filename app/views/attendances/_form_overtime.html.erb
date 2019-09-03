@@ -22,7 +22,7 @@
           <td><%= f.time_field :expected_finish_time, class: 'form-control' %></td>
           <td><%= f.check_box :tomorrow, :as => :boolean, class: 'form-control' %></td>
           <td><%= f.text_field :reason, class: 'form-control' %></td>
-          <td><%=  %></td>
+          <td><%= f.select :superior_id,  %></td>
         </tr>
         <% end %>
       </tbody>
