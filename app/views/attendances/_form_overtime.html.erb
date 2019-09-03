@@ -2,6 +2,7 @@
   <div class="modal-content" style="padding:20px 0 30px;">
     <h3 style="text-align:center;">【残業申請】</h3>
     <p><%= @user.name %></p>
+    <%= form_with(url: overtime_submit_path) do |f| %>
     <table class="table table-bordered table-striped table-condensed users_show-table">
       <thead>
         <tr>
@@ -10,24 +11,23 @@
           <th>終了予定時間</th>
           <th>翌日</th>
           <th>業務処理内容</th>
-          <th>支持者確認印</th>
+          <th>指示者確認印</th>
         </tr>
       </thead>
       <tbody>
+        <% @day.each do |d| %>
         <tr>
-          <%# debugger %>
-          <% @day.each do |d| %>
-            <%= form_with url: overtime_submit_each_path d do |f| %>
-            <td><%= d.attendance_day.to_s(:day) %></td>
-            <td><%= @week[d.attendance_day.wday] %></td>
-            <td><%#= f.time_field :expected_finish_time, class: 'form-control' %></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <%# end %>
-          <% end %>
-        </tr>  
+          <td><%= d.attendance_day.to_s(:day) %></td>
+          <td><%= @week[d.attendance_day.wday] %></td>
+          <td><%= f.time_field :expected_finish_time, class: 'form-control' %></td>
+          <td><%= f.check_box :tomorrow, :as => :boolean, class: 'form-control' %></td>
+          <td><%= f.text_field :reason, class: 'form-control' %></td>
+          <td><%=  %></td>
+        </tr>
+        <% end %>
       </tbody>
     </table>
+    <%= f.submit '変更を送信する', class: 'btn btn-attendance btn-default' %>
+    <% end %>
   </div>
 </div>

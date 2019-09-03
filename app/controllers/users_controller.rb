@@ -50,7 +50,7 @@ class UsersController < ApplicationController
       end
     
     
-      # 当月を昇順で取得し@daysへ代入　= @first_day =< >= @last_day
+      # 当月を昇順で取得し@daysへ代入 = @first_day =< >= @last_day
       @days = @user.attendances.where('attendance_day >= ? and attendance_day <= ?', \
       @first_day, @last_day).order('attendance_day')
       # 在社時間の集計、ついでに出勤日数も

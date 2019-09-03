@@ -71,12 +71,11 @@ class AttendancesController < ApplicationController
     @week = %w{日 月 火 水 木 金 土}
     # 特定の日付のID
     @day = Attendance.where(id: params[:a_id])
-    # form_with　で残業申請を実装（特定の日付の、予定時間、翌日チェック、業務内容、上長選択）
+    # form_with で残業申請を実装（特定の日付の、予定時間、翌日チェック、業務内容、上長選択）
   end
 
 #個別残業申請
-  def overtime_submit_each
-    
+  def overtime_submit
     
   end
   
