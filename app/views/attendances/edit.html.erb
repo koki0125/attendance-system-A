@@ -50,6 +50,7 @@
     	</thead>
     	<tbody>
     		<% @days.each do |d| %>
+    		<!--fields_forの第一引数に[]つけると、各formのnameに[id]という形式で展開される-->
     		  <%= fields_for "attendances[]", d do |tf| %>
         		<tr>
         		  <!--１項：日付-->

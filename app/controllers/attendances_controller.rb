@@ -69,6 +69,10 @@ class AttendancesController < ApplicationController
     # 表示用
     @user = User.find(params[:id])
     @week = %w{日 月 火 水 木 金 土}
+    # 自分以外の上長達
+    @superiors = User.where(superior: true).where.not(id: @user.id)
+
+    
     # 特定の日付のID
     @day = Attendance.where(id: params[:a_id])
     # form_with で残業申請を実装（特定の日付の、予定時間、翌日チェック、業務内容、上長選択）
@@ -76,7 +80,11 @@ class AttendancesController < ApplicationController
 
 #個別残業申請
   def overtime_submit
-    
+    @user = User.find(params[:id])
+    # もし〜なら更新　tomorrow なら1日プラス
+    update_attributes(params:user_params)
+    # ここからrouting_error
+    # redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
   end
   
   
@@ -84,13 +92,17 @@ class AttendancesController < ApplicationController
   private
   
     def attendances_params
-      params.permit(attendances: [:started_time, :finished_time, :detail])[:attendances]
+      params.permit(attendances: [:started_time, :finished_time, :expected_finish_time,
+                                  :detail, :reason, :superior_id])[:attendances]
     end
     
     def user_params
       params.require(:user).permit(:name, :email, :department, :password,
                                    :basic_time, :specified_working_time,
-                                   :password_confirmation)
+                                   :password_confirmation, 
+                                   attendance_attributes:[:id, :started_time,
+                                   :finished_time, :expected_finish_time,
+                                  :detail, :reason, :superior_id])
     end
 
 end

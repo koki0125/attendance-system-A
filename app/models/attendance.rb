@@ -1,3 +1,4 @@
 class Attendance < ApplicationRecord
-  belongs_to :user
+  # userに紐づく、その逆も
+  belongs_to :user, inverse_of: :attendances
 end

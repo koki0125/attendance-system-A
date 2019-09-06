@@ -2,6 +2,8 @@ class User < ApplicationRecord
   # attendancesテーブルとの関連付け
   # userを削除した時、関連したデータを削除
   has_many :attendances, dependent: :destroy
+  # 親モデルを通じてネストしたモデルの関連レコードの登録・更新
+  accepts_nested_attributes_for :attendances, allow_destroy: true
   attr_accessor :remember_token
   before_save { email.downcase! }
   validates :name, presence: true, length: { maximum: 50 }
