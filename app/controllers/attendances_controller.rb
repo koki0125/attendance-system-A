@@ -82,9 +82,9 @@ class AttendancesController < ApplicationController
   def overtime_submit
     @user = User.find(params[:id])
     # もし〜なら更新　tomorrow なら1日プラス
-    update_attributes(params:user_params)
-    # ここからrouting_error
-    # redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+    @user.update_attributes(params:user_params)
+    flash[:success] = '残業申請をしました。'
+    redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
   end
   
   

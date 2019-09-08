@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   get '/form_overtime', to: 'attendances#form_overtime'
   #test below
   get '/overtime', to: 'attendances#overtime'
-  post '/overtime_submit', to: 'attendances#overtime_submit'
+  patch '/overtime_submit', to: 'attendances#overtime_submit'
   # bases
   get '/base_edit/',  to: 'bases#edit'
 end
