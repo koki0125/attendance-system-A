@@ -113,8 +113,9 @@ class AttendancesController < ApplicationController
                                    :basic_time, :specified_working_time,
                                    :password_confirmation, 
                                    attendances_attributes:[:id, :started_time,
-                                   :finished_time, :expected_finish_time,
-                                  :detail, :reason, :tomorrow,:superior_id, :status])
+                                   :started_time, :finished_time,:finished_time,
+                                   :expected_finish_time, :detail, :reason,
+                                   :tomorrow,:superior_id, :status])
     end
 end
 
