@@ -19,12 +19,12 @@ ActiveRecord::Schema.define(version: 20190905004516) do
     t.date "attendance_day"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.datetime "expected_finish_time" #終了予定時間
+    t.datetime "expected_finish_time"
     t.datetime "overtime"
-    t.string "detail" #備考
-    t.string "reason" #業務処理内容
-    t.integer "status", default: 0 #残業申請のステータス
-    t.integer "superior_id" #残業指示者のID
+    t.string "detail"
+    t.string "reason"
+    t.integer "status", default: 0
+    t.integer "superior_id"
     t.boolean "tomorrow", default: false
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end

@@ -112,15 +112,15 @@
         <!--10項：備考-->
         <td><%= d.detail %></td>
         <!--11項：終了予定時間(時)-->
-        <td><%= d.expected_finish_time.to_s(:hour) %></td>
+        <td><%= d.expected_finish_time.to_s(:hour) if d.expected_finish_time.present? %></td>
         <!--12項：終了予定時間(分)-->
-        <td></td>
+        <td><%= d.expected_finish_time.to_s(:miute) if d.expected_finish_time.present? %></td>
         <!--12項：時間外時間-->
-        <td></td>
+        <td><% d.tomorrow.to_s if d.tomorrow.present? %>仮</td>
         <!--13項：業務処理内容-->
-        <td></td>
+        <td><%= d.reason.to_s if d.reason.present? %></td>
         <!--14項：指示者確認印-->
-        <td></td>
+        <td><% d.superior_id.to_s if d.superior_id.present? %> </td>
       </tr>
       <% end %>
       <!-- 最後の一行 -->      

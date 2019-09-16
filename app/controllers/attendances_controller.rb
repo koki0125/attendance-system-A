@@ -79,12 +79,24 @@ class AttendancesController < ApplicationController
   end
 
 #個別残業申請
+    # 出勤ボタン
+    # [["user_id", 4], ["attendance_day", "2019-09-08"]
+    # @user = User.find(params[:id])
+    # @started_time = @user.attendances.find_by(attendance_day: Date.current)
+    # @started_time.update_attributes(started_time: DateTime.new(DateTime.now.year,\
+    # DateTime.now.month, DateTime.now.day,DateTime.now.hour,DateTime.now.min,0))
+    # flash[:info] = "今日も１日元気に頑張りましょう！"
   def overtime_submit
-    @user = User.find(params[:id])
+    @user = current_user
     # もし〜なら更新　tomorrow なら1日プラス
-    @user.update_attributes(params:user_params)
-    flash[:success] = '残業申請をしました。'
-    redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+    if @day = Attendance.where(id: params[:a_id])
+      @day.update_attributes(user_params)
+      
+      flash[:success] = '残業申請をしました。'
+      redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+    else
+      render show
+    end
   end
   
   
@@ -93,16 +105,22 @@ class AttendancesController < ApplicationController
   
     def attendances_params
       params.permit(attendances: [:started_time, :finished_time, :expected_finish_time,
-                                  :detail, :reason, :superior_id])[:attendances]
+                                  :detail, :reason, :tomorrow, :superior_id, :status])[:attendances]
     end
     
     def user_params
       params.require(:user).permit(:name, :email, :department, :password,
                                    :basic_time, :specified_working_time,
                                    :password_confirmation, 
-                                   attendance_attributes:[:id, :started_time,
+                                   attendances_attributes:[:id, :started_time,
                                    :finished_time, :expected_finish_time,
-                                  :detail, :reason, :superior_id])
+                                  :detail, :reason, :tomorrow,:superior_id, :status])
     end
-
 end
+
+
+
+
+# attendances_params 
+# これでもいける？
+# user_params
