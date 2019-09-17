@@ -71,7 +71,7 @@ class AttendancesController < ApplicationController
     @week = %w{日 月 火 水 木 金 土}
     # 自分以外の上長達
     @superiors = User.where(superior: true).where.not(id: @user.id)
-
+  
     
     # 特定の日付のID
     @day = Attendance.where(id: params[:a_id])
@@ -87,15 +87,19 @@ class AttendancesController < ApplicationController
     # DateTime.now.month, DateTime.now.day,DateTime.now.hour,DateTime.now.min,0))
     # flash[:info] = "今日も１日元気に頑張りましょう！"
   def overtime_submit
-    @user = current_user
+    @user = User.find(params[:user_id])
     # もし〜なら更新　tomorrow なら1日プラス
-    if @day = Attendance.where(id: params[:a_id])
-      @day.update_attributes(user_params)
-      
-      flash[:success] = '残業申請をしました。'
-      redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
-    else
-      render show
+    user_params.each do |id, item|
+      attendance = Attendance.find(id)
+      attendance.present?
+      if #@day = Attendance.where(id: params[:a_id])
+        attendance.update_attributes(item)
+        flash[:success] = '残業申請をしました。'
+        redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+      else
+        redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+        # render 
+      end
     end
   end
   
@@ -104,7 +108,7 @@ class AttendancesController < ApplicationController
   private
   
     def attendances_params
-      params.permit(attendances: [:started_time, :finished_time, :expected_finish_time,
+      params.require(:user).permit(attendances: [:started_time, :finished_time, :expected_finish_time,
                                   :detail, :reason, :tomorrow, :superior_id, :status])[:attendances]
     end
     
@@ -112,10 +116,10 @@ class AttendancesController < ApplicationController
       params.require(:user).permit(:name, :email, :department, :password,
                                    :basic_time, :specified_working_time,
                                    :password_confirmation, 
-                                   attendances_attributes:[:id, :started_time,
-                                   :started_time, :finished_time,:finished_time,
+                                   attendances_attributes: [:id, :started_time,
+                                   :started_time, :finished_time, :finished_time,
                                    :expected_finish_time, :detail, :reason,
-                                   :tomorrow,:superior_id, :status])
+                                   :tomorrow, :superior_id, :status])
     end
 end
 
