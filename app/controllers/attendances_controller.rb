@@ -79,27 +79,21 @@ class AttendancesController < ApplicationController
   end
 
 #個別残業申請
-    # 出勤ボタン
-    # [["user_id", 4], ["attendance_day", "2019-09-08"]
-    # @user = User.find(params[:id])
-    # @started_time = @user.attendances.find_by(attendance_day: Date.current)
-    # @started_time.update_attributes(started_time: DateTime.new(DateTime.now.year,\
-    # DateTime.now.month, DateTime.now.day,DateTime.now.hour,DateTime.now.min,0))
-    # flash[:info] = "今日も１日元気に頑張りましょう！"
   def overtime_submit
-    @user = User.find(params[:user_id])
-    # もし〜なら更新　tomorrow なら1日プラス
-    user_params.each do |id, item|
-      attendance = Attendance.find(id)
-      attendance.present?
-      if #@day = Attendance.where(id: params[:a_id])
+    if @user = User.find(params[:user_id])
+      # もし〜なら更新　tomorrow なら1日プラス //残業時間に日付もプラス
+      overtime_params.each do |id, item|
+        attendance = Attendance.find(id)
+        attendance.present?
+        #@day = Attendance.where(id: params[:a_id])
         attendance.update_attributes(item)
-        flash[:success] = '残業申請をしました。'
-        redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
-      else
-        redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
-        # render 
       end
+      flash[:success] = '残業申請をしました。'
+      redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+    else
+      flash[:danger] = "残業申請に失敗しました。"
+      redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+      # render 
     end
   end
   
@@ -108,7 +102,7 @@ class AttendancesController < ApplicationController
   private
   
     def attendances_params
-      params.require(:user).permit(attendances: [:started_time, :finished_time, :expected_finish_time,
+      params.permit(attendances: [ :id, :started_time, :finished_time, :expected_finish_time,
                                   :detail, :reason, :tomorrow, :superior_id, :status])[:attendances]
     end
     
@@ -116,9 +110,16 @@ class AttendancesController < ApplicationController
       params.require(:user).permit(:name, :email, :department, :password,
                                    :basic_time, :specified_working_time,
                                    :password_confirmation, 
-                                   attendances_attributes: [:id, :started_time,
-                                   :started_time, :finished_time, :finished_time,
+                                   attendances_attributes: [:id, :attendances, :started_time,
+                                   :started_time, :finished_time,
                                    :expected_finish_time, :detail, :reason,
+                                   :tomorrow, :superior_id, :status])
+    end
+    
+    # 残業申請用
+    def overtime_params
+      params.require(:user).permit( attendances_attributes: [:id,
+                                   :expected_finish_time, :reason,
                                    :tomorrow, :superior_id, :status])
     end
 end
