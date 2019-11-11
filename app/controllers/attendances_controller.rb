@@ -81,12 +81,17 @@ class AttendancesController < ApplicationController
 #個別残業申請
   def overtime_submit
     if @user = User.find(params[:user_id])
+        # @day = Attendance.where(id: params[:a_id])
       # もし〜なら更新　tomorrow なら1日プラス //残業時間に日付もプラス
       overtime_params.each do |id, item|
-        attendance = Attendance.find(id)
-        attendance.present?
-        #@day = Attendance.where(id: params[:a_id])
-        attendance.update_attributes(item)
+        attendance = Attendance.where(@user.id)
+        
+        # ユーザー情報と紐づいているか？
+        # 欲しいのは、ユーザーの特定の日付の情報 should be user.date
+        
+        if attendance.present?
+          attendance.update_attributes(item)
+        end
       end
       flash[:success] = '残業申請をしました。'
       redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
@@ -130,3 +135,6 @@ end
 # attendances_params 
 # これでもいける？
 # user_params
+
+
+

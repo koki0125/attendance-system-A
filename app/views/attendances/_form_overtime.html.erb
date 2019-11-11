@@ -20,6 +20,7 @@
           <%= f.fields_for :attendances, d do |af| %>
           <tr>
             <%= hidden_field_tag :user_id, @user.id %>
+            <%#= hidden_field_tag :id, @day.a_id %>
             <td><%= d.attendance_day.to_s(:day) %></td>
             <td><%= @week[d.attendance_day.wday] %></td>
             <td><%= af.time_field :expected_finish_time, class: 'form-control' %></td>
