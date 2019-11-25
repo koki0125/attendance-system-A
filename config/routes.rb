@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   get '/working_employees_index',  to: 'users#working_employees_index'
   
    # attendances
-  post '/update_all', to: 'attendances#update_bunch'
+  post '/update_all', to: 'attendances#update_all'
   get '/form_overtime', to: 'attendances#form_overtime'
   #test below
   get '/overtime', to: 'attendances#overtime'

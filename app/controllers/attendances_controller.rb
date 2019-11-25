@@ -37,7 +37,7 @@ class AttendancesController < ApplicationController
   end
 
 # 勤怠編集画面ー更新ボタン
-  def update_bunch
+  def update_all
     @user = User.find(params[:id])
     
     attendances_params.each do |id, time|
@@ -71,28 +71,33 @@ class AttendancesController < ApplicationController
     @week = %w{日 月 火 水 木 金 土}
     # 自分以外の上長達
     @superiors = User.where(superior: true).where.not(id: @user.id)
-  
     
     # 特定の日付のID
-    @day = Attendance.where(id: params[:a_id])
+    
+    @day = @user.attendances.where(id: params[:a_id])
     # form_with で残業申請を実装（特定の日付の、予定時間、翌日チェック、業務内容、上長選択）
   end
 
 #個別残業申請
   def overtime_submit
-    if @user = User.find(params[:user_id])
-        # @day = Attendance.where(id: params[:a_id])
       # もし〜なら更新　tomorrow なら1日プラス //残業時間に日付もプラス
-      overtime_params.each do |id, item|
-        attendance = Attendance.where(@user.id)
+      # if params[:tomorrow] = true
+          
+      # ユーザー情報と紐づいているか？
+      #a_idを使えるようにする
+      # isset()のようなものを使う。 u_id と attendance_idあるなら、
+      # if は、else処理も書く
+      # sqlは正しい？リレーションが怪しいぞ
+      # # strong_parameter ?
         
-        # ユーザー情報と紐づいているか？
-        # 欲しいのは、ユーザーの特定の日付の情報 should be user.date
         
+    attendance = @user.attendances.where(id: params[:a_id]) # hash
+    attendance_id = attendance.ids[0] # int
+      
+    if @user = User.find(params[:user][:user_id])
         if attendance.present?
           attendance.update_attributes(item)
         end
-      end
       flash[:success] = '残業申請をしました。'
       redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
     else
@@ -129,12 +134,6 @@ class AttendancesController < ApplicationController
     end
 end
 
-
-
-
 # attendances_params 
 # これでもいける？
 # user_params
-
-
-
