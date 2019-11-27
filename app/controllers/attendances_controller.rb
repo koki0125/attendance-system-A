@@ -80,17 +80,19 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:user][:user_id])
       # もし〜なら更新　tomorrow なら1日プラス //残業時間に日付もプラス
       # if params[:tomorrow] = true
-          
-      # ユーザー情報と紐づいているか？
-      #a_idを使えるようにする
-      # isset()のようなものを使う。 u_id と attendance_idあるなら、
-      # if は、else処理も書く
+    attendance = Attendance.where(id: params[:user][:a_id])
       # sqlは正しい？リレーションが怪しいぞ
-      # # strong_parameter ?
-        
-    attendance = @user.attendances.where(id: params[:user][:attendances]) # TODO: a_idとれない
-    attendance_id = attendance.ids[0] # int
-    # if attendance.present?
+      # strong_parameter ?
+    attendance_id = Attendance.where(id: params[:user][:a_id]) # str
+    
+    overtime_params.each do |id, time|
+      @user.attendance.update_attributes
+    end
+    
+    # ブロック変数使う？　一つのデータいじるのにeach必要？
+    # user.update見てみて！
+    
+    
      if @user.overtime_params.update_attributes
       flash[:success] = '残業申請をしました。'
       redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})

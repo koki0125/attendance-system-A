@@ -15,11 +15,11 @@
         </tr>
       </thead>
       <tbody>
+            <%= f.hidden_field :a_id, :value => @day.ids[0] %>
         <%= f.hidden_field :user_id, :value => @user.id %>
         <% @day.each do |d| %>
           <%= f.fields_for "attendances[]", d do |af| %>
           <tr>
-            <%= f.hidden_field :a_id, :value => @day %>
             <%= hidden_field_tag :date, d.attendance_day.to_s(:day) %>
             <td><%= d.attendance_day.to_s(:day) %></td>
             <td><%= @week[d.attendance_day.wday] %></td>
