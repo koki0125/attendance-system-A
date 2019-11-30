@@ -84,16 +84,15 @@ class AttendancesController < ApplicationController
     # userに紐づく残業申請日
     @attendance = Attendance.where(id: params[:user][:attendances][:id])
     
-    @expected_finish_time = params[:user][:attendances][:expected_finish_time]
+    # overtime_paramsのexpected_finish_timeをDateDimeにする　ついでに翌日フラグも
+    @overtime_params = overtime_params
     if overtime_params[:tomorrow] == "1"
-      overtime_params[:expected_finish_time] = DateTime.parse( "#{params[:date]} #{@expected_finish_time}")+1
+      @overtime_params[:expected_finish_time] = DateTime.parse( "#{params[:date]} #{overtime_params[:expected_finish_time]}")+1
     else
-      overtime_params[:expected_finish_time] = DateTime.parse( "#{params[:date]} #{@expected_finish_time}")
+      @overtime_params[:expected_finish_time] = DateTime.parse( "#{params[:date]} #{overtime_params[:expected_finish_time]}")
     end
     
-    
-    if @attendance.update(overtime_params)
-
+    if @attendance.update(@overtime_params)
       flash[:success] = '残業申請をしました。'
       redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
     else

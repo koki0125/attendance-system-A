@@ -109,7 +109,7 @@
         <!--11項：終了予定時間(時)-->
         <td><%= d.expected_finish_time.to_s(:hour) if d.expected_finish_time.present? %></td>
         <!--12項：終了予定時間(分)-->
-        <td><%= d.expected_finish_time.to_s(:miute) if d.expected_finish_time.present? %></td>
+        <td><%= d.expected_finish_time.to_s(:minute) if d.expected_finish_time.present? %></td>
         <!--12項：時間外時間-->
         <td><% d.tomorrow.to_s if d.tomorrow.present? %>仮</td>
         <!--13項：業務処理内容-->
