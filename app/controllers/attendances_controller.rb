@@ -78,13 +78,22 @@ class AttendancesController < ApplicationController
 #個別残業申請
   def overtime_submit
     @user = User.find(params[:user][:user_id])
-      # もし〜なら更新　tomorrow なら1日プラス //残業時間に日付もプラス
-      # if params[:tomorrow] = true
-      # sqlは正しい？リレーションが怪しいぞ
-    @attendance = Attendance.where(id: params[:user][:attendances][:id]) # str
+    
+    # TODO:1 もし〜なら更新　tomorrow なら1日プラス //残業時間に日付もプラス
+    # TODO:2 バリデーションを入れる
+    # userに紐づく残業申請日
+    @attendance = Attendance.where(id: params[:user][:attendances][:id])
+    
+    @expected_finish_time = params[:user][:attendances][:expected_finish_time]
+    if overtime_params[:tomorrow] == "1"
+      overtime_params[:expected_finish_time] = DateTime.parse( "#{params[:date]} #{@expected_finish_time}")+1
+    else
+      overtime_params[:expected_finish_time] = DateTime.parse( "#{params[:date]} #{@expected_finish_time}")
+    end
     
     
-     if @attendance.update(overtime_params)
+    if @attendance.update(overtime_params)
+
       flash[:success] = '残業申請をしました。'
       redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
     else
@@ -103,15 +112,15 @@ class AttendancesController < ApplicationController
                                   :detail, :reason, :tomorrow, :superior_id, :status])[:attendances]
     end
     
-    def user_params
-      params.require(:user).permit(:name, :email, :department, :password,
-                                  :basic_time, :specified_working_time,
-                                  :password_confirmation, 
-                                  attendances_attributes: [:id, :attendances, :started_time,
-                                  :started_time, :finished_time,
-                                  :expected_finish_time, :detail, :reason,
-                                  :tomorrow, :superior_id, :status])
-    end
+    # def user_params
+    #   params.require(:user).permit(:name, :email, :department, :password,
+    #                               :basic_time, :specified_working_time,
+    #                               :password_confirmation, 
+    #                               attendances_attributes: [:id, :attendances, :started_time,
+    #                               :started_time, :finished_time,
+    #                               :expected_finish_time, :detail, :reason,
+    #                               :tomorrow, :superior_id, :status])
+    # end
     
     # 残業申請用
     def overtime_params
