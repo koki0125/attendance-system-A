@@ -80,26 +80,17 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:user][:user_id])
       # もし〜なら更新　tomorrow なら1日プラス //残業時間に日付もプラス
       # if params[:tomorrow] = true
-    attendance = Attendance.where(id: params[:user][:a_id])
       # sqlは正しい？リレーションが怪しいぞ
-      # strong_parameter ?
-    attendance_id = Attendance.where(id: params[:user][:a_id]) # str
-    
-    overtime_params.each do |id, time|
-      @user.attendance.update_attributes
-    end
-    
-    # ブロック変数使う？　一つのデータいじるのにeach必要？
-    # user.update見てみて！
+    @attendance = Attendance.where(id: params[:user][:attendances][:id]) # str
     
     
-     if @user.overtime_params.update_attributes
+     if @attendance.update(overtime_params)
       flash[:success] = '残業申請をしました。'
       redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
     else
       flash[:danger] = "残業申請に失敗しました。"
-      redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
-      # render 
+      # redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+      render :form_overtime
     end
   end
   
@@ -112,23 +103,20 @@ class AttendancesController < ApplicationController
                                   :detail, :reason, :tomorrow, :superior_id, :status])[:attendances]
     end
     
-    # def user_params
-    #   params.require(:user).permit(:name, :email, :department, :password,
-    #                               :basic_time, :specified_working_time,
-    #                               :password_confirmation, 
-    #                               attendances_attributes: [:id, :attendances, :started_time,
-    #                               :started_time, :finished_time,
-    #                               :expected_finish_time, :detail, :reason,
-    #                               :tomorrow, :superior_id, :status])
-    # end
+    def user_params
+      params.require(:user).permit(:name, :email, :department, :password,
+                                  :basic_time, :specified_working_time,
+                                  :password_confirmation, 
+                                  attendances_attributes: [:id, :attendances, :started_time,
+                                  :started_time, :finished_time,
+                                  :expected_finish_time, :detail, :reason,
+                                  :tomorrow, :superior_id, :status])
+    end
     
     # 残業申請用
     def overtime_params
       params.require(:user).permit( attendances: [:id,
                                    :expected_finish_time, :reason,
-                                   :tomorrow, :superior_id, :status])
+                                   :tomorrow, :superior_id, :status])[:attendances]
     end
 end
-
-# attendances_params 
-# これでもいける？

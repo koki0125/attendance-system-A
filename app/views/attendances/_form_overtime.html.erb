@@ -2,7 +2,7 @@
   <div class="modal-content" style="padding:20px 0 30px;">
     <h3 style="text-align:center;">【残業申請】</h3>
     <p><%= @user.name %></p>
-    <%= form_with( model: @user, url: overtime_submit_path, local: true) do |f| %>
+    <%= form_with( model: @user, url: overtime_submit_path(@user), local: true) do |f| %>
     <table class="table table-bordered table-striped table-condensed users_show-table">
       <thead>
         <tr>
@@ -15,12 +15,12 @@
         </tr>
       </thead>
       <tbody>
-            <%= f.hidden_field :a_id, :value => @day.ids[0] %>
         <%= f.hidden_field :user_id, :value => @user.id %>
         <% @day.each do |d| %>
-          <%= f.fields_for "attendances[]", d do |af| %>
+          <%= f.fields_for :attendances do |af| %>
           <tr>
-            <%= hidden_field_tag :date, d.attendance_day.to_s(:day) %>
+        <%= af.hidden_field :id, :value => @day.ids[0] %>
+            <%#= hidden_field_tag :date, d.attendance_day.to_s(:day) %>
             <td><%= d.attendance_day.to_s(:day) %></td>
             <td><%= @week[d.attendance_day.wday] %></td>
           <!-- 入力項目 -->
@@ -28,7 +28,7 @@
             <td><%= af.check_box :tomorrow, :as => :boolean, class: 'form-control' %></td>
             <td><%= af.text_field :reason, class: 'form-control' %></td>
             <td><%= af.collection_select( :superior_id, @superiors, :id, :name, {class: 'form-control'}) %></td>
-            <%= af.hidden_field :status, :value => 1, class:'form-control' %>
+            <%= af.hidden_field :status, :value => 0, class:'form-control' %>
           </tr>
           <% end %>
         <% end %>
