@@ -37,7 +37,7 @@
       <p style="margin-bottom: 5px; color: gray;">【残業申請のお知らせ】</p>
     <% else %>
       <p style="margin-bottom: 5px; color: black;">【残業申請のお知らせ】
-      <%= link_to @overtime_appli, form_overtime_path, style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
+      <%= link_to @overtime_appli, check_overtime_path, style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
       </p>
     <% end %>
   <% end %>
@@ -45,7 +45,8 @@
   <%= link_to "勤怠を編集", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
   <%= link_to "CSV出力", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
   <%= link_to "勤怠修正ログ（承認済み）", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
-  <div id="overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+  <div id="form_overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+  <div id="check_overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <!-- 最初の一行目    -->
   <table class="table table-bordered table-striped table-condensed users_show-table">
     <thead>

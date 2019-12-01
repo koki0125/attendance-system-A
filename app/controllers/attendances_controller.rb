@@ -76,7 +76,7 @@ class AttendancesController < ApplicationController
   end
 
 #個別残業申請
-  def overtime_submit
+  def submit_overtime
     @user = User.find(params[:user][:user_id])
     # userに紐づく残業申請日
     @attendance = Attendance.where(id: params[:user][:attendances][:id])
@@ -89,6 +89,16 @@ class AttendancesController < ApplicationController
       # redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
       render :form_overtime
     end
+  end
+  
+# 残業申請確認（上長ユーザー）
+  def check_overtime
+    
+  end
+
+# 残業申請回答（上長ユーザー）
+  def res_overtime
+    
   end
   
   

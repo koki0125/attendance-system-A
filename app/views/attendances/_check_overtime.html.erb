@@ -2,7 +2,7 @@
   <div class="modal-content" style="padding:20px 0 30px;">
     <h3 style="text-align:center;">【残業申請】</h3>
     <p><%= @user.name %></p>
-    <%= form_with( model: @user, url: submit_overtime_path(@user), local: true) do |f| %>
+    <%= form_with( model: @user, url: res_overtime_path(@user), local: true) do |f| %>
     <table class="table table-bordered table-striped table-condensed users_show-table">
       <thead>
         <tr>
