@@ -22,7 +22,15 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     if current_user.admin? || current_user.id == @user.id
       
-      
+      # もし今のユーザーが、上長なら
+      if current_user.superior == true
+        # もし上長にあてた残業申請があるなら
+        
+        if @application = Attendance.all.where(superior_id: @user.id, status: 0)
+          @overtime_appli = @application.count.to_s+" 件の通知があります"
+        end
+      end
+
       # 曜日表示用に使用する %w = 配列を作る
       @week = %w{日 月 火 水 木 金 土}
      
@@ -68,7 +76,7 @@ class UsersController < ApplicationController
       @attendances_count = i
       @attendances_sum = @days.where.not(started_time: nil, finished_time: nil).count
     else
-      flash[:warning] = "他のユーザーの勤��情報は閲覧できません。"
+      flash[:warning] = "他のユーザーの勤怠情報は閲覧できません。"
       redirect_to current_user 
       return
     end
