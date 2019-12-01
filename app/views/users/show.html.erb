@@ -32,12 +32,14 @@
   <% if current_user.superior? %>
     <p style="margin-bottom: 5px; color: gray;">【所属長承認申請のお知らせ】</p>
     <p style="margin-bottom: 5px; color: gray;">【勤怠変更申請のお知らせ】</p>
-    <p style="margin-bottom: 5px; color: gray;">【残業申請のお知らせ】
     <!-- 残業申請あるなら -->
-      <% if @application.count > 0 %>
+    <% if @application.count == 0 %>
+      <p style="margin-bottom: 5px; color: gray;">【残業申請のお知らせ】</p>
+    <% else %>
+      <p style="margin-bottom: 5px; color: black;">【残業申請のお知らせ】
       <%= link_to @overtime_appli, form_overtime_path, style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
-      <% end %>
-    </p>
+      </p>
+    <% end %>
   <% end %>
   <!-- 一般ユーザー共通ボタン類 -->  
   <%= link_to "勤怠を編集", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
