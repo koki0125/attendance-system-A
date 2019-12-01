@@ -121,7 +121,7 @@
         <!--13項：業務処理内容-->
         <td><%= d.reason.to_s if d.reason.present? %></td>
         <!--14項：指示者確認印-->
-        <td><%= User.find(d.superior_id).name+" に残業申請中" if d.superior_id.present? %> </td>
+        <td><%= User.find(d.superior_id).name+" に残業申請中" if d.superior_id.present? && d.status == 0 %> </td>
       </tr>
       <% end %>
       <!-- 最後の一行 -->      
