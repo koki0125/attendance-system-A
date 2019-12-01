@@ -29,10 +29,11 @@
     </thead>
   </table> 
   <!--上長ユーザーボタン類  -->
-  <p style="margin: 0 0 5px;">【所属長承認申請のお知らせ】</p>
-  <p style="margin: 0 0 5px;">【勤怠変更申請のお知らせ】</p>
-  <p style="margin: 0 0 5px; color: gray">【残業申請のお知らせ】</p>
-  
+  <% if current_user.superior? %>
+    <p style="margin: 0 0 5px;">【所属長承認申請のお知らせ】</p>
+    <p style="margin: 0 0 5px;">【勤怠変更申請のお知らせ】</p>
+    <p style="margin: 0 0 5px; color: gray">【残業申請のお知らせ】</p>
+  <% end %>
   <!-- 一般ユーザー共通ボタン類 -->  
   <%= link_to "勤怠を編集", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
   <%= link_to "CSV出力", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
