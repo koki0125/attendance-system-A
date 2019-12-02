@@ -14,6 +14,10 @@ class User < ApplicationRecord
   # validates :basic_time, presence: true
   # validates :specified_working_time, presence: true
   
+  # TODO: scopeについて　書き方
+  scope :join_attendances, -> { joins(:attendances) } # OK
+  
+  
   class << self
     # 渡された文字列のハッシュ値を返す
     def digest(string)

@@ -37,7 +37,7 @@
       <p style="margin-bottom: 5px; color: gray;">【残業申請のお知らせ】</p>
     <% else %>
       <p style="margin-bottom: 5px; color: black;">【残業申請のお知らせ】
-      <%= link_to @overtime_appli, check_overtime_path, style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
+      <%= link_to @overtime_appli, check_overtime_path(params:{id: @user.id}), style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
       </p>
     <% end %>
   <% end %>

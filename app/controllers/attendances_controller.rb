@@ -93,12 +93,26 @@ class AttendancesController < ApplicationController
   
 # 残業申請確認（上長ユーザー）
   def check_overtime
-    
+    @user = User.find(params[:id])
+    # 表の表示を先に、残業申請ページを参考に
+# scope用いた書き方を調べる
+debugger
+  # ユーザの情報とれてる、あとattendancesも含めてとるのと、sperior_idでの検索も追加
+    User.Attendance.join_attendances.merge(Attendance.where_status(0))
+
+    # 今、申請されている残業申請のステータスが0のものを表示
+    # 1人で複数送ることもできるため、ユーザごとにeach 文で取得
+    # ステータスと変更フラグだけ、formで表示分、全ての変更を送信できる
+    # 確認ボタンで確認できる。
+  
+  
   end
 
 # 残業申請回答（上長ユーザー）
   def res_overtime
-    
+    # formからまとめて更新
+    # この時点で、勤怠情報の総計に含める
+    # それまでは仮の状態
   end
   
   
