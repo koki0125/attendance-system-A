@@ -1,6 +1,8 @@
 <div class="modal-dialog">
   <div class="modal-content" style="padding: 30px;">
-    <h3 style="text-align:center;">【残業申請】</h3>
+    <h3 style="text-align:center;">【残業申請確認】</h3>
+    <div class="modal-content" style="padding-top: 20px;">
+      <h4 style="text-align:center;">【残業申請確認】</h4>
     <p><%= @user.name %></p>
     <%= form_with( model: @user, url: overtime_submit_path(@user), local: true) do |f| %>
     <table class="table table-bordered table-striped table-condensed users_show-table">
@@ -34,6 +36,7 @@
         <% end %>
       </tbody>
     </table>
+    </div>
     <%= f.submit '変更を送信する', class: 'btn btn-attendance btn-default' %>
     <% end %>
   </div>
