@@ -87,8 +87,8 @@ class UsersController < ApplicationController
   def started_time
     @user = User.find(params[:id])
     @started_time = @user.attendances.find_by(attendance_day: Date.current)
-    @started_time.update_attributes(started_time: DateTime.new(DateTime.now.year,\
-    DateTime.now.month, DateTime.now.day,DateTime.now.hour,DateTime.now.min,0))
+    @started_time.update_attributes(started_time: Time.new(Time.now.year,\
+    Time.now.month, Time.now.day,Time.now.hour,Time.now.min,0))
     flash[:info] = "今日も１日元気に頑張りましょう！"
     redirect_to @user 
   end
@@ -96,9 +96,9 @@ class UsersController < ApplicationController
   # 退勤ボタン
   def finished_time
     @user = User.find(params[:id])
-    @finished_time = @user.attendances.find_by(attendance_day: Date.current)
-    finishedtime = DateTime.new(DateTime.now.year,DateTime.now.month,\
-    DateTime.now.day,DateTime.now.hour,DateTime.now.min,0)
+    @finished_time = @user.attendances.find_by(attendance_day: Time.current)
+    finishedtime = Time.new(Time.now.year,Time.now.month,\
+    Time.now.day,Time.now.hour,Time.now.min,0)
     @finished_time.update_attributes(finished_time: finishedtime)
     flash[:info] = "今日も一日お疲れ様でした！"
     redirect_to @user 

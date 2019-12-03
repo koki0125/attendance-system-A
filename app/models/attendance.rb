@@ -11,10 +11,10 @@ class Attendance < ApplicationRecord
     @overtime_params = overtime_params
     if overtime_params[:tomorrow] == "1"
       @overtime_params[:expected_finish_time] = 
-      DateTime.parse( "#{params[:date]} #{overtime_params[:expected_finish_time]}")+1
+      Time.zone.parse( "#{params[:date]} #{overtime_params[:expected_finish_time]}")+1
     else
       @overtime_params[:expected_finish_time] = 
-      DateTime.parse( "#{params[:date]} #{overtime_params[:expected_finish_time]}")
+      Time.zone.parse( "#{params[:date]} #{overtime_params[:expected_finish_time]}")
     end
     return @overtime_params
   end
