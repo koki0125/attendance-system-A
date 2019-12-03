@@ -58,6 +58,21 @@ User.create!(name:  "五木ひろし(一般ユーザー)",
              basic_time: Time.zone.parse("7:30"),
             # specified_working_time: Time.zone.parse("8:00")
              )
+             
+User.create!(name:  "ヒロシ(一般ユーザー)",
+             email: "employee2@railstutorial.org",
+             password:              "password",
+             password_confirmation: "password",
+             department: "福岡吉本",
+             employee_number: 555,
+             admin:     false,
+             superior:  false,
+             designated_start_time: Time.zone.parse("10:00"),
+             designated_finish_time: Time.zone.parse("18:00"),
+             uid: 555,
+             basic_time: Time.zone.parse("7:30"),
+            # specified_working_time: Time.zone.parse("8:00")
+             )
 
 
 99.times do |n|

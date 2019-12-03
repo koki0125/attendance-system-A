@@ -98,8 +98,9 @@ class AttendancesController < ApplicationController
 # scope用いた書き方を調べる
 debugger
   # ユーザの情報とれてる、あとattendancesも含めてとるのと、sperior_idでの検索も追加
-    User.Attendance.join_attendances.merge(Attendance.where_status(0))
-
+    @user = User.join_attendances.merge(Attendance.where_status(0))
+    @user.attendances # OK
+    
     # 今、申請されている残業申請のステータスが0のものを表示
     # 1人で複数送ることもできるため、ユーザごとにeach 文で取得
     # ステータスと変更フラグだけ、formで表示分、全ての変更を送信できる
