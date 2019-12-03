@@ -96,10 +96,10 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:id])
     # 表の表示を先に、残業申請ページを参考に
 # scope用いた書き方を調べる
-debugger
+
   # ユーザの情報とれてる、あとattendancesも含めてとるのと、sperior_idでの検索も追加
     @user = User.join_attendances.merge(Attendance.where_status(0))
-    @user.attendances # OK
+    # @user.attendances # OK
     
     # 今、申請されている残業申請のステータスが0のものを表示
     # 1人で複数送ることもできるため、ユーザごとにeach 文で取得
