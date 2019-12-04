@@ -101,6 +101,11 @@ class AttendancesController < ApplicationController
     @appli_users = User.join_attendances.merge(Attendance.where_status(0).where_superior_id(@user.id))
     # @appli_users.attendances # OK
     # @appli_users.ids [4,5,5,3] user_id refer 0,1,2.3 eachで回す TODO: 5が被ってる
+# TODO: 5が被ってる -> attendances.where~ を持つ　user_id を取得
+# TODO: そのなかで、eachで残業情報を表示 
+# TODO: ステータスを一括更新
+    
+
     # User.find(@users.ids[i]).attendances.find_by(status:0, superior_id: @user.id) をeachで回す。
     
     # 今、申請されている残業申請のステータスが0のものを表示
