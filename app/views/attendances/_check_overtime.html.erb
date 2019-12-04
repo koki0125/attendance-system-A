@@ -1,8 +1,8 @@
 <div class="modal-dialog">
   <div class="modal-content" style="padding: 30px;">
     <h3 style="text-align:center;">【残業申請確認】</h3>
-      <h4 style="text-align:center; padding-top: 30px;"><%= @user.name %>からの残業申請</h4>
-      <p><%= @user.name %></p>
+    <% @appli_users.each do |a| %>
+      <h5 style="text-align:center; padding-top: 30px;"><%= a.name %> からの残業申請</h5>
       <%#= form_with( model: @user, url: overtime_submit_path(@user), local: true) do |f| %>
       <table class="table table-bordered table-striped table-condensed users_show-table">
         <thead>
@@ -35,6 +35,7 @@
           <%# end %>
         </tbody>
       </table>
+    <% end %>
     <%#= f.submit '変更を送信する', class: 'btn btn-attendance btn-default' %>
     <%# end %>
     

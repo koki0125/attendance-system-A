@@ -98,8 +98,10 @@ class AttendancesController < ApplicationController
 # scope用いた書き方を調べる
 
   # ユーザの情報とれてる、あとattendancesも含めてとるのと、sperior_idでの検索も追加
-    @user = User.join_attendances.merge(Attendance.where_status(0))
-    # @user.attendances # OK
+    @appli_users = User.join_attendances.merge(Attendance.where_status(0).where_superior_id(@user.id))
+    # @appli_users.attendances # OK
+    # @appli_users.ids [4,5,5,3] user_id refer 0,1,2.3 eachで回す TODO: 5が被ってる
+    # User.find(@users.ids[i]).attendances.find_by(status:0, superior_id: @user.id) をeachで回す。
     
     # 今、申請されている残業申請のステータスが0のものを表示
     # 1人で複数送ることもできるため、ユーザごとにeach 文で取得

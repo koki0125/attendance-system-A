@@ -29,7 +29,7 @@ User.create!(name:  "野原ひろし(上長ユーザー)",
             # specified_working_time: Time.zone.parse("8:00")
              )    
 
-User.create!(name:  "猫ひろし(上長ユーザー)",
+User.create!(name:  "五木ひろし(上長ユーザー)",
              email: "superior2@railstutorial.org",
              password:              "password",
              password_confirmation: "password",
@@ -44,7 +44,7 @@ User.create!(name:  "猫ひろし(上長ユーザー)",
             # specified_working_time: Time.zone.parse("8:00")
              ) 
              
-User.create!(name:  "五木ひろし(一般ユーザー)",
+User.create!(name:  "猫ひろし(一般ユーザー)",
              email: "employee@railstutorial.org",
              password:              "password",
              password_confirmation: "password",
