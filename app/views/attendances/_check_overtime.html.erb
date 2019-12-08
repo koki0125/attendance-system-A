@@ -31,8 +31,8 @@
                 <td><%= WEEK[appli.attendance_day.wday] %></td>
                 <td><%= appli.expected_finish_time.strftime("%R") %></td>
                 <td><%= user.designated_finish_time.strftime("%R") %></td>
-                <td><%= calculate_overtime(appli.expected_finish_time.strftime("%R"), user.designated_finish_time.strftime("%R")) %></td>
-                <td><%= appli.reason %></td><% p STATUS %>
+                <td><%= calculate_overtime(appli.expected_finish_time.strftime("%d %T"), user.designated_finish_time.strftime("#{appli.attendance_day.to_s(:day)} %R")) %></td>
+                <td><%= appli.reason %></td>
                 <td><%= f_appli.select( :status, STATUS, {class: 'form-control'} ) %></td>
                 <td><%= check_box_tag :modified, class: 'form-control' %></td>
                 <td><%#= appli.collection_select( :superior_id, @superiors, :id, :name, {class: 'form-control'}) %></td>

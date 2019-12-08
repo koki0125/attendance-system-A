@@ -4,6 +4,8 @@ module AttendancesHelper
 # @param  str Time
 # @return str Time
   def calculate_overtime(over, basic)
+    puts over
+    puts basic
     sec = Time.parse(over) - Time.parse(basic)
     if sec < 0
       sec = sec * -1
