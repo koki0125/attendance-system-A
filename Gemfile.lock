@@ -241,6 +241,9 @@ GEM
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
     will_paginate (3.1.6)
+    yard (0.9.20)
+    yard-activesupport-concern (0.0.1)
+      yard (>= 0.8)
 
 PLATFORMS
   ruby
@@ -280,6 +283,8 @@ DEPENDENCIES
   uglifier (= 3.2.0)
   web-console (= 3.5.1)
   will_paginate (= 3.1.6)
+  yard
+  yard-activesupport-concern
 
 BUNDLED WITH
    1.17.1

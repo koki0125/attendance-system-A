@@ -33,7 +33,7 @@
               <td><%= user.designated_finish_time.strftime("%R") %></td>
               <td><%= calculate_overtime(appli.expected_finish_time.strftime("%R"), user.designated_finish_time.strftime("%R")) %></td>
               <td><%= appli.reason %></td>
-              <td><%#= af.check_box :tomorrow, :as => :boolean, class: 'form-control' %></td>
+              <td><%= overtime_status(appli.status) %></td>
               <td><%#= af.text_field :reason, class: 'form-control' %></td>
               <td><%#= af.collection_select( :superior_id, @superiors, :id, :name, {class: 'form-control'}) %></td>
               <%#= af.hidden_field :status, :value => 0, class:'form-control' %>
