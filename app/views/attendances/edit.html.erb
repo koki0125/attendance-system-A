@@ -55,15 +55,15 @@
         		<tr>
         		  <!--１項：日付-->
               <td><%= d.attendance_day.to_s(:day) %></td>
-                <!--２項：曜日-->
-                <td><%= @week[d.attendance_day.wday] %></td>
-                <td><%= tf.time_field  :started_time, class: 'form-control' %></td>
-                <td><%= tf.time_field  :finished_time, class: 'form-control' %></td>
-                <td>
-                  <%= working_hours(d.started_time, d.finished_time) if d.started_time.present? && d.finished_time.present? %>
-                </td>
-                <td><%= tf.text_field :detail, class: 'form-control' %></td>
-                <td></td>
+              <!--２項：曜日-->
+              <td><%= WEEK[d.attendance_day.wday] %></td>
+              <td><%= tf.time_field  :started_time, class: 'form-control' %></td>
+              <td><%= tf.time_field  :finished_time, class: 'form-control' %></td>
+              <td>
+                <%= working_hours(d.started_time, d.finished_time) if d.started_time.present? && d.finished_time.present? %>
+              </td>
+              <td><%= tf.text_field :detail, class: 'form-control' %></td>
+              <td></td>
               <td></td>
             </tr>
           <% end %>

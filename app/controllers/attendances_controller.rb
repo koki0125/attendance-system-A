@@ -7,8 +7,6 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:id])
     if current_user.admin? || current_user.id == @user.id
 
-      @week = %w{日 月 火 水 木 金 土}
-      
       if not params[:first_day].nil?
         @first_day = Date.parse(params[:first_day])
       else
@@ -70,7 +68,6 @@ class AttendancesController < ApplicationController
     @user = User.find(params[:id])
     # 特定の日付のID
     @day = @user.attendances.where(id: params[:a_id])
-    @week = %w{日 月 火 水 木 金 土}
     # 自分以外の上長達
     @superiors = User.where(superior: true).where.not(id: @user.id)
   end
@@ -93,7 +90,6 @@ class AttendancesController < ApplicationController
   
 # 残業申請確認（上長ユーザー）
   def check_overtime
-@week = %w{日 月 火 水 木 金 土}
     @user = User.find(params[:id])
     # @applications1 = [params[:applications].user_id]
     # @applications = Attendance.where(id: params[:applications])
@@ -105,7 +101,6 @@ class AttendancesController < ApplicationController
   # ユーザの情報とれてる、あとattendancesも含めてとるのと、sperior_idでの検索も追加
     @appli_users = User.join_attendances.merge(Attendance.where_status(1).where_superior_id(@user.id))
     @appli_users_uniq = @appli_users.uniq
-
     # @appli_users.attendances # OK
     # @appli_users.ids [4,5,5,3] user_id refer 0,1,2.3 eachで回す TODO: 5が被ってる
 # TODO: 5が被ってる -> attendances.where~ を持つ　user_id を取得 rails cで

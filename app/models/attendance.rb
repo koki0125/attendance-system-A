@@ -4,6 +4,7 @@ class Attendance < ApplicationRecord
   
   scope :where_status, ->(status) { where(status: status) }
   scope :where_superior_id, ->(superior_id) { where(superior_id: superior_id) }
+
   
   
   # overtime_params[:expected_finish_time] をTateTime型に整形して@overtime_params全体を返す
@@ -18,5 +19,6 @@ class Attendance < ApplicationRecord
     end
     return @overtime_params
   end
+
   
 end

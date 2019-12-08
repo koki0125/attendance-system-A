@@ -31,9 +31,6 @@ class UsersController < ApplicationController
           @overtime_appli = @application.count.to_s+" 件の通知があります"
         end
       end
-
-      # 曜日表示用に使用する %w = 配列を作る
-      @week = %w{日 月 火 水 木 金 土}
      
       # 既に表示月があれば、表示月を取得する
       # first_dayがnilでないなら

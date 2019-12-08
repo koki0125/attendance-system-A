@@ -89,7 +89,7 @@
         <!--１項：日付-->
         <td><%= d.attendance_day.to_s(:day) %></td>
         <!--２項：曜日-->
-        <td><%= @week[d.attendance_day.wday] %></td>
+        <td><%= WEEK[d.attendance_day.wday] %></td>
         <!--３〜４項：出社時間表示（データが存在する場合）-->
         <td><%= d.started_time.to_s(:hour) if d.started_time.present? %></td>
         <td><%= d.started_time.to_s(:minute) if d.started_time.present? %></td>
