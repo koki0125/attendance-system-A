@@ -43,7 +43,7 @@ ActiveRecord::Schema.define(version: 20190905004516) do
     t.boolean "superior", default: false
     t.time "designated_start_time"
     t.time "designated_finish_time"
-    t.string "uid"
+    t.integer "uid"
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 

@@ -93,15 +93,22 @@ class AttendancesController < ApplicationController
   
 # 残業申請確認（上長ユーザー）
   def check_overtime
+@week = %w{日 月 火 水 木 金 土}
     @user = User.find(params[:id])
+    # @applications1 = [params[:applications].user_id]
+    # @applications = Attendance.where(id: params[:applications])
+    # # @applications.push(Attendance.where(params[:applications]))
+    # Attendance.get_users_submitting_overtime(@user.id)
     # 表の表示を先に、残業申請ページを参考に
 # scope用いた書き方を調べる
 
   # ユーザの情報とれてる、あとattendancesも含めてとるのと、sperior_idでの検索も追加
-    @appli_users = User.join_attendances.merge(Attendance.where_status(0).where_superior_id(@user.id))
+    @appli_users = User.join_attendances.merge(Attendance.where_status(1).where_superior_id(@user.id))
+    @appli_users_uniq = @appli_users.uniq
+
     # @appli_users.attendances # OK
     # @appli_users.ids [4,5,5,3] user_id refer 0,1,2.3 eachで回す TODO: 5が被ってる
-# TODO: 5が被ってる -> attendances.where~ を持つ　user_id を取得
+# TODO: 5が被ってる -> attendances.where~ を持つ　user_id を取得 rails cで
 # TODO: そのなかで、eachで残業情報を表示 
 # TODO: ステータスを一括更新
     

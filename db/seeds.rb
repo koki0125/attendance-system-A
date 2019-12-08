@@ -74,7 +74,6 @@ User.create!(name:  "ヒロシ(一般ユーザー)",
             # specified_working_time: Time.zone.parse("8:00")
              )
 
-
 99.times do |n|
   name  = Faker::Name.name
   email = "example-#{n+1}@railstutorial.org"
@@ -93,4 +92,5 @@ User.create!(name:  "ヒロシ(一般ユーザー)",
                basic_time: Time.zone.parse("7:30"),
               # specified_working_time: Time.zone.parse("8:00")
              )
+
 end
