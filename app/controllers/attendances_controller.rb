@@ -80,7 +80,7 @@ class AttendancesController < ApplicationController
     # フォーマットされたovertime_paramsを更新
     if @attendance.update(Attendance.fmt_overtime_params(overtime_params,params))
       flash[:success] = '残業申請をしました。'
-      redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+      redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:user][:attendances][:first_day]})
     else
       flash[:danger] = "残業申請に失敗しました。"
       # redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})

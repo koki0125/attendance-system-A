@@ -19,7 +19,8 @@
         <% @day.each do |d| %>
           <%= f.fields_for :attendances do |af| %>
           <tr>
-        <%= af.hidden_field :id, :value => @day.ids[0] %>
+            <%= af.hidden_field :id, :value => @day.ids[0] %>
+            <%= af.hidden_field :first_day, :value => d.attendance_day.beginning_of_month %>
             <%= hidden_field_tag :date, d.attendance_day %>
             <td><%= d.attendance_day.to_s(:day) %></td>
             <td><%= WEEK[d.attendance_day.wday] %></td>

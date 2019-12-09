@@ -5,10 +5,14 @@
     <thead>
       <tr>
         <th>
-            <!--先月へ-->
-        <%= link_to "◀︎" , user_path(params:{id: @user.id, first_day: @first_day.prev_month }), class: "btn btn-sm btn-primary" %>
-        &emsp; <%= @first_day.year %>年<%= @first_day.month %>月  時間管理表 &emsp;
-        <%= link_to "▶︎" , user_path(params:{id: @user.id, first_day: @first_day.next_month }), class: "btn btn-sm btn-primary" %>
+        <!--先月へ-->
+        <% if @user == current_user %>    
+          <%= link_to "◀︎" , user_path(params:{id: @user.id, first_day: @first_day.prev_month }), class: "btn btn-sm btn-primary" %>&emsp; 
+          <%= @first_day.year %>年<%= @first_day.month %>月  時間管理表 &emsp;
+          <%= link_to "▶︎" , user_path(params:{id: @user.id, first_day: @first_day.next_month }), class: "btn btn-sm btn-primary" %>
+        <% else %>
+          <%= @first_day.year %>年<%= @first_day.month %>月  時間管理表
+        <% end %>
         </th>
         <th>
           指定勤務開始時間:　<%= basic_info_time(@user.designated_start_time) %>
@@ -29,22 +33,24 @@
     </thead>
   </table> 
   <!--上長ユーザーボタン類  -->
-  <% if current_user.superior? %>
-    <p style="margin-bottom: 5px; color: gray;">【所属長承認申請のお知らせ】</p>
-    <p style="margin-bottom: 5px; color: gray;">【勤怠変更申請のお知らせ】</p>
-    <!-- 残業申請あるなら -->
-    <% if @application.count == 0 %>
-      <p style="margin-bottom: 5px; color: gray;">【残業申請のお知らせ】</p>
-    <% else %>
-      <p style="margin-bottom: 5px; color: black;">【残業申請のお知らせ】
-      <%= link_to @overtime_appli, check_overtime_path(params:{id: @user.id}), style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
-      </p>
+  <% if @user == current_user %>
+    <% if current_user.superior? %>
+      <p style="margin-bottom: 5px; color: gray;">【所属長承認申請のお知らせ】</p>
+      <p style="margin-bottom: 5px; color: gray;">【勤怠変更申請のお知らせ】</p>
+      <!-- 残業申請あるなら -->
+      <% if @application.count == 0 %>
+        <p style="margin-bottom: 5px; color: gray;">【残業申請のお知らせ】</p>
+      <% else %>
+        <p style="margin-bottom: 5px; color: black;">【残業申請のお知らせ】
+        <%= link_to @overtime_appli, check_overtime_path(params:{id: @user.id}), style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
+        </p>
+      <% end %>
     <% end %>
+    <!-- 一般ユーザー共通ボタン類 -->  
+    <%= link_to "勤怠を編集", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
+    <%= link_to "CSV出力", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
+    <%= link_to "勤怠修正ログ（承認済み）", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
   <% end %>
-  <!-- 一般ユーザー共通ボタン類 -->  
-  <%= link_to "勤怠を編集", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
-  <%= link_to "CSV出力", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
-  <%= link_to "勤怠修正ログ（承認済み）", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
   <div id="form_overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <div id="check_overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <!-- 最初の一行目    -->
@@ -85,7 +91,11 @@
     <% @days.each do |d| %>
       <tr>
         <!--０項：残業申請ボタン-->
-        <td><%= link_to "残業申請", form_overtime_path(params:{id: @user.id, a_id: d }), class: "btn btn-sm btn-primary", remote: true %></td>
+        <td>
+          <% if @user == current_user %>
+            <%= link_to "残業申請", form_overtime_path(params:{id: @user.id, a_id: d }), class: "btn btn-sm btn-primary", remote: true %>
+          <% end %>  
+        </td>
         <!--１項：日付-->
         <td><%= d.attendance_day.to_s(:day) %></td>
         <!--２項：曜日-->
@@ -95,7 +105,7 @@
         <td><%= d.started_time.to_s(:minute) if d.started_time.present? %></td>
         <!--５項：出社ボタン表示（当日かつ出社時間が存在しない場合）-->
         <td>
-          <% if d.attendance_day == Date.current && d.started_time.nil? %>
+          <% if d.attendance_day == Date.current && d.started_time.nil? && @user == current_user %>
             <%= button_to "出社",startedtime_create_path(@user,params:{id: @user.id}),{class: "btn btn-attendance btn-default"}%>
           <% end %>
         </td>
@@ -104,7 +114,7 @@
         <td><%= d.finished_time.to_s(:minute) if d.finished_time.present? %></td>
         <!--８項：退社ボタン表示（当日かつ出社時間あり、かつ退社時間なし）-->
         <td>
-          <% if d.attendance_day == Date.current && d.started_time.present? && d.finished_time.nil? %>
+          <% if d.attendance_day == Date.current && d.started_time.present? && d.finished_time.nil? && @user == current_user %>
             <%= button_to "退社",finishedtime_creat_path(@user,params:{id: @user.id}), class: "btn btn-attendance btn-default"%>
           <% end %>
           <div id="overtime_modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
@@ -124,7 +134,7 @@
         <!--13項：業務処理内容-->
         <td><%= d.reason.to_s if d.reason.present? %></td>
         <!--14項：指示者確認印-->
-        <td><%= User.find(d.superior_id).name+" に残業申請中" if d.superior_id.present? && d.status == 0 %> </td>
+        <td><%= User.find(d.superior_id).name+" に残業申請中" if d.superior_id.present? && d.status == 1 %> </td>
       </tr>
       <% end %>
       <!-- 最後の一行 -->      

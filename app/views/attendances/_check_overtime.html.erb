@@ -34,8 +34,8 @@
                 <td><%= calculate_overtime(appli.expected_finish_time.strftime("%F %R"), user.designated_finish_time.strftime("#{appli.attendance_day.strftime("%F")} %R")) %></td>
                 <td><%= appli.reason %></td>
                 <td><%= f_appli.select( :status, STATUS, {class: 'form-control'} ) %></td>
-                <td><%= check_box_tag :modified, class: 'form-control' %></td>
-                <td><%#= appli.collection_select( :superior_id, @superiors, :id, :name, {class: 'form-control'}) %></td>
+                <td><%= check_box_tag :modified, class: 'form-control' %></td><% p user.id %>
+                <td><%= link_to "確認", user_path(id: user.id, first_day: appli.attendance_day.beginning_of_month), class: "btn btn-sm btn-primary", :target=>["_blank"] %></td>
                 <%#= appli.hidden_field :status, :value => 0, class:'form-control' %>
               </tr>
               <% end %>

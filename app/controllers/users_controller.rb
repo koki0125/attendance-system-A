@@ -20,7 +20,7 @@ class UsersController < ApplicationController
   def show
     # .find = id のみで探す場合
     @user = User.find(params[:id])
-    if current_user.admin? || current_user.id == @user.id
+    if current_user.admin? || current_user.id == @user.id ||current_user.superior
       
       # もし今のユーザーが、上長なら
       if current_user.superior == true
@@ -208,7 +208,7 @@ class UsersController < ApplicationController
     # 正しいユーザーかどうかを確認
     def correct_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user?(@user)
+      redirect_to(root_url) unless current_user?(@user) || current_user.superior
     end
 
     # 管理者かどうかを確認
@@ -223,6 +223,6 @@ class UsersController < ApplicationController
     
     def admin_user__current_user
       @user = User.find(params[:id])
-      redirect_to(root_url) unless current_user.admin?||current_user?(@user)
+      redirect_to(root_url) unless current_user.admin? || current_user?(@user)
     end
 end
