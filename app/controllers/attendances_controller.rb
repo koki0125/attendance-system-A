@@ -120,9 +120,18 @@ class AttendancesController < ApplicationController
 
 # 残業申請回答（上長ユーザー）
   def res_overtime
-    # formからまとめて更新
+    puts params
+    puts error
+    # 1 時間外時間の表示 users/show
+    # 2 正しい形のparamsを(eachの, :status, :modified, :ovetime)
+    # formから、もしチェックがあるなら、
+    # 残業予定時間・時間外時間・ステータス
+    # を更新して、その日の退勤時間を
+    # 入れ替える処理をモデルに書こう。
+    if user == @user
     # この時点で、勤怠情報の総計に含める
     # それまでは仮の状態
+    end
   end
   
   
@@ -133,16 +142,6 @@ class AttendancesController < ApplicationController
       params.permit(attendances: [ :id, :started_time, :finished_time, :expected_finish_time,
                                   :detail, :reason, :tomorrow, :superior_id, :status])[:attendances]
     end
-    
-    # def user_params
-    #   params.require(:user).permit(:name, :email, :department, :password,
-    #                               :basic_time, :specified_working_time,
-    #                               :password_confirmation, 
-    #                               attendances_attributes: [:id, :attendances, :started_time,
-    #                               :started_time, :finished_time,
-    #                               :expected_finish_time, :detail, :reason,
-    #                               :tomorrow, :superior_id, :status])
-    # end
     
     # 残業申請用
     def overtime_params

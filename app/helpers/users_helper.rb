@@ -4,7 +4,7 @@ module UsersHelper
   def working_hours(a,b)
     startedtime = Time.mktime(a.year, a.month, a.day, a.hour, a.min, 0, 0)
     finishedtime = Time.mktime(b.year, b.month, b.day, b.hour, b.min, 0, 0)
-    (((finishedtime - startedtime) / 60) / 60).truncate(2)
+    ( ( (finishedtime - startedtime) / 60) / 60).truncate(2)
   end
   
   # 引数の時刻データの秒を０にして差を求める

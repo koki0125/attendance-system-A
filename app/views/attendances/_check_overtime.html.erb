@@ -3,7 +3,7 @@
     <h3 style="text-align:center;">【残業申請確認】</h3>
     <% @appli_users_uniq.each do |user| %>
       <h5 style="text-align:center; padding-top: 30px;"><%= user.name %> からの残業申請</h5>
-      <%= form_with( model: @user, url: res_overtime_path(@user), local: true) do |f| %>
+      <%= form_with( model: @user, url: res_overtime_path(user), local: true) do |f| %>
         <table class="table table-bordered table-striped table-condensed users_show-table">
           <thead>
             <tr>
@@ -31,12 +31,11 @@
                 <td><%= WEEK[appli.attendance_day.wday] %></td>
                 <td><%= appli.expected_finish_time.strftime("%R") %></td>
                 <td><%= user.designated_finish_time.strftime("%R") %></td>
-                <td><%= calculate_overtime(appli.expected_finish_time.strftime("%F %R"), user.designated_finish_time.strftime("#{appli.attendance_day.strftime("%F")} %R")) %></td>
+                <td><%= f_appli.calculate_overtime(appli.expected_finish_time.strftime("%F %R"), user.designated_finish_time.strftime("#{appli.attendance_day.strftime("%F")} %R")) %></td>
                 <td><%= appli.reason %></td>
                 <td><%= f_appli.select( :status, STATUS, {class: 'form-control'} ) %></td>
-                <td><%= check_box_tag :modified, class: 'form-control' %></td><% p user.id %>
+                <td><%= check_box_tag :modified, class: 'form-control' %></td>
                 <td><%= link_to "確認", user_path(id: user.id, first_day: appli.attendance_day.beginning_of_month), class: "btn btn-sm btn-primary", :target=>["_blank"] %></td>
-                <%#= appli.hidden_field :status, :value => 0, class:'form-control' %>
               </tr>
               <% end %>
             <% end %>
