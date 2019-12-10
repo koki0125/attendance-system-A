@@ -130,14 +130,14 @@
         <!--12項：終了予定時間(分)-->
         <td><%= d.expected_finish_time.to_s(:minute) if d.expected_finish_time.present? %></td>
         <!--12項：時間外時間-->
-        <td><%  %></td>
+        <td><%= overtime_hours(d.expected_finish_time, Time.zone.parse( "#{d[:attendance_day]} #{User.find(params[:id])[:designated_finish_time].strftime("%R")}") ) if d.expected_finish_time.present? %></td>
         <!--13項：業務処理内容-->
         <td><%= d.reason.to_s if d.reason.present? %></td>
         <!--14項：指示者確認印-->
         <td><%= User.find(d.superior_id).name+" に残業申請中" if d.superior_id.present? && d.status == 1 %> </td>
       </tr>
       <% end %>
-      <!-- 最後の一行 -->      
+      <!-- 最後の一行 -->
       <tr>
         <td></td>
     　　　<!-- 総合勤務時間の表示  --> 

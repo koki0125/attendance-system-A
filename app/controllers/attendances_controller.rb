@@ -91,45 +91,23 @@ class AttendancesController < ApplicationController
 # 残業申請確認（上長ユーザー）
   def check_overtime
     @user = User.find(params[:id])
-    # @applications1 = [params[:applications].user_id]
-    # @applications = Attendance.where(id: params[:applications])
-    # # @applications.push(Attendance.where(params[:applications]))
-    # Attendance.get_users_submitting_overtime(@user.id)
-    # 表の表示を先に、残業申請ページを参考に
-# scope用いた書き方を調べる
-
-  # ユーザの情報とれてる、あとattendancesも含めてとるのと、sperior_idでの検索も追加
+    # 残業申請しているusers
     @appli_users = User.join_attendances.merge(Attendance.where_status(1).where_superior_id(@user.id))
+    # 重複したuser_idを除外
     @appli_users_uniq = @appli_users.uniq
-    # @appli_users.attendances # OK
-    # @appli_users.ids [4,5,5,3] user_id refer 0,1,2.3 eachで回す TODO: 5が被ってる
-# TODO: 5が被ってる -> attendances.where~ を持つ　user_id を取得 rails cで
-# TODO: そのなかで、eachで残業情報を表示 
-# TODO: ステータスを一括更新
-    
-
-    # User.find(@users.ids[i]).attendances.find_by(status:0, superior_id: @user.id) をeachで回す。
-    
-    # 今、申請されている残業申請のステータスが0のものを表示
-    # 1人で複数送ることもできるため、ユーザごとにeach 文で取得
-    # ステータスと変更フラグだけ、formで表示分、全ての変更を送信できる
-    # 確認ボタンで確認できる。
-  
-  
   end
 
 # 残業申請回答（上長ユーザー）
   def res_overtime
     puts params
     puts error
-    # 1 時間外時間の表示 users/show
-    # 2 正しい形のparamsを(eachの, :status, :modified, :ovetime)
-    # formから、もしチェックがあるなら、
+    # 1 正しい形のparamsを(eachの, :status, :modified, :ovetime)
+    # 2 formから、もしチェックがあるなら、
     # 残業予定時間・時間外時間・ステータス
     # を更新して、その日の退勤時間を
     # 入れ替える処理をモデルに書こう。
     if user == @user
-    # この時点で、勤怠情報の総計に含める
+    # 3 この時点で、勤怠情報の総計に含める
     # それまでは仮の状態
     end
   end
@@ -145,7 +123,7 @@ class AttendancesController < ApplicationController
     
     # 残業申請用
     def overtime_params
-      params.require(:user).permit( attendances: [:id,
+      params.require(:user).permit( attendances: [:id, :overtime,
                                    :expected_finish_time, :reason,
                                    :tomorrow, :superior_id, :status])[:attendances]
     end
