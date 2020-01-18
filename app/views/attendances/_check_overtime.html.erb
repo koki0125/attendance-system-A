@@ -1,9 +1,9 @@
 <div class="modal-dialog">
   <div class="modal-content" style="padding: 30px;">
     <h3 style="text-align:center;">【残業申請確認】</h3>
+    <%= form_with( url: res_overtime_path(params:{id: @user}), method: :patch, local: true) do |f| %>
     <% @appli_users_uniq.each do |user| %>
       <h5 style="text-align:center; padding-top: 30px;"><%= user.name %> からの残業申請</h5>
-      <%= form_with( model: @user, url: res_overtime_path(user), local: true) do |f| %>
         <table class="table table-bordered table-striped table-condensed users_show-table">
           <thead>
             <tr>
@@ -25,7 +25,7 @@
             <%# @day.each do |d| %>
               <%= fields_for "attendances[]", appli do |f_appli| %>
               <tr>
-            <%#= af.hidden_field :id, :value => @day.ids[0] %>
+                <%#= af.hidden_field :id, :value => @day.ids[0] %>
                 <%#= hidden_field_tag :date, d.attendance_day %>
                 <td><%= appli.attendance_day.to_s(:day) %></td>
                 <td><%= WEEK[appli.attendance_day.wday] %></td>
@@ -34,15 +34,15 @@
                 <td><%= calculate_overtime(appli.expected_finish_time.strftime("%F %R"), user.designated_finish_time.strftime("#{appli.attendance_day.strftime("%F")} %R")) %></td>
                 <td><%= appli.reason %></td>
                 <td><%= f_appli.select( :status, STATUS, {class: 'form-control'} ) %></td>
-                <td><%= check_box_tag :modified, class: 'form-control' %></td>
+                <td><%= f_appli.check_box(:modified, {class: 'form-control'}, checked_value = 1, unchecked_value = 0) %></td>
                 <td><%= link_to "確認", user_path(id: user.id, first_day: appli.attendance_day.beginning_of_month), class: "btn btn-sm btn-primary", :target=>["_blank"] %></td>
               </tr>
-              <% end %>
-            <% end %>
+              <% end %><!-- fields_for.f_appli -->
+            <% end %><!-- appli.each --> 
           </tbody>
         </table>
-        <%= f.submit '変更を送信する', class: 'btn btn-attendance btn-default' %>
       <% end %>
+        <%= f.submit '変更を送信する', class: 'btn btn-attendance btn-default' %>
     <% end %>
     
   </div>

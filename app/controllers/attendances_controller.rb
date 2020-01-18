@@ -99,17 +99,19 @@ class AttendancesController < ApplicationController
 
 # 残業申請回答（上長ユーザー）
   def res_overtime
-    puts params
-    puts error
-    # 1 正しい形のparamsを(eachの, :status, :modified, :ovetime)
+    @user =  User.find(params[:id])
+    @overtimes = params[:attendances]
+    @approval_overtime = Attendance.approval_overtime(attendances_params,@overtimes)
+    @attendance = Attendance.where(@approval_overtime[0])
+    @attendance.update_attributes(@approval_overtime)
+    # 1 正しい形のparamsを(eachの, :status, :modified) 
     # 2 formから、もしチェックがあるなら、
     # 残業予定時間・時間外時間・ステータス
-    # を更新して、その日の退勤時間を
+    # を更新して、その日の退勤時間
     # 入れ替える処理をモデルに書こう。
-    if user == @user
+ 
     # 3 この時点で、勤怠情報の総計に含める
     # それまでは仮の状態
-    end
   end
   
   
