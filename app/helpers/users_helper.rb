@@ -33,4 +33,26 @@ module UsersHelper
     designated_finish_time = Time.mktime(b.year, b.month, b.day, b.hour, b.min, 0, 0)
     return ( ( (expected_finish_time - designated_finish_time) / 60) / 60).truncate(2)
   end
+  
+  # 残業申請時の上長レスポンス欄に表示する文言
+  def superior_response(d_superior_id, d_status)
+    # "なし"   => 0,
+    # "申請中" => 1,
+    # "承認"   => 2,
+    # "否認"   => 3 
+    if d_superior_id.present?
+      case d_status
+      when 1
+        User.find(d_superior_id).name+" に残業申請中"
+      when 2
+        "残業承認済 勤怠編集否認" #これ以降、勤怠編集禁止の意味
+      when 3
+        "残業否認 勤怠編集承認済" #
+      else
+        nil
+      end
+    end
+  end
+  
+  
 end
