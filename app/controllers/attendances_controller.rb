@@ -102,16 +102,17 @@ class AttendancesController < ApplicationController
     @user =  User.find(params[:id])
     @overtimes = params[:attendances]
     @approval_overtime = Attendance.approval_overtime(attendances_params,@overtimes)
-    @attendance = Attendance.where(@approval_overtime[0])
-    @attendance.update_attributes(@approval_overtime)
-    # 1 正しい形のparamsを(eachの, :status, :modified) 
-    # 2 formから、もしチェックがあるなら、
-    # 残業予定時間・時間外時間・ステータス
-    # を更新して、その日の退勤時間
-    # 入れ替える処理をモデルに書こう。
- 
-    # 3 この時点で、勤怠情報の総計に含める
-    # それまでは仮の状態
+    # @attendance = Attendance.where(@approval_overtime) なにこれ
+    @checked_overtimes =  @approval_overtime[0]
+    
+    @approval_overtime.each do |id, item|
+      attendances = Attendance.find(id)
+      
+      attendances.update!(item)
+    end
+  # if で条件分岐　render 
+  # 仕様テスト
+  # 
   end
   
   

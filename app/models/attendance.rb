@@ -27,7 +27,7 @@ class Attendance < ApplicationRecord
     
     @appli_params.each do |op|
       if op[1]["modified"] == "1"
-        @checked_overtimes.merge!( op[0] => {attendances_params[:status] => op[1]["status"].to_i} )
+        @checked_overtimes.merge!( op[0] => {:status => op[1]["status"].to_i} )
       end
     end
     return @checked_overtimes
