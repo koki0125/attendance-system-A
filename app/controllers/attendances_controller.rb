@@ -5,6 +5,7 @@ class AttendancesController < ApplicationController
 # 勤怠編集画面 
   def edit
     @user = User.find(params[:id])
+    @superiors = User.where(superior: true).where.not(id: @user.id)
     if current_user.admin? || current_user.id == @user.id
 
       if not params[:first_day].nil?
@@ -34,7 +35,7 @@ class AttendancesController < ApplicationController
     end
   end
 
-# 勤怠編集画面ー更新ボタン
+# 勤怠編集画面(申請ボタン)
   def update_all
     @user = User.find(params[:id])
     
