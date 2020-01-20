@@ -1,7 +1,7 @@
 
 source 'https://rubygems.org'
 
-gem 'rails',                      '5.2.0'
+gem 'rails',                      '5.2.4'
 gem 'bcrypt',                     '~> 3.1.11'
 gem 'puma',                       '~>3.12.2'
 gem 'faker',                      '1.7.3'
@@ -50,7 +50,7 @@ group :test do
 end
 
 group :production do
-  gem 'pg',                       '0.20.0'
+  gem 'pg',                       '1.2.2'
 end
 
 # Windows環境ではtzinfo-dataというgemを含める必要があります
