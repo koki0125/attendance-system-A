@@ -37,11 +37,10 @@ class AttendancesController < ApplicationController
 
 # 勤怠編集画面(申請ボタン)
 
-# 上長選択行だけ申請
-# 変更前と変更後を保存して上長モーダルで表示
+# 上長選択行だけ申請 -> postのsuperior_id がnilでないレコードだけ更新
+# 変更後を保存してフラグを立てる　-> 上長モーダルで表示
 # ※エラーチェックは編集日付箇所の指示者確認㊞が空欄でないところのみ行うこと
-# ・退社時間>出社時間
-# ・退社時間もしくは出社時間のみ
+# ・退社時間>出社時間・退社時間もしくは出社時間のみ
 # 申請中なら、上長申請中と表示されること
   def update_all
     @user = User.find(params[:id])
@@ -129,7 +128,9 @@ class AttendancesController < ApplicationController
   
     def attendances_params
       params.permit(attendances: [ :id, :started_time, :finished_time, :expected_finish_time,
-                                  :detail, :reason, :tomorrow, :superior_id, :status_overtime])[:attendances]
+                                  :detail, :reason, :modified_started_time, :modified_finished_time,
+                                  :tomorrow, :superior_id, :status_modified, :status_overtime,
+                                  :status_month])[:attendances]
     end
     
     # 残業申請用

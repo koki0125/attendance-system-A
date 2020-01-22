@@ -2,8 +2,8 @@ class AddColumnToAttendances < ActiveRecord::Migration[5.1]
   def change
     add_column :attendances, :expected_finish_time,   :datetime   # 残業終了予定時間
     add_column :attendances, :overtime,               :datetime   # 残業時間
-    add_column :attendances, :detail,                 :string     # 詳細
-    add_column :attendances, :reason,                 :string     # 理由
+    add_column :attendances, :detail,                 :string     # 備考
+    add_column :attendances, :reason,                 :string     # 業務処理内容
     add_column :attendances, :modified_started_time,  :datetime   # 編集した勤怠開始時間
     add_column :attendances, :modified_finished_time, :datetime   # 編集した勤怠終了時間
     add_column :attendances, :status_modified,        :integer, default: 0 # 編集承認ステータス

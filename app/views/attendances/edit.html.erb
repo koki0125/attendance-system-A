@@ -57,13 +57,13 @@
               <td><%= d.attendance_day.to_s(:day) %></td>
               <!--2項：曜日-->
               <td><%= WEEK[d.attendance_day.wday] %></td>
-              <td><%= tf.time_field  :started_time, class: 'form-control' %></td>
-              <td><%= tf.time_field  :finished_time, class: 'form-control' %></td>
+              <td><%= tf.time_field :modified_started_time,  class: 'form-control' %></td>
+              <td><%= tf.time_field :modified_finished_time, class: 'form-control' %></td>
               <!--5項：翌日-->
-              <td><%= tf.check_box :tomorrow, :as => :boolean, :checked => false, class: 'form-control' %></td>
+              <td><%= tf.check_box  :tomorrow, :as => :boolean, :checked => false, class: 'form-control' %></td>
               <!--6項：在社時間-->
               <td>
-                <%= working_hours(d.started_time, d.finished_time) if d.started_time.present? && d.finished_time.present? %>
+                <%= modified_working_hours(d.modified_started_time, d.modified_finished_time) if d.modified_started_time.present? && d.modified_finished_time.present? %>
               </td>
               <!--7項：備考-->
               <td><%= tf.text_field :detail, class: 'form-control' %></td>
