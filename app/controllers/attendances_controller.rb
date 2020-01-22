@@ -37,7 +37,6 @@ class AttendancesController < ApplicationController
 
 # 勤怠編集画面(申請ボタン)
 
-# カラムの持ち方、データの保存の仕方　ー＞　変更前　変更後の　勤怠時間、勤怠編集フラグ、勤怠編集の上長
 # 上長選択行だけ申請
 # 変更前と変更後を保存して上長モーダルで表示
 # ※エラーチェックは編集日付箇所の指示者確認㊞が空欄でないところのみ行うこと
@@ -101,7 +100,7 @@ class AttendancesController < ApplicationController
   def check_overtime
     @user = User.find(params[:id])
     # 残業申請しているusers
-    @appli_users = User.join_attendances.merge(Attendance.where_status(1).where_superior_id(@user.id))
+    @appli_users = User.join_attendances.merge(Attendance.where_status_overtime(1).where_superior_id(@user.id))
     # 重複したuser_idを除外
     @appli_users_uniq = @appli_users.uniq
   end
@@ -130,13 +129,13 @@ class AttendancesController < ApplicationController
   
     def attendances_params
       params.permit(attendances: [ :id, :started_time, :finished_time, :expected_finish_time,
-                                  :detail, :reason, :tomorrow, :superior_id, :status])[:attendances]
+                                  :detail, :reason, :tomorrow, :superior_id, :status_overtime])[:attendances]
     end
     
     # 残業申請用
     def overtime_params
       params.require(:user).permit( attendances: [:id, :overtime,
                                    :expected_finish_time, :reason,
-                                   :tomorrow, :superior_id, :status])[:attendances]
+                                   :tomorrow, :superior_id, :status_overtime])[:attendances]
     end
 end

@@ -29,7 +29,7 @@
             <td><%= af.check_box :tomorrow, :as => :boolean, class: 'form-control' %></td>
             <td><%= af.text_field :reason, class: 'form-control' %></td>
             <td><%= af.collection_select( :superior_id, @superiors, :id, :name, {class: 'form-control'}) %></td>
-            <%= af.hidden_field :status, :value => 1, class:'form-control' %>
+            <%= af.hidden_field :status_overtime, :value => 1, class:'form-control' %>
           </tr>
           <% end %>
         <% end %>

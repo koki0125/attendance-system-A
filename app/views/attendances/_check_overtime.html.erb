@@ -20,7 +20,7 @@
           </thead>
           <tbody>
           <!--  -->
-            <% user.attendances.where_status(1).where_superior_id(@user.id).each do |appli| %>
+            <% user.attendances.where_status_overtime(1).where_superior_id(@user.id).each do |appli| %>
             <%#= f.hidden_field :user_id, :value => @user.id %>
             <%# @day.each do |d| %>
               <%= fields_for "attendances[]", appli do |f_appli| %>
@@ -33,7 +33,7 @@
                 <td><%= user.designated_finish_time.strftime("%R") %></td>
                 <td><%= calculate_overtime(appli.expected_finish_time.strftime("%F %R"), user.designated_finish_time.strftime("#{appli.attendance_day.strftime("%F")} %R")) %></td>
                 <td><%= appli.reason %></td>
-                <td><%= f_appli.select( :status, STATUS, {class: 'form-control'} ) %></td>
+                <td><%= f_appli.select( :status_overtime, STATUS, {class: 'form-control'} ) %></td>
                 <td><%= f_appli.check_box(:modified, {class: 'form-control'}, checked_value = 1, unchecked_value = 0) %></td>
                 <td><%= link_to "確認", user_path(id: user.id, first_day: appli.attendance_day.beginning_of_month), class: "btn btn-sm btn-primary", :target=>["_blank"] %></td>
               </tr>

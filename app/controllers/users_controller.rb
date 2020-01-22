@@ -25,7 +25,7 @@ class UsersController < ApplicationController
       # もし今のユーザーが、上長なら
       if current_user.superior == true
         # 残業申請ステータスと上長選択が一致するもの
-        @application = Attendance.all.where(superior_id: @user.id, status: 1)
+        @application = Attendance.all.where(superior_id: @user.id, status_overtime: 1)
         # もし上長にあてた残業申請があるなら
         if @application.count > 0
           @overtime_appli = @application.count.to_s+" 件の通知があります"
