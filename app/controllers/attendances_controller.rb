@@ -47,25 +47,29 @@ class AttendancesController < ApplicationController
     
     attendances_params.each do |id, time|
       attendance = Attendance.find(id)
-
-      #当日以降の編集はadminユーザのみ
-      if attendance.attendance_day > Date.current && !current_user.admin?
-    
-      elsif time["started_time"].blank? && time["finished_time"].blank?
-
-      #出社時間と退社時間の両方の存在を確認
-      elsif time["started_time"].blank? || time["finished_time"].blank?
-        flash[:warning] = '一部編集が無効となった項目があります。'
       
-      #出社時間 > 退社時間ではないか
-      elsif time["started_time"].to_s > time["finished_time"].to_s
-        flash[:warning] = '出社時間より退社時間が早い項目がありました'
+      # 上長選択してる日のみ
+      if time["superior_id"].present?
+
+        # 当日以降の編集はadminユーザのみ
+        if attendance.attendance_day > Date.current && !current_user.admin?
       
-      else
-        attendance.update_attributes(time)
-        flash[:success] = '勤怠時間を更新しました。なお本日以降の更新はできません。'
-      end
-    end #eachの締め
+        elsif time["modified_started_time"].blank? && time["modified_finished_time"].blank?
+  
+        # 出社時間と退社時間の両方の存在を確認
+        elsif time["modified_started_time"].blank? || time["modified_finished_time"].blank?
+          flash[:warning] = '一部編集が無効となった項目があります。'
+        
+        # 出社時間 > 退社時間ではないか
+        elsif time["modified_started_time"].to_s > time["modified_finished_time"].to_s
+          flash[:warning] = '出社時間より退社時間が早い項目がありました'
+        
+        else
+          attendance.update_attributes(time)
+          flash[:success] = '勤怠時間を更新しました。なお本日以降の更新はできません。'
+        end
+      end # superior_idの締め
+    end # eachの締め
     redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
   end
   
