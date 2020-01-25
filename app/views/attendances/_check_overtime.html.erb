@@ -21,12 +21,8 @@
           <tbody>
           <!--  -->
             <% user.attendances.where_status_overtime(1).where_superior_id(@user.id).each do |appli| %>
-            <%#= f.hidden_field :user_id, :value => @user.id %>
-            <%# @day.each do |d| %>
               <%= fields_for "attendances[]", appli do |f_appli| %>
               <tr>
-                <%#= af.hidden_field :id, :value => @day.ids[0] %>
-                <%#= hidden_field_tag :date, d.attendance_day %>
                 <td><%= appli.attendance_day.to_s(:day) %></td>
                 <td><%= WEEK[appli.attendance_day.wday] %></td>
                 <td><%= appli.expected_finish_time.strftime("%R") %></td>

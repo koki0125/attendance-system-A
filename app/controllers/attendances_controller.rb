@@ -46,10 +46,12 @@ class AttendancesController < ApplicationController
 # 申請中なら、上長申請中と表示されること
   def update_all
     @user = User.find(params[:id])
+    # :tomorrowの処理
+    attendances_params = Attendance.fmt_modified_params(params).permit!
     
     attendances_params.each do |id, item|
       attendance = Attendance.find(id)
-      
+
       # 上長選択してる日のみ
       if item["superior_id"].present?
 
@@ -57,7 +59,7 @@ class AttendancesController < ApplicationController
         if attendance.attendance_day > Date.current && !current_user.admin?
       
         elsif item["modified_started_time"].blank? && item["modified_finished_time"].blank?
-  
+  puts error
         # 出社時間と退社時間の両方の存在を確認
         elsif item["modified_started_time"].blank? || item["modified_finished_time"].blank?
           flash[:warning] = '一部編集が無効となった項目があります。'

@@ -60,7 +60,7 @@
               <td><%= tf.time_field :modified_started_time,  class: 'form-control' %></td>
               <td><%= tf.time_field :modified_finished_time, class: 'form-control' %></td>
               <!--5項：翌日-->
-              <td><%= tf.check_box  :tomorrow, :as => :boolean, :checked => false, class: 'form-control' %></td>
+              <td><%= tf.check_box  :tomorrow, :as => :boolean, class: 'form-control' %></td>
               <!--6項：在社時間-->
               <td>
                 <%= modified_working_hours(d.modified_started_time, d.modified_finished_time) if d.modified_started_time.present? && d.modified_finished_time.present? %>
@@ -69,6 +69,8 @@
               <td><%= tf.text_field :detail, class: 'form-control' %></td>
               <!--8項：支持者確認㊞-->
               <td><%= tf.collection_select( :superior_id, @superiors, :id, :name, {:include_blank => true, :selected => false, class: 'form-control'}) %></td>
+              <!---->
+              <%= tf.hidden_field :attendance_day, :value => d.attendance_day %>
               <!--編集ステータス1-->
               <%= tf.hidden_field :status_modified, :value => 1, class:'form-control' %>
             </tr>

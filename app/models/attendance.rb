@@ -1,13 +1,13 @@
 class Attendance < ApplicationRecord
   belongs_to :user
   validates :user_id, presence: true
-  attr_accessor :modified # modelにないけど、form_withでフラグとして使いたかったため
+  attr_accessor :modified  # modelにないけど、form_withでフラグとして使いたかったため
   
   scope :where_status_overtime, ->(status_overtime) { where(status_overtime: status_overtime) }
   scope :where_superior_id, ->(superior_id) { where(superior_id: superior_id) }
   
   # 'self.'はクラスメソッドにつける
-  # overtime_params[:expected_finish_time] をDateTime型に整形して@overtime_params全体を返す
+  # overtime_params[:expected_finish_time] をDateTime型に整形して@overtime_params全体を返す :tomorrow処理
   def self.fmt_overtime_params(overtime_params,params)
     @overtime_params = overtime_params
     if overtime_params[:tomorrow] == "1"
@@ -18,6 +18,24 @@ class Attendance < ApplicationRecord
       Time.zone.parse( "#{params[:date]} #{overtime_params[:expected_finish_time]}")
     end
     return @overtime_params
+  end
+  
+  # 本当は上記とまとめた方が良い。。。リファクタリングの余地あり
+  # 勤怠編集用の日時フォーマット(:tomorrow処理も)
+  def self.fmt_modified_params(params)
+    @params = params[:attendances]
+    @params.each do |id, item|
+      if item[:tomorrow] == "1"
+        item[:modified_finished_time] = 
+        Time.zone.parse( "#{Date.parse(item[:attendance_day])+1} #{item[:modified_finished_time]}")
+      else
+        item[:modified_finished_time] = 
+        Time.zone.parse( "#{item[:attendance_day]} #{item[:modified_finished_time]}")
+      end
+      item[:modified_started_time] = 
+        Time.zone.parse( "#{item[:attendance_day]} #{item[:modified_started_time]}")
+    end
+    return @params
   end
   
   # 上長承認のため、modelにない :modifiedフラグで、チェック済みのものだけをハッシュとして抽出
