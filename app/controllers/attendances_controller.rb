@@ -38,6 +38,8 @@ class AttendancesController < ApplicationController
 # 勤怠編集画面(申請ボタン)
 
 # 上長選択行だけ申請 -> postのsuperior_id がnilでないレコードだけ更新
+
+
 # 変更後を保存してフラグを立てる　-> 上長モーダルで表示
 # ※エラーチェックは編集日付箇所の指示者確認㊞が空欄でないところのみ行うこと
 # ・退社時間>出社時間・退社時間もしくは出社時間のみ
@@ -45,27 +47,27 @@ class AttendancesController < ApplicationController
   def update_all
     @user = User.find(params[:id])
     
-    attendances_params.each do |id, time|
+    attendances_params.each do |id, item|
       attendance = Attendance.find(id)
       
       # 上長選択してる日のみ
-      if time["superior_id"].present?
+      if item["superior_id"].present?
 
         # 当日以降の編集はadminユーザのみ
         if attendance.attendance_day > Date.current && !current_user.admin?
       
-        elsif time["modified_started_time"].blank? && time["modified_finished_time"].blank?
+        elsif item["modified_started_time"].blank? && item["modified_finished_time"].blank?
   
         # 出社時間と退社時間の両方の存在を確認
-        elsif time["modified_started_time"].blank? || time["modified_finished_time"].blank?
+        elsif item["modified_started_time"].blank? || item["modified_finished_time"].blank?
           flash[:warning] = '一部編集が無効となった項目があります。'
         
         # 出社時間 > 退社時間ではないか
-        elsif time["modified_started_time"].to_s > time["modified_finished_time"].to_s
+        elsif item["modified_started_time"].to_s > item["modified_finished_time"].to_s
           flash[:warning] = '出社時間より退社時間が早い項目がありました'
         
         else
-          attendance.update_attributes(time)
+          attendance.update_attributes(item)
           flash[:success] = '勤怠時間を更新しました。なお本日以降の更新はできません。'
         end
       end # superior_idの締め
