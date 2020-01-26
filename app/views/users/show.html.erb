@@ -35,14 +35,28 @@
   <!--上長ユーザーボタン類  -->
   <% if @user == current_user %>
     <% if current_user.superior? %>
-      <p style="margin-bottom: 5px; color: gray;">【所属長承認申請のお知らせ】</p>
+      <!-- 所属長承認申請あるなら -->
+      <% if @appli_approval.count == 0 %>
+        <p style="margin-bottom: 5px; color: gray;">【所属長承認申請のお知らせ】</p>
+      <% else %>
+        <p style="margin-bottom: 5px; color: black;">【勤怠変更申請のお知らせ】
+        <%= link_to @approvals, check_approval_path(params:{id: @user.id}), style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
+        </p>
+      <% end %>
+      <!-- 勤怠変更申請あるなら -->
+      <% if @appli_modifed.count == 0 %>
       <p style="margin-bottom: 5px; color: gray;">【勤怠変更申請のお知らせ】</p>
+      <% else %>
+        <p style="margin-bottom: 5px; color: black;">【勤怠変更申請のお知らせ】
+        <%= link_to @modifieds, check_modified_path(params:{id: @user.id}), style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
+        </p>
+      <% end %>
       <!-- 残業申請あるなら -->
-      <% if @application.count == 0 %>
+      <% if @appli_overtimes.count == 0 %>
         <p style="margin-bottom: 5px; color: gray;">【残業申請のお知らせ】</p>
       <% else %>
         <p style="margin-bottom: 5px; color: black;">【残業申請のお知らせ】
-        <%= link_to @overtime_appli, check_overtime_path(params:{id: @user.id}), style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
+        <%= link_to @overtimes, check_overtime_path(params:{id: @user.id}), style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
         </p>
       <% end %>
     <% end %>

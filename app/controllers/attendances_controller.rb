@@ -46,7 +46,7 @@ class AttendancesController < ApplicationController
 # 申請中なら、上長申請中と表示されること
   def update_all
     @user = User.find(params[:id])
-    # :tomorrowの処理
+    # 日時のフォーマット（:tomorrowの処理も）モデルにないカラムもあるので強制permit!
     attendances_params = Attendance.fmt_modified_params(params).permit!
     
     attendances_params.each do |id, item|
@@ -59,10 +59,10 @@ class AttendancesController < ApplicationController
         if attendance.attendance_day > Date.current && !current_user.admin?
       
         elsif item["modified_started_time"].blank? && item["modified_finished_time"].blank?
-  puts error
+
         # 出社時間と退社時間の両方の存在を確認
         elsif item["modified_started_time"].blank? || item["modified_finished_time"].blank?
-          flash[:warning] = '一部編集が無効となった項目があります。'
+          flash[:warning] = '出社時間と退社時間を入力してください。'
         
         # 出社時間 > 退社時間ではないか
         elsif item["modified_started_time"].to_s > item["modified_finished_time"].to_s
@@ -70,7 +70,7 @@ class AttendancesController < ApplicationController
         
         else
           attendance.update_attributes(item)
-          flash[:success] = '勤怠時間を更新しました。なお本日以降の更新はできません。'
+          flash[:success] = '勤怠編集を申請しました。なお本日以降の申請はできません。'
         end
       end # superior_idの締め
     end # eachの締め
@@ -102,8 +102,67 @@ class AttendancesController < ApplicationController
       render :form_overtime
     end
   end
+
+
+
+# 上長ユーザー
+
+# 所属長承認申請確認
+  def check_approval
+    @user = User.find(params[:id])
+    # 残業申請しているusers
+    @appli_users = User.join_attendances.merge(Attendance.where_status_approval(1).where_superior_id(@user.id))
+    # 重複したuser_idを除外
+    @appli_users_uniq = @appli_users.uniq
+  end
+
+# 残業申請回答
+  def res_approval
+    @user =  User.find(params[:id])
+    @overtimes = params[:attendances]
+    @approval_overtime = Attendance.approval_overtime(attendances_params,@overtimes)
+    # @attendance = Attendance.where(@approval_overtime) なにこれ
+    @checked_overtimes =  @approval_overtime[0]
+    
+    @approval_overtime.each do |id, item|
+      attendances = Attendance.find(id)
+      
+      attendances.update!(item)
+    end
+  # if で条件分岐　render 
+  # 仕様テスト
+  # 
+  end
+
+# 勤怠変更申請確認
+  def check_modified
+    @user = User.find(params[:id])
+    # 残業申請しているusers
+    @appli_users = User.join_attendances.merge(Attendance.where_status_modified(1).where_superior_id(@user.id))
+    # 重複したuser_idを除外
+    @appli_users_uniq = @appli_users.uniq
+  end
   
-# 残業申請確認（上長ユーザー）
+# 残業申請回答
+  def res_modified
+    @user =  User.find(params[:id])
+    @overtimes = params[:attendances]
+    @approval_overtime = Attendance.approval_overtime(attendances_params,@overtimes)
+    # @attendance = Attendance.where(@approval_overtime) なにこれ
+    @checked_overtimes =  @approval_overtime[0]
+    
+    @approval_overtime.each do |id, item|
+      attendances = Attendance.find(id)
+      
+      attendances.update!(item)
+    end
+  # if で条件分岐　render 
+  # 仕様テスト
+  # 
+  end
+
+
+# 残業申請確認
   def check_overtime
     @user = User.find(params[:id])
     # 残業申請しているusers
@@ -112,7 +171,7 @@ class AttendancesController < ApplicationController
     @appli_users_uniq = @appli_users.uniq
   end
 
-# 残業申請回答（上長ユーザー）
+# 残業申請回答
   def res_overtime
     @user =  User.find(params[:id])
     @overtimes = params[:attendances]
@@ -129,7 +188,6 @@ class AttendancesController < ApplicationController
   # 仕様テスト
   # 
   end
-  
   
   # プライベート
   private

@@ -24,14 +24,24 @@ Rails.application.routes.draw do
   get     '/working_employees_index', to: 'users#working_employees_index'
   
    # attendances
+  # 勤怠変更申請
   post    '/update_all',              to: 'attendances#update_all'
+  
   # 残業申請
   get     '/form_overtime',           to: 'attendances#form_overtime'
   patch   '/submit_overtime',         to: 'attendances#submit_overtime'
-  # get '/overtime', to: 'attendances#overtime' これ使ってない気がする
-  # 残業確認・承認
+
+# 上長ユーザー
+  # 所属長承認　確認・承認
+  get     '/check_approval',          to: 'attendances#check_approval'
+  patch   '/res_approval',            to: 'attendances#res_approval'
+  # 勤怠変更　確認・承認
+  get     '/check_modified',          to: 'attendances#check_modified'
+  patch   '/res_modified',            to: 'attendances#res_modified'
+  # 残業申請　確認・承認
   get     '/check_overtime',          to: 'attendances#check_overtime'
   patch   '/res_overtime',            to: 'attendances#res_overtime'
-  # bases
+
+# bases
   get     '/base_edit/',              to: 'bases#edit'
 end

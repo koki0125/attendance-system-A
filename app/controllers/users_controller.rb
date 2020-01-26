@@ -24,12 +24,25 @@ class UsersController < ApplicationController
       
       # もし今のユーザーが、上長なら
       if current_user.superior == true
-        # 残業申請ステータスと上長選択が一致するもの
-        @application = Attendance.all.where(superior_id: @user.id, status_overtime: 1)
-        # もし上長にあてた残業申請があるなら
-        if @application.count > 0
-          @overtime_appli = @application.count.to_s+" 件の通知があります"
+        
+        # 所属長承認ステータスと上長選択が一致するもの
+        @appli_approval = Attendance.all.where(superior_id: @user.id, status_month: 1)
+        if @appli_approval.count > 0
+          @approvals = @appli_approval.count.to_s+" 件の通知があります"
         end
+        
+        # 勤怠変更申請ステータスと上長選択が一致するもの
+        @appli_modifed = Attendance.all.where(superior_id: @user.id, status_modified: 1)
+        if @appli_modifed.count > 0
+          @modifieds = @appli_modifed.count.to_s+" 件の通知があります"
+        end
+        
+        # 残業申請ステータスと上長選択が一致するもの
+        @appli_overtimes = Attendance.all.where(superior_id: @user.id, status_overtime: 1)
+        if @appli_overtimes.count > 0
+          @overtimes = @appli_overtimes.count.to_s+" 件の通知があります"
+        end
+        
       end
      
       # 既に表示月があれば、表示月を取得する

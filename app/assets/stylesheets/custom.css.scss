@@ -141,13 +141,14 @@ p {
   float: left;
   margin-right: 10px;
   font-size: 1.7em;
-  color: white;
+  color: #fff;
   text-transform: uppercase;
   letter-spacing: -1px;
   padding-top: 9px;
   font-weight: bold;
+  line-height: 1;
   &:hover {
-    color: white;
+    color: #fff;
     text-decoration: none;
   }
 }
@@ -297,9 +298,6 @@ span.picture {
   text-align: center;
   vertical-align: middle;
   }
-}
-.logo {
-  font-size: 18px;
 }
 
 .m-top {
