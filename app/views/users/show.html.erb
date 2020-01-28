@@ -66,6 +66,8 @@
     <%= link_to "勤怠修正ログ（承認済み）", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
   <% end %>
   <div id="form_overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+  <div id="check_approval-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+  <div id="check_modified-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <div id="check_overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <!-- 最初の一行目    -->
   <table class="table table-bordered table-striped table-condensed users_show-table">

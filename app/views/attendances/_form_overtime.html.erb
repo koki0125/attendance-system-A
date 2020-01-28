@@ -26,7 +26,7 @@
             <td><%= WEEK[d.attendance_day.wday] %></td>
           <!-- 入力項目 -->
             <td><%= af.time_field :expected_finish_time, class: 'form-control' %></td>
-            <td><%= af.check_box :tomorrow, :as => :boolean, class: 'form-control' %></td>
+            <td><%= af.check_box :tomorrow, :as => :boolean, style:"width: 14px; height: 14px;" %></td>
             <td><%= af.text_field :reason, class: 'form-control' %></td>
             <td><%= af.collection_select( :superior_id, @superiors, :id, :name, {class: 'form-control'}) %></td>
             <%= af.hidden_field :status_overtime, :value => 1, class:'form-control' %>

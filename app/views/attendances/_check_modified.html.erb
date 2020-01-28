@@ -1,4 +1,4 @@
-<div class="modal-dialog">
+<div class="modal-dialog" style="width: 1100px;">
   <div class="modal-content" style="padding: 30px;">
     <h3 style="text-align:center;">【勤怠変更残業申請確認】</h3>
     <%= form_with( url: res_modified_path(params:{id: @user}), method: :patch, local: true) do |f| %>
@@ -7,15 +7,30 @@
         <table class="table table-bordered table-striped table-condensed users_show-table">
           <thead>
             <tr>
-              <th>日付</th>
-              <th>曜日</th>
-              <th>終了予定時間</th>
-              <th>指定勤務時間</th>
-              <th>時間外時間</th>
-              <th>業務処理内容</th>
-              <th>指示者確認印</th>
-              <th>変更</th>
-              <th>勤怠を確認する</th>
+              <th rowspan="3">日付</th>
+              <th rowspan="3">曜日</th>
+              <th colspan="4">変更前</th>
+              <th colspan="4">変更後</th>
+              <th rowspan="3">備考</th>
+              <th rowspan="3">指示者確認印</th>
+              <th rowspan="3">変更</th>
+              <th rowspan="3">勤怠を確認する</th>
+            </tr>
+            <tr>
+              <th colspan="2">出社</th>
+              <th colspan="2">退社</th>
+              <th colspan="2">出社</th>
+              <th colspan="2">退社</th>
+            </tr>
+            <tr>
+              <th>時</th>
+              <th>分</th>
+              <th>時</th>
+              <th>分</th>
+              <th>時</th>
+              <th>分</th>
+              <th>時</th>
+              <th>分</th>
             </tr>
           </thead>
           <tbody>
@@ -25,11 +40,16 @@
                 <td><%= appli.attendance_day.to_s(:day) %></td>
                 <td><%= WEEK[appli.attendance_day.wday] %></td>
                 <td><%= appli.modified_finished_time.strftime("%R") %></td>
-                <td><%= user.modified_finished_time.strftime("%R") %></td>
+                <td><%= appli.modified_finished_time.strftime("%R") %></td>
+                <td><%= appli.modified_finished_time.strftime("%R") %></td>
+                <td><%= appli.modified_finished_time.strftime("%R") %></td>
+                <td><%= appli.modified_finished_time.strftime("%R") %></td>
+                <td><%= appli.modified_finished_time.strftime("%R") %></td>
+                <td><%= appli.modified_finished_time.strftime("%R") %></td>
                 <td><%#= calculate_modified(appli.expected_finish_time.strftime("%F %R"), user.designated_finish_time.strftime("#{appli.attendance_day.strftime("%F")} %R")) %></td>
                 <td><%#= appli.reason %></td>
                 <td><%= f_appli.select( :status_modified, STATUS, {class: 'form-control'} ) %></td>
-                <td><%= f_appli.check_box(:modified, {class: 'form-control'}, checked_value = 1, unchecked_value = 0) %></td>
+                <td><%= f_appli.check_box(:modified, { style:"width: 14px; height: 14px;"}, checked_value = 1, unchecked_value = 0) %></td>
                 <td><%= link_to "確認", user_path(id: user.id, first_day: appli.attendance_day.beginning_of_month), class: "btn btn-sm btn-primary", :target=>["_blank"] %></td>
               </tr>
               <% end %><!-- fields_for.f_appli -->
@@ -37,7 +57,7 @@
           </tbody>
         </table>
       <% end %>
-        <%= f.submit '変更を送信する', class: 'btn btn-attendance btn-primary' %>
+      <%= f.submit '変更を送信する', class: 'btn btn-attendance btn-primary' %>
     <% end %>
     
   </div>
