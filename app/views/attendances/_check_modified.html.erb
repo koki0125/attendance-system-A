@@ -39,14 +39,15 @@
               <tr>
                 <td><%= appli.attendance_day.to_s(:day) %></td>
                 <td><%= WEEK[appli.attendance_day.wday] %></td>
-                <td><%= appli.modified_finished_time.strftime("%R") %></td>
-                <td><%= appli.modified_finished_time.strftime("%R") %></td>
-                <td><%= appli.modified_finished_time.strftime("%R") %></td>
-                <td><%= appli.modified_finished_time.strftime("%R") %></td>
-                <td><%= appli.modified_finished_time.strftime("%R") %></td>
-                <td><%= appli.modified_finished_time.strftime("%R") %></td>
-                <td><%= appli.modified_finished_time.strftime("%R") %></td>
-                <td><%#= calculate_modified(appli.expected_finish_time.strftime("%F %R"), user.designated_finish_time.strftime("#{appli.attendance_day.strftime("%F")} %R")) %></td>
+                
+                <td><%= appli.started_time&.strftime("%I") %></td>
+                <td><%= appli.started_time&.strftime("%M") %></td>
+                <td><%= appli.finished_time&.strftime("%M") %></td>
+                <td><%= appli.finished_time&.strftime("%I") %></td>
+                <td><%= appli.modified_started_time.strftime("%I") %></td>
+                <td><%= appli.modified_started_time.strftime("%M") %></td>
+                <td><%= appli.modified_finished_time.strftime("%I") %></td>
+                <td><%= appli.modified_finished_time.strftime("%M") %></td>
                 <td><%#= appli.reason %></td>
                 <td><%= f_appli.select( :status_modified, STATUS, {class: 'form-control'} ) %></td>
                 <td><%= f_appli.check_box(:modified, { style:"width: 14px; height: 14px;"}, checked_value = 1, unchecked_value = 0) %></td>
