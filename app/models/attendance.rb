@@ -42,6 +42,19 @@ class Attendance < ApplicationRecord
   end
   
   # 上長承認のため、modelにない :modifiedフラグで、チェック済みのものだけをハッシュとして抽出
+  def self.approval_modified(attendances_params,appli_params)
+    @appli_params = appli_params.to_unsafe_h #.permit!もある each or map
+    @checked_modifieds = {};
+    
+    @appli_params.each do |mp|
+      if mp[1]["modified"] == "1"
+        @checked_modifieds.merge!( mp[0] => {:status_modified => mp[1]["status_modified"].to_i} )
+      end
+    end
+    return @checked_modifieds
+  end
+    
+  # 上長承認のため、modelにない :modifiedフラグで、チェック済みのものだけをハッシュとして抽出
   def self.approval_overtime(attendances_params,appli_params)
     @appli_params = appli_params.to_unsafe_h #.permit!もある each or map
     @checked_overtimes = {};

@@ -121,8 +121,6 @@ class AttendancesController < ApplicationController
     @user =  User.find(params[:id])
     @overtimes = params[:attendances]
     @approval_overtime = Attendance.approval_overtime(attendances_params,@overtimes)
-    # @attendance = Attendance.where(@approval_overtime) なにこれ
-    @checked_overtimes =  @approval_overtime[0]
     
     @approval_overtime.each do |id, item|
       attendances = Attendance.find(id)
@@ -145,13 +143,13 @@ class AttendancesController < ApplicationController
   
 # 残業申請回答
   def res_modified
+    # checked にチェックあるものだけ更新　支持者確認印ステータス　TODO: できてるか確認
     @user =  User.find(params[:id])
-    @overtimes = params[:attendances]
-    @approval_overtime = Attendance.approval_overtime(attendances_params,@overtimes)
-    # @attendance = Attendance.where(@approval_overtime) なにこれ
-    @checked_overtimes =  @approval_overtime[0]
+    @modifieds = params[:attendances]
+    @approval_modified = Attendance.approval_modified(attendances_params,@modifieds)
+
     
-    @approval_overtime.each do |id, item|
+    @approval_modified.each do |id, item|
       attendances = Attendance.find(id)
       
       attendances.update!(item)
@@ -176,8 +174,6 @@ class AttendancesController < ApplicationController
     @user =  User.find(params[:id])
     @overtimes = params[:attendances]
     @approval_overtime = Attendance.approval_overtime(attendances_params,@overtimes)
-    # @attendance = Attendance.where(@approval_overtime) なにこれ
-    @checked_overtimes =  @approval_overtime[0]
     
     @approval_overtime.each do |id, item|
       attendances = Attendance.find(id)
