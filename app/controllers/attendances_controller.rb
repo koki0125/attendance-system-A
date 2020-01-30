@@ -143,7 +143,11 @@ class AttendancesController < ApplicationController
   
 # 残業申請回答
   def res_modified
-    # checked にチェックあるものだけ更新　支持者確認印ステータス　TODO: できてるか確認
+    # checked にチェックあるものだけ更新できてる
+    # show画面にステータス文言を表示
+    # リダイレクト先、モーダル消去 res_overtimeも
+    # 新ブランチで。
+    # １ヶ月分の勤怠更新タスク
     @user =  User.find(params[:id])
     @modifieds = params[:attendances]
     @approval_modified = Attendance.approval_modified(attendances_params,@modifieds)
