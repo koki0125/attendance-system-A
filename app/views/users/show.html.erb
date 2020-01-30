@@ -151,7 +151,7 @@
         <td><%= d.reason.to_s if d.reason.present? %></td>
         <!--14項：指示者確認印-->
         <!--<td><%#= User.find(d.superior_id).name+" に残業申請中" if d.superior_id.present? && d.status_overtime == 1 %> </td>-->
-        <td><%= superior_response(d.superior_id, d.status_overtime) %> </td>
+        <td><%= superior_response(d.superior_id, d.status_overtime, d.status_modified) %> </td>
       </tr>
       <% end %>
       <!-- 最後の一行 -->
