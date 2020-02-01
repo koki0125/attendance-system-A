@@ -36,14 +36,6 @@ class AttendancesController < ApplicationController
   end
 
 # 勤怠編集画面(申請ボタン)
-
-# 上長選択行だけ申請 -> postのsuperior_id がnilでないレコードだけ更新
-
-
-# 変更後を保存してフラグを立てる　-> 上長モーダルで表示
-# ※エラーチェックは編集日付箇所の指示者確認㊞が空欄でないところのみ行うこと
-# ・退社時間>出社時間・退社時間もしくは出社時間のみ
-# 申請中なら、上長申請中と表示されること
   def update_all
     @user = User.find(params[:id])
     # 日時のフォーマット（:tomorrowの処理も）モデルにないカラムもあるので強制permit!
@@ -127,9 +119,7 @@ class AttendancesController < ApplicationController
       
       attendances.update!(item)
     end
-  # if で条件分岐　render 
-  # 仕様テスト
-  # 
+    redirect_to @user and return
   end
 
 # 勤怠変更申請確認
@@ -143,24 +133,18 @@ class AttendancesController < ApplicationController
   
 # 残業申請回答
   def res_modified
-    # checked にチェックあるものだけ更新できてる
-    # show画面にステータス文言を表示
     # リダイレクト先、モーダル消去 res_overtimeも
     # 新ブランチで。
     # １ヶ月分の勤怠更新タスク
     @user =  User.find(params[:id])
     @modifieds = params[:attendances]
     @approval_modified = Attendance.approval_modified(attendances_params,@modifieds)
-
     
     @approval_modified.each do |id, item|
       attendances = Attendance.find(id)
-      
       attendances.update!(item)
     end
-  # if で条件分岐　render 
-  # 仕様テスト
-  # 
+    redirect_to @user and return
   end
 
 
@@ -184,9 +168,7 @@ class AttendancesController < ApplicationController
       
       attendances.update!(item)
     end
-  # if で条件分岐　render 
-  # 仕様テスト
-  # 
+    redirect_to @user and return
   end
   
   # プライベート
