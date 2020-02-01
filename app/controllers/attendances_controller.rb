@@ -116,7 +116,6 @@ class AttendancesController < ApplicationController
     
     @approval_overtime.each do |id, item|
       attendances = Attendance.find(id)
-      
       attendances.update!(item)
     end
     redirect_to @user and return
@@ -133,9 +132,6 @@ class AttendancesController < ApplicationController
   
 # 残業申請回答
   def res_modified
-    # リダイレクト先、モーダル消去 res_overtimeも
-    # 新ブランチで。
-    # １ヶ月分の勤怠更新タスク
     @user =  User.find(params[:id])
     @modifieds = params[:attendances]
     @approval_modified = Attendance.approval_modified(attendances_params,@modifieds)
@@ -165,7 +161,6 @@ class AttendancesController < ApplicationController
     
     @approval_overtime.each do |id, item|
       attendances = Attendance.find(id)
-      
       attendances.update!(item)
     end
     redirect_to @user and return
