@@ -38,10 +38,14 @@ class AttendancesController < ApplicationController
 # 勤怠承認申請ボタン
   def submit_month
     @user = User.find(params[:user_id])
-    if @user.attendances.find_by(attendance_day: params[:attendances][:attendance_day]).update(attendances_params)
-      flash[:success] = '１ヶ月分の勤怠承認を申請しました。'
+    if params[:attendances][:superior_id_month].present?
+      if @user.attendances.find_by(attendance_day: params[:attendances][:attendance_day]).update(attendances_params)
+        flash[:success] = '１ヶ月分の勤怠承認を申請しました。'
+      else
+        flash[:danger] = '１ヶ月分の勤怠承認申請に失敗しました'
+      end
     else
-      flash[:alert] = '１ヶ月分の勤怠承認申請に失敗しました'
+      flash[:danger] = "所属長を選択してください"
     end
     redirect_to @user and return
   end
@@ -120,8 +124,6 @@ class AttendancesController < ApplicationController
   end
 
 # 残業申請回答
-# 更新処理
-# showで反映の結果確認
   def res_approval
     @user =  User.find(params[:id])
     params[:attendances].permit!
