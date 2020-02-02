@@ -28,7 +28,7 @@
             <td><%= af.time_field :expected_finish_time, class: 'form-control' %></td>
             <td><%= af.check_box :tomorrow, :as => :boolean, style:"width: 14px; height: 14px;" %></td>
             <td><%= af.text_field :reason, class: 'form-control' %></td>
-            <td><%= af.collection_select( :superior_id, @superiors, :id, :name, {class: 'form-control'}) %></td>
+            <td><%= af.collection_select( :superior_id_overtime, @superiors, :id, :name, {class: 'form-control'}) %></td>
             <%= af.hidden_field :status_overtime, :value => 1, class:'form-control' %>
           </tr>
           <% end %>

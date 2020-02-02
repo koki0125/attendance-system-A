@@ -9,7 +9,7 @@ class AddColumnToAttendances < ActiveRecord::Migration[5.1]
     add_column :attendances, :status_modified,        :integer, default: 0 # 編集承認ステータス
     add_column :attendances, :status_overtime,        :integer, default: 0 # 残業承認ステータス
     add_column :attendances, :status_month,           :integer, default: 0 # ひと月承認ステータス
-    add_column :attendances, :superior_id,            :integer # 上長ID
+    add_column :attendances, :superior_id,            :integer # 上長ID  のちにカラム名変更される
     add_column :attendances, :tomorrow,               :boolean, default: false # 翌日フラグ
   end
 end

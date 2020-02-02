@@ -20,7 +20,7 @@
           </thead>
           <tbody>
           <!--  -->
-            <% user.attendances.where_status_approval(1).where_superior_id(@user.id).each do |appli| %>
+            <% user.attendances.where_status_approval(1).where_superior_id_month(@user.id).each do |appli| %>
               <%= fields_for "attendances[]", appli do |f_appli| %>
               <tr>
                 <td><%= appli.attendance_day.to_s(:day) %></td>

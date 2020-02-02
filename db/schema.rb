@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_12_27_003854) do
+ActiveRecord::Schema.define(version: 2020_02_02_050945) do
 
   create_table "attendances", force: :cascade do |t|
     t.integer "user_id"
@@ -28,8 +28,10 @@ ActiveRecord::Schema.define(version: 2018_12_27_003854) do
     t.integer "status_modified", default: 0
     t.integer "status_overtime", default: 0
     t.integer "status_month", default: 0
-    t.integer "superior_id"
+    t.integer "superior_id_overtime"
     t.boolean "tomorrow", default: false
+    t.integer "superior_id_month"
+    t.integer "superior_id_modified"
     t.index ["user_id"], name: "index_attendances_on_user_id"
   end
 

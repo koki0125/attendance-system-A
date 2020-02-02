@@ -150,8 +150,7 @@
         <!--13項：業務処理内容-->
         <td><%= d.reason.to_s if d.reason.present? %></td>
         <!--14項：指示者確認印-->
-        <!--<td><%#= User.find(d.superior_id).name+" に残業申請中" if d.superior_id.present? && d.status_overtime == 1 %> </td>-->
-        <td><%= superior_response(d.superior_id, d.status_overtime, d.status_modified) %> </td>
+        <td><%= superior_response(d) %> </td>
       </tr>
       <% end %>
       <!-- 最後の一行 -->
@@ -166,7 +165,18 @@
         <td></td>
         <td></td>
         <td></td>
-        <td></td>
+        <td>
+          <!-- if句 ステータスに応じて-->
+          <%= form_with(model: @days.first, url: submit_month_path(@user), local: true) do |f| %>
+            <%= fields_for :attendances do |fm| %>
+              <%= fm.hidden_field :id, :value => @first_day %>
+              <%= fm.collection_select( :superior_id_month, @superiors, :id, :name, {:include_blank => true, :selected => false, class: 'form-control'}) %>
+              <%= fm.hidden_field( :status_month, :value => 1 ) %>
+            <% end %>
+            <br>
+          <%= f.submit '　　申請　　', class: 'btn btn-attendance btn-primary' %>
+          <% end %>
+        </td>
       </tr>
     </tbody>
   </table>

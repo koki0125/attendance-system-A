@@ -35,8 +35,8 @@ module UsersHelper
   end
   
   # 上長ステータスの表示用（残業申請>勤怠編集申請）
-  def superior_response(d_superior_id, d_status_o, d_status_m)
-    return d_status_o != 0 ? (superior_response_o(d_superior_id, d_status_o)) : ( d_status_m != 0 ? (superior_response_m(d_superior_id, d_status_m)) : nil )
+  def superior_response(d)
+    return d[:status_overtime] != 0 ? (superior_response_o( d[:superior_id_overtime], d[:status_overtime] )) : ( d[:status_modified] != 0 ? (superior_response_m(d[:superior_id_modified], d[:status_modified])) : nil )
   end
     
   

@@ -23,7 +23,10 @@ Rails.application.routes.draw do
   post    '/basic_info_edit/:id',     to: 'users#basic_info_edit', as:"basic_info_edit"
   get     '/working_employees_index', to: 'users#working_employees_index'
   
-   # attendances
+  # attendances
+  # １ヶ月分の勤怠承認申請
+  patch   '/submit_month',            to: 'attendances#submit_month'
+   
   # 勤怠変更申請
   post    '/update_all',              to: 'attendances#update_all'
   

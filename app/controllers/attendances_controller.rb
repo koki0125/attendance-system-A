@@ -35,6 +35,13 @@ class AttendancesController < ApplicationController
     end
   end
 
+  def submit_month
+    @user = User.find(params[:user_id])
+    
+    puts error
+    redirect_to @user and return
+  end
+
 # 勤怠編集画面(申請ボタン)
   def update_all
     @user = User.find(params[:id])
@@ -45,7 +52,7 @@ class AttendancesController < ApplicationController
       attendance = Attendance.find(id)
 
       # 上長選択してる日のみ
-      if item["superior_id"].present?
+      if item["superior_id_modified"].present?
 
         # 当日以降の編集はadminユーザのみ
         if attendance.attendance_day > Date.current && !current_user.admin?
@@ -64,7 +71,7 @@ class AttendancesController < ApplicationController
           attendance.update_attributes(item)
           flash[:success] = '勤怠編集を申請しました。なお本日以降の申請はできません。'
         end
-      end # superior_idの締め
+      end # superior_id_modifiedの締め
     end # eachの締め
     redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
   end
@@ -103,7 +110,7 @@ class AttendancesController < ApplicationController
   def check_approval
     @user = User.find(params[:id])
     # 残業申請しているusers
-    @appli_users = User.join_attendances.merge(Attendance.where_status_approval(1).where_superior_id(@user.id))
+    @appli_users = User.join_attendances.merge(Attendance.where_status_approval(1).where_superior_id_month(@user.id))
     # 重複したuser_idを除外
     @appli_users_uniq = @appli_users.uniq
   end
@@ -125,7 +132,7 @@ class AttendancesController < ApplicationController
   def check_modified
     @user = User.find(params[:id])
     # 残業申請しているusers
-    @appli_users = User.join_attendances.merge(Attendance.where_status_modified(1).where_superior_id(@user.id))
+    @appli_users = User.join_attendances.merge(Attendance.where_status_modified(1).where_superior_id_modified(@user.id))
     # 重複したuser_idを除外
     @appli_users_uniq = @appli_users.uniq
   end
@@ -148,7 +155,7 @@ class AttendancesController < ApplicationController
   def check_overtime
     @user = User.find(params[:id])
     # 残業申請しているusers
-    @appli_users = User.join_attendances.merge(Attendance.where_status_overtime(1).where_superior_id(@user.id))
+    @appli_users = User.join_attendances.merge(Attendance.where_status_overtime(1).where_superior_id_overtime(@user.id))
     # 重複したuser_idを除外
     @appli_users_uniq = @appli_users.uniq
   end
@@ -172,14 +179,14 @@ class AttendancesController < ApplicationController
     def attendances_params
       params.permit(attendances: [ :id, :started_time, :finished_time, :expected_finish_time,
                                   :detail, :reason, :modified_started_time, :modified_finished_time,
-                                  :tomorrow, :superior_id, :status_modified, :status_overtime,
-                                  :status_month])[:attendances]
+                                  :tomorrow, :superior_id_month, :superior_id_modified, :superior_id_overtime,
+                                  :status_modified, :status_overtime, :status_month])[:attendances]
     end
     
     # 残業申請用
     def overtime_params
       params.require(:user).permit( attendances: [:id, :overtime,
                                    :expected_finish_time, :reason,
-                                   :tomorrow, :superior_id, :status_overtime])[:attendances]
+                                   :tomorrow, :superior_id_overtime, :status_overtime])[:attendances]
     end
 end

@@ -7,7 +7,9 @@ class Attendance < ApplicationRecord
   scope :where_status_modified, ->(status_modified) { where(status_modified: status_modified) }
   scope :where_status_overtime, ->(status_overtime) { where(status_overtime: status_overtime) }
   
-  scope :where_superior_id, ->(superior_id) { where(superior_id: superior_id) }
+  scope :where_superior_id_month,    ->(superior_id_month)    { where(superior_id_month:    superior_id_month) }
+  scope :where_superior_id_modified, ->(superior_id_modified) { where(superior_id_modified: superior_id_modified) }
+  scope :where_superior_id_overtime, ->(superior_id_overtime) { where(superior_id_overtime: superior_id_overtime) }
   
   # 'self.'はクラスメソッドにつける
   # overtime_params[:expected_finish_time] をDateTime型に整形して@overtime_params全体を返す :tomorrow処理

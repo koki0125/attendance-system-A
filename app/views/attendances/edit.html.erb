@@ -68,7 +68,7 @@
               <!--7項：備考-->
               <td><%= tf.text_field :detail, class: 'form-control' %></td>
               <!--8項：支持者確認㊞-->
-              <td><%= tf.collection_select( :superior_id, @superiors, :id, :name, {:include_blank => true, :selected => false, class: 'form-control'}) %></td>
+              <td><%= tf.collection_select( :superior_id_modified, @superiors, :id, :name, {:include_blank => true, :selected => false, class: 'form-control'}) %></td>
               <!---->
               <%= tf.hidden_field :attendance_day, :value => d.attendance_day %>
               <!--編集ステータス1-->
