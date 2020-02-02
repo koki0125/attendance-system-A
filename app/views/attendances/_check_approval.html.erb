@@ -14,7 +14,6 @@
             </tr>
           </thead>
           <tbody>
-          <!--  -->
             <% user.attendances.where_status_month(1).where_superior_id_month(@user.id).each do |appli| %>
               <%= fields_for "attendances[]", appli do |f_appli| %>
               <tr>

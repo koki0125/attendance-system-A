@@ -124,12 +124,13 @@ class AttendancesController < ApplicationController
 # showで反映の結果確認
   def res_approval
     @user =  User.find(params[:id])
-    @overtimes = params[:attendances]
-    @approval_overtime = Attendance.approval_overtime(attendances_params,@overtimes)
+    params[:attendances].permit!
     
-    @approval_overtime.each do |id, item|
-      attendances = Attendance.find(id)
-      attendances.update!(item)
+    params[:attendances].each do |p|
+      if p[1][:modified] == "1"
+        Attendance.find(p[0])
+        Attendance.find(p[0]).update(p[1])
+      end
     end
     redirect_to @user and return
   end
