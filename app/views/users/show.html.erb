@@ -167,9 +167,9 @@
         <td></td>
         <td>
           <!-- if句 ステータスに応じて-->
-          <%= form_with(model: @days.first, url: submit_month_path(@user), local: true) do |f| %>
+          <%= form_with(model: @days.first, url: submit_month_path(user_id: @user), local: true) do |f| %>
             <%= fields_for :attendances do |fm| %>
-              <%= fm.hidden_field :id, :value => @first_day %>
+              <%= fm.hidden_field :attendance_day,      :value => @first_day %>
               <%= fm.collection_select( :superior_id_month, @superiors, :id, :name, {:include_blank => true, :selected => false, class: 'form-control'}) %>
               <%= fm.hidden_field( :status_month, :value => 1 ) %>
             <% end %>

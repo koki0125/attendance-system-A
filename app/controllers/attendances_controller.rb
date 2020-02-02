@@ -35,10 +35,15 @@ class AttendancesController < ApplicationController
     end
   end
 
+# 勤怠承認申請ボタン
   def submit_month
     @user = User.find(params[:user_id])
-    
-    puts error
+    if Attendance.find_by(attendance_day: params[:attendances][:attendance_day]).update(attendances_params)
+      flash[:success] = '１ヶ月分の勤怠承認を申請しました。'
+    else
+      puts error
+      flash[:alert] = '１ヶ月分の勤怠承認申請に失敗しました'
+    end
     redirect_to @user and return
   end
 
