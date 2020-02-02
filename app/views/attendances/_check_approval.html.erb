@@ -7,12 +7,7 @@
         <table class="table table-bordered table-striped table-condensed users_show-table">
           <thead>
             <tr>
-              <th>日付</th>
-              <th>曜日</th>
-              <th>終了予定時間</th>
-              <th>指定勤務時間</th>
-              <th>時間外時間</th>
-              <th>業務処理内容</th>
+              <th>月</th>
               <th>指示者確認印</th>
               <th>変更</th>
               <th>勤怠を確認する</th>
@@ -20,16 +15,11 @@
           </thead>
           <tbody>
           <!--  -->
-            <% user.attendances.where_status_approval(1).where_superior_id_month(@user.id).each do |appli| %>
+            <% user.attendances.where_status_month(1).where_superior_id_month(@user.id).each do |appli| %>
               <%= fields_for "attendances[]", appli do |f_appli| %>
               <tr>
-                <td><%= appli.attendance_day.to_s(:day) %></td>
-                <td><%= WEEK[appli.attendance_day.wday] %></td>
-                <td><%= appli.expected_finish_time.strftime("%R") %></td>
-                <td><%= user.designated_finish_time.strftime("%R") %></td>
-                <td><%= calculate_approval(appli.expected_finish_time.strftime("%F %R"), user.designated_finish_time.strftime("#{appli.attendance_day.strftime("%F")} %R")) %></td>
-                <td><%= appli.reason %></td>
-                <td><%= f_appli.select( :status_approval, STATUS, {class: 'form-control'} ) %></td>
+                <td><%= appli.attendance_day.strftime("%m月") %></td>
+                <td><%= f_appli.select( :status_month, STATUS, {class: 'form-control'} ) %></td>
                 <td><%= f_appli.check_box(:modified, { style:"width: 14px; height: 14px;"}, checked_value = 1, unchecked_value = 0) %></td>
                 <td><%= link_to "確認", user_path(id: user.id, first_day: appli.attendance_day.beginning_of_month), class: "btn btn-sm btn-primary", :target=>["_blank"] %></td>
               </tr>

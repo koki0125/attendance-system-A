@@ -54,8 +54,6 @@ module UsersHelper
           "残業承認済 勤怠編集否認" #これ以降、勤怠編集禁止の意味
         when 3
           "残業否認 勤怠編集承認済" #
-        else
-          nil
       end
     end
   end
@@ -74,9 +72,25 @@ module UsersHelper
           "勤怠編集承認済" # 承認
         when 3
           "勤怠編集否認" # 否認
-        else
-          nil
       end
+    end
+  end
+
+  # 
+  def superior_response_month(day)
+    d = Attendance.find(day[:id])
+    # puts error
+    if d.status_month.present?
+      case d.status_month
+        when 1
+          "所属長承認　"+ User.find(d.superior_id_month).name+" に申請中"
+        when 2
+          "所属長承認　"+ User.find(d.superior_id_month).name+" から承認済み"
+        when 3
+          "所属長承認　"+ User.find(d.superior_id_month).name+" から否認されました"
+      end
+    else
+      "所属長承認　未"
     end
   end
 end

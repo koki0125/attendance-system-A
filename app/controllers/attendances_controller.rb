@@ -38,10 +38,9 @@ class AttendancesController < ApplicationController
 # 勤怠承認申請ボタン
   def submit_month
     @user = User.find(params[:user_id])
-    if Attendance.find_by(attendance_day: params[:attendances][:attendance_day]).update(attendances_params)
+    if @user.attendances.find_by(attendance_day: params[:attendances][:attendance_day]).update(attendances_params)
       flash[:success] = '１ヶ月分の勤怠承認を申請しました。'
     else
-      puts error
       flash[:alert] = '１ヶ月分の勤怠承認申請に失敗しました'
     end
     redirect_to @user and return
@@ -115,12 +114,14 @@ class AttendancesController < ApplicationController
   def check_approval
     @user = User.find(params[:id])
     # 残業申請しているusers
-    @appli_users = User.join_attendances.merge(Attendance.where_status_approval(1).where_superior_id_month(@user.id))
+    @appli_users = User.join_attendances.merge(Attendance.where_status_month(1).where_superior_id_month(@user.id))
     # 重複したuser_idを除外
     @appli_users_uniq = @appli_users.uniq
   end
 
 # 残業申請回答
+# 更新処理
+# showで反映の結果確認
   def res_approval
     @user =  User.find(params[:id])
     @overtimes = params[:attendances]
