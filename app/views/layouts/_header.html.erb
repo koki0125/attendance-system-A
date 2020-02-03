@@ -11,6 +11,7 @@
           <% if current_user.admin? %>
             <li><%= link_to "社員一覧", users_path %></li>
             <li><%= link_to "出勤中社員一覧", working_employees_index_path %></li>
+            <li><%= link_to "基本情報の更新", rule_path %></li>
             <li><%= link_to "拠点情報の修正", base_edit_path %></li>
           <% end %>
         <% if @user.presence %>

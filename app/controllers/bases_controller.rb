@@ -6,4 +6,10 @@ class BasesController < ApplicationController
   
   def edit
   end
+  
+  private
+        # 管理者かどうかを確認
+    def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end
 end

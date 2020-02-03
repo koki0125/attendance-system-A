@@ -6,8 +6,10 @@ Rails.application.routes.draw do
   resources :attendances
   resources :password_resets,         only: [:new, :create, :edit, :update]
   
-  
+  # home
   root   'home#top'
+  get    '/rule',                     to: 'home#rule'
+  
   # sessions
   post    '/login',                   to: 'sessions#create'
   get     '/login',                   to: 'sessions#new'
