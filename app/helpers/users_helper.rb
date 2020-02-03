@@ -4,7 +4,7 @@ module UsersHelper
   def working_hours(a,b)
     startedtime = Time.mktime(a.year, a.month, a.day, a.hour, a.min, 0, 0)
     finishedtime = Time.mktime(b.year, b.month, b.day, b.hour, b.min, 0, 0)
-    return ( ( (finishedtime - startedtime) / 60) / 60).truncate(2)
+    (((finishedtime - startedtime) / 60) / 60).truncate(2)
   end
   
   # 引数の時刻データの秒を０にして差を求める
@@ -67,7 +67,7 @@ module UsersHelper
     if d_superior_id.present?
       case d_status
         when 1
-          User.find(d_superior_id).name+" に勤怠編集申請中"
+          User.find(d_superior_id).name+" に���怠編集申請中"
         when 2
           "勤怠編集承認済" # 承認
         when 3

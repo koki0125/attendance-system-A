@@ -1,6 +1,7 @@
 require "time"
 
 class AttendancesController < ApplicationController
+  before_action :correct_user,   only: %i[edit]
 
 # 勤怠編集画面 
   def edit
@@ -197,5 +198,16 @@ class AttendancesController < ApplicationController
       params.require(:user).permit( attendances: [:id, :overtime,
                                    :expected_finish_time, :reason,
                                    :tomorrow, :superior_id_overtime, :status_overtime])[:attendances]
+    end
+    
+        # beforeフィルター
+
+    # 正しいユーザーかどうかを確認
+    def correct_user
+      @user = User.find(params[:id])
+      redirect_to(root_url) unless current_user?(@user) || current_user.superior
+      if current_user.admin?
+        redirect_to(root_url)
+      end
     end
 end
