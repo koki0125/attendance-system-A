@@ -166,7 +166,7 @@
         <td></td>
         <td></td>
         <td>
-          <%#= superior_response_month(@days.first) %>
+          <%= superior_response_month(@days.first) %>
           <br>
           <% if @user == current_user %>
             <%= form_with(model: @days.first, url: submit_month_path(user_id: @user), local: true) do |f| %>
