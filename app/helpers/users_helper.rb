@@ -69,7 +69,7 @@ module UsersHelper
         when 1
           User.find(d_superior_id).name+" に勤怠編集申請中"
         when 2
-          "勤怠編集承認済" # 承認
+          "勤怠編集承認��" # 承認
         when 3
           "勤怠編集否認" # 否認
       end

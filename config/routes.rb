@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   get 'bases/edit'
 
   resources :users
+  resources :bases
   resources :attendances
   resources :password_resets,         only: [:new, :create, :edit, :update]
   
@@ -48,5 +49,5 @@ Rails.application.routes.draw do
   patch   '/res_overtime',            to: 'attendances#res_overtime'
 
 # bases
-  get     '/base_edit/',              to: 'bases#edit'
+
 end
