@@ -135,7 +135,6 @@ class UsersController < ApplicationController
   end
   
   def update
-    # debugger
     if @user.update_attributes(user_params)
       flash[:success] = "プロフィールを更新しました"
       if current_user.admin?
