@@ -47,6 +47,9 @@ Rails.application.routes.draw do
   # 残業申請　確認・承認
   get     '/check_overtime',          to: 'attendances#check_overtime'
   patch   '/res_overtime',            to: 'attendances#res_overtime'
+  
+  # 勤怠修正ログ
+  get     '/modified_log',        to: 'attendances#modified_log'
 
 # bases
 

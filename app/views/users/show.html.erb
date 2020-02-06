@@ -63,7 +63,7 @@
     <!-- 一般ユーザー共通ボタン類 -->  
     <%= link_to "勤怠を編集", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
     <%= link_to "CSV出力", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
-    <%= link_to "勤怠修正ログ（承認済み）", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
+    <%= link_to "勤怠修正ログ（承認済み）", modified_log_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
   <% end %>
   <div id="form_overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <div id="check_approval-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
@@ -122,7 +122,7 @@
         <!--５項：出社ボタン表示（当日かつ出社時間が存在しない場合）-->
         <td>
           <% if d.attendance_day == Date.current && d.started_time.nil? && @user == current_user %>
-            <%= button_to "出社",startedtime_create_path(@user,params:{id: @user.id}),{class: "btn btn-attendance btn-default"}%>
+            <%= button_to "出社",startedtime_create_path(@user,params:{id: @user.id}),{class: "btn btn-attendance btn-default"} %>
           <% end %>
         </td>
         <!--６〜７項：退社時間表示（データが存在する場合）-->

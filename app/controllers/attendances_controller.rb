@@ -172,7 +172,7 @@ class AttendancesController < ApplicationController
 
 # 残業申請回答
   def res_overtime
-    @user =  User.find(params[:id])
+    @user = User.find(params[:id])
     @overtimes = params[:attendances]
     @approval_overtime = Attendance.approval_overtime(attendances_params,@overtimes)
     
@@ -181,6 +181,11 @@ class AttendancesController < ApplicationController
       attendances.update!(item)
     end
     redirect_to @user and return
+  end
+  
+  # 勤怠修正ログ
+  def modified_log
+    @user = User.find(params[:id])
   end
   
   # プライベート
