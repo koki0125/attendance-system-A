@@ -3,7 +3,8 @@ class Attendance < ApplicationRecord
   validates :user_id, presence: true
   attr_accessor :modified  # modelにないけど、form_withでフラグとして使いたかったため
   
-  scope :where_status_month,    ->(status_month)    { where(status_month:    status_month) }
+  scope :where_users_firstday,  ->(attendance_day)  { where(attendance_day:  attendance_day ) }
+  scope :where_status_month,    ->(status_month)    { where(status_month:    status_month   ) }
   scope :where_status_modified, ->(status_modified) { where(status_modified: status_modified) }
   scope :where_status_overtime, ->(status_overtime) { where(status_overtime: status_overtime) }
   
@@ -67,6 +68,12 @@ class Attendance < ApplicationRecord
       end
     end
     return @checked_overtimes
+  end
+  
+  # 上長の名前
+  def self.superior_name(id)
+    @superior = User.find(id)
+    return @superior.name
   end
   
   

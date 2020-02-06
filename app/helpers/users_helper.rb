@@ -34,7 +34,7 @@ module UsersHelper
     return ( ( (expected_finish_time - designated_finish_time) / 60) / 60).truncate(2)
   end
   
-  # 上長ステータスの表示用（残業申請>勤怠編集申請）
+  # 上長ステータスの表示用（残業申請>勤怠編集申請）残業申請の方が優先
   def superior_response(d)
     return d[:status_overtime] != 0 ? (superior_response_o( d[:superior_id_overtime], d[:status_overtime] )) : ( d[:status_modified] != 0 ? (superior_response_m(d[:superior_id_modified], d[:status_modified])) : nil )
   end
@@ -69,7 +69,7 @@ module UsersHelper
         when 1
           User.find(d_superior_id).name+" に勤怠編集申請中"
         when 2
-          "勤怠編集承認��" # 承認
+          "勤怠編集承認済" # 承認
         when 3
           "勤怠編集否認" # 否認
       end

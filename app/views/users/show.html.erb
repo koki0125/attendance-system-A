@@ -63,12 +63,13 @@
     <!-- 一般ユーザー共通ボタン類 -->  
     <%= link_to "勤怠を編集", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
     <%= link_to "CSV出力", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
-    <%= link_to "勤怠修正ログ（承認済み）", modified_log_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
+    <%= link_to "勤怠修正ログ（承認済み）", modified_log_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary", remote: true %>
   <% end %>
   <div id="form_overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <div id="check_approval-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <div id="check_modified-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <div id="check_overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
+  <div id="modified_log-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
   <!-- 最初の一行目    -->
   <table class="table table-bordered table-striped table-condensed users_show-table">
     <thead>

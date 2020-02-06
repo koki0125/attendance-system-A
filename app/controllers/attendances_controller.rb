@@ -186,6 +186,24 @@ class AttendancesController < ApplicationController
   # 勤怠修正ログ
   def modified_log
     @user = User.find(params[:id])
+    @first_day = @user.attendances.find_by(attendance_day: params[:first_day])
+    # @first_day = @first_day[:attendance_day]
+    @last_day = @first_day[:attendance_day].end_of_month
+    
+    # 当月を昇順で取得し@daysへ代入
+    @days = @user.attendances.where('attendance_day >= ? and attendance_day <= ?', \
+    @first_day, @last_day).order('attendance_day')
+    @modified_days = []
+    @days.each do |d|
+      if d.status_modified == 2 || d.status_overtime == 2
+        @modified_days.push(d)
+
+# 残業申請が優先的　if文書き換える
+      end
+    end
+    # 
+    # 
+# puts error
   end
   
   # プライベート

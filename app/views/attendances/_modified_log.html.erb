@@ -1,0 +1,36 @@
+<div class="modal-dialog">
+  <div class="modal-content" style="padding:30px;">
+    <h3 style="text-align:center;">勤怠ログ</h3>
+    <div class="row">
+      <%= button_to 'リセット', modified_log_path(@user, params:{id: @user.id}),{class: "btn btn-attendance btn-default"} %>
+    
+      <table class="table table-bordered table-striped table-condensed users_show-table">
+          <thead>
+            <tr>
+              <th>日付</th>
+              <th>変更前出社時間</th>
+              <th>変更前退社時間</th>
+              <th>変更後出社</th>
+              <th>変更後退社</th>
+              <th>指示者</th>
+              <th>承認日</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!--each-->
+            <% @modified_days.each do |d| %>
+            <tr>
+              <td><%= d.attendance_day.strftime("%Y/%m/%d") %></td>
+              <td><%= d.started_time.strftime("%H:%M") if d.started_time.present? %></td>
+              <td><%= d.finished_time.strftime("%H:%M") if d.finished_time.present? %></td>
+              <td><%= d.modified_started_time.strftime("%H:%M") if d.modified_started_time.present? %></td>
+              <td><%= d.modified_finished_time.strftime("%H:%M") if d.modified_finished_time.present? %></td>
+              <td><%= Attendance.superior_name(d.superior_id_modified || d.superior_id_overtime) %></td>
+              <td><%= d.updated_at.strftime("%Y/%m/%d") %></td>
+            </tr>
+            <% end %>
+          </tbody>
+        </table> 
+    </div>
+  </div>
+</div>
