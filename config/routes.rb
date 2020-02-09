@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   post    '/startedtime_create',      to: 'users#started_time'
   post    '/finishedtime_creat',      to: 'users#finished_time'
   post    '/csv_import',              to: 'users#csv_import'
-  get     '/csv_export',              to: 'users#csv_export' 
+  post    '/csv_export',              to: 'users#csv_export' 
   get     'home/top'
   get     '/basic_info/:id',          to: 'users#basic_info', as:"basic_info"
   post    '/basic_info_edit/:id',     to: 'users#basic_info_edit', as:"basic_info_edit"
