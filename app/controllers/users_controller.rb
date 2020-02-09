@@ -79,9 +79,9 @@ class UsersController < ApplicationController
       # 在社時間の集計、ついでに出勤日数も
       i = 0
       @days.each do |d|
-        if d.started_time.present? && d.finished_time.present?
+        if started_time_for_total(d).present? && finished_time_for_total(d).present?
           second = 0
-          second = times(d.started_time,d.finished_time)  #times = users_helperで定義している
+          second = times(started_time_for_total(d),finished_time_for_total(d))  #times = users_helperで定義している
           @total_time = @total_time.to_i + second.to_i
           i = i + 1
         end

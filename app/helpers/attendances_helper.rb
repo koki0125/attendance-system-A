@@ -19,7 +19,7 @@ module AttendancesHelper
     return Time.at(sec).utc.strftime("%R")
   end
   
-  # 表示用
+  # 表示用 for modified_log
   def fixed_started_time(d)
     if d.modified_started_time.present?
       return d.modified_started_time.strftime("%H:%M")
@@ -28,7 +28,7 @@ module AttendancesHelper
     end 
   end
   
-  # 表示用
+  # 表示用 for modified_log
   def fixed_finished_time(d)
     if d.modified_finished_time.present?
       return d.modified_finished_time.strftime("%H:%M")

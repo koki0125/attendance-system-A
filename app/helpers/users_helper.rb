@@ -19,7 +19,6 @@ module UsersHelper
     format("%.2f", ((t.hour * 60.0) + t.min)/60) if !t.blank?
   end
   
-  
   # 引数で与えられたユーザーのGravatar画像を返す
   def gravatar_for(user, size: 80)
     gravatar_id = Digest::MD5::hexdigest(user.email.downcase)
@@ -93,4 +92,67 @@ module UsersHelper
       "所属長承認　未"
     end
   end
+  
+# users/show
+  # 表示できる時間 出社
+  def show_started_time_h(d)
+    if d.status_modified == 2
+      hour = d.modified_started_time&.to_s(:hour) 
+    else
+      hour = d.started_time&.to_s(:hour) 
+    end
+    return hour
+  end
+  
+  def show_started_time_m(d)
+    if d.status_modified == 2
+      minute = d.modified_started_time&.to_s(:minute) 
+    else
+      minute = d.started_time&.to_s(:minute) 
+    end
+    return minute
+  end
+  
+  # 表示できる時間 退社
+  def show_finished_time_h(d)
+    if d.status_modified == 2
+      hour = d.modified_finished_time&.to_s(:hour) 
+    else
+      hour = d.finished_time&.to_s(:hour)
+    end 
+    return hour
+  end
+  
+  def show_finished_time_m(d)
+    if d.status_modified == 2
+      minute = d.modified_finished_time&.to_s(:minute) 
+    else
+      minute = d.finished_time&.to_s(:minute)
+    end
+    return minute
+  end
+
+  # @total_time計算用にfixした出社時間をわたす
+  def started_time_for_total(d)
+    if d.status_modified == 2
+      started_time = d.modified_started_time
+    else
+      started_time = d.started_time
+    end
+    return started_time
+  end
+  
+  # @total_time計算用にfixした退社時間をわたす
+  def finished_time_for_total(d)
+    if d.status_overtime == 2
+      finished_time = d.expected_finish_time
+    elsif d.status_modified == 2
+      finished_time = d.modified_finished_time
+    else
+      finished_time = d.finished_time
+    end
+    return finished_time
+  end
+  
+  
 end
