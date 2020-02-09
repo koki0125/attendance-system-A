@@ -6,8 +6,8 @@ CSV.generate do |csv|
   @days.each do |d|
   column_values = [
     d.attendance_day,
-    started_time_for_total(d),
-    finished_time_for_total(d)
+    started_time_for_total(d)&.strftime("%H:%M"),
+    finished_time_for_total(d)&.strftime("%H:%M")
     ]
     csv << column_values
   end

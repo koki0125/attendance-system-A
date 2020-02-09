@@ -62,7 +62,7 @@
     <% end %>
     <!-- 一般ユーザー共通ボタン類 -->  
     <%= link_to "勤怠を編集", edit_attendance_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
-    <%= link_to "CSV出力", csv_export_path(format: :csv, params:{id: @user.id, first_day: @first_day}), method: :post, class: "btn btn-sm btn-primary" %>
+    <%= link_to "CSV出力", csv_export_path(format: :csv, params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary" %>
     <%= link_to "勤怠修正ログ（承認済み）", modified_log_path(params:{id: @user.id, first_day: @first_day}), class: "btn btn-sm btn-primary", remote: true %>
   <% end %>
   <div id="form_overtime-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true"></div>
