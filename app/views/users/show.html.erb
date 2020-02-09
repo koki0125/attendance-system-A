@@ -39,7 +39,7 @@
       <% if @appli_approval.count == 0 %>
         <p style="margin-bottom: 5px; color: gray;">【所属長承認申請のお知らせ】</p>
       <% else %>
-        <p style="margin-bottom: 5px; color: black;">【勤怠変更申請のお知らせ】
+        <p style="margin-bottom: 5px; color: black;">【所属長承認申請のお知らせ】
         <%= link_to @approvals, check_approval_path(params:{id: @user.id}), style: "color:red; border: solid 2px red; padding: 2px 5px;", remote: true %>
         </p>
       <% end %>
@@ -138,7 +138,7 @@
         </td>
         <!--９項：在社時間表示（出社時間と退社時間がどちらもある）-->
         <td>
-          <%= working_hours(d.started_time,d.finished_time) if d.started_time.present? && d.finished_time.present? %>
+          <%= working_hours(started_time_for_total(d),finished_time_for_total(d)) if started_time_for_total(d).present? && finished_time_for_total(d).present? %>
         </td>
         <!--10項：備考-->
         <td><%= d.detail %></td>
