@@ -203,7 +203,18 @@ class UsersController < ApplicationController
     end
     redirect_to users_path
   end
-
+  
+  # CSV出力
+  def csv_export
+    @user = User.find(params[:id])
+    @first_day = Date.parse(params[:first_day])
+    @last_day = @first_day.end_of_month
+    # 当月を昇順で取得し@daysへ代入
+    @days = @user.attendances.where('attendance_day >= ? and attendance_day <= ?', \
+    @first_day, @last_day).order('attendance_day')
+    flash[:success] = "CSV出力しました"
+    redirect_to @user
+  end
 
   private
 

@@ -1,6 +1,12 @@
 <header class="navbar navbar-fixed-top navbar-inverse">
   <div class="container">
-    <%= link_to "勤怠システム", root_path, class: "navbar-brand" %>
+    <% if current_user&.admin? %>
+      <%= link_to "勤怠システム", users_path, class: "navbar-brand" %>
+    <% elsif logged_in? %>
+      <%= link_to "勤怠システム", user_url(@user, params:{first_day: @first_day }), class: "navbar-brand" %>
+    <% else %>
+      <%= link_to "勤怠システム", root_path, class: "navbar-brand" %>
+    <% end %>
     <nav>
       <ul id="navnav" class="nav navbar-nav navbar-right">
       <% if logged_in? %>
@@ -16,7 +22,6 @@
           <% end %>
         <% if @user.presence %>
           <li><%= link_to "トップへ", user_url(@user, params:{first_day: @first_day }) %></li>
-          <!--<li><%#= link_to "基本情報の修正", basic_info_path(@user) %></li>-->
         <% end %>
           <li class="dropdown">
             <a href="#" id="dropdown_ac" class="dropdown-toggle" data-toggle="dropdown">
