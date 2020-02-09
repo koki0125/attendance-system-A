@@ -192,7 +192,7 @@ class AttendancesController < ApplicationController
     
     # 当月を昇順で取得し@daysへ代入
     @days = @user.attendances.where('attendance_day >= ? and attendance_day <= ?', \
-    @first_day, @last_day).order('attendance_day')
+    "%@first_day%", "%@last_day%").order('attendance_day')
     @modified_days = []
     @days.each do |d|
       if d.status_modified == 2 || d.status_overtime == 2
