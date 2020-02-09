@@ -186,9 +186,9 @@ class AttendancesController < ApplicationController
   # 勤怠修正ログ
   def modified_log
     @user = User.find(params[:id])
-    @first_day = @user.attendances.find_by(attendance_day: params[:first_day])
+    @first_day = Date.parse(params[:first_day])
     # @first_day = @first_day[:attendance_day]
-    @last_day = @first_day[:attendance_day].end_of_month
+    @last_day = @first_day.end_of_month
     
     # 当月を昇順で取得し@daysへ代入
     @days = @user.attendances.where('attendance_day >= ? and attendance_day <= ?', \
