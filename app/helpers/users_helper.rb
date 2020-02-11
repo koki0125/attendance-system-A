@@ -78,18 +78,15 @@ module UsersHelper
   # 
   def superior_response_month(day)
     d = Attendance.find(day[:id])
-    # puts error
-    if d.status_month.present?
-      case d.status_month
-        when 1
-          "所属長承認　"+ User.find(d.superior_id_month).name+" に申請中"
-        when 2
-          "所属長承認　"+ User.find(d.superior_id_month).name+" から承認済み"
-        when 3
-          "所属長承認　"+ User.find(d.superior_id_month).name+" から否認されました"
-      end
-    else
-      "所属長承認　未"
+    case d.status_month
+      when 1
+        "所属長承認　"+ User.find(d.superior_id_month).name+" に申請中"
+      when 2
+        "所属長承認　"+ User.find(d.superior_id_month).name+" から承認済み"
+      when 3
+        "所属長承認　"+ User.find(d.superior_id_month).name+" から否認されました"
+      else
+        "所属長承認　未"
     end
   end
   
