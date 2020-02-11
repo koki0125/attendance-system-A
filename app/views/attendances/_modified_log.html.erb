@@ -28,8 +28,8 @@
         <tr>
           <td><%= d.attendance_day.strftime("%Y/%m/%d") %></td>
           <!--変更前時間-->
-          <td><%= d.started_time.strftime("%H:%M") if d.started_time.present? %></td>
-          <td><%= d.finished_time.strftime("%H:%M") if d.finished_time.present? %></td>
+          <td><%= d.started_time&.strftime("%H:%M") if d.started_time.present? %></td>
+          <td><%= d.finished_time&.strftime("%H:%M") if d.finished_time.present? %></td>
           <!--変更後時間-->
           <td><%= fixed_started_time(d) %></td>
           <td><%= fixed_finished_time(d) %></td>
