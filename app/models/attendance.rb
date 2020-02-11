@@ -31,15 +31,19 @@ class Attendance < ApplicationRecord
   def self.fmt_modified_params(params)
     @params = params[:attendances]
     @params.each do |id, item|
-      if item[:tomorrow] == "1"
-        item[:modified_finished_time] = 
-        Time.zone.parse( "#{Date.parse(item[:attendance_day])+1} #{item[:modified_finished_time]}")
-      else
-        item[:modified_finished_time] = 
-        Time.zone.parse( "#{item[:attendance_day]} #{item[:modified_finished_time]}")
+      if item [:modified_finished_time].present?
+        if item[:tomorrow] == "1"
+          item[:modified_finished_time] = 
+          Time.zone.parse( "#{Date.parse(item[:attendance_day])+1} #{item[:modified_finished_time]}")
+        else
+          item[:modified_finished_time] = 
+          Time.zone.parse( "#{item[:attendance_day]} #{item[:modified_finished_time]}")
+        end
       end
+      if item[:modified_started_time].present?
       item[:modified_started_time] = 
         Time.zone.parse( "#{item[:attendance_day]} #{item[:modified_started_time]}")
+      end
     end
     return @params
   end
