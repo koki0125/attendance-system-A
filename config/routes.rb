@@ -52,6 +52,4 @@ Rails.application.routes.draw do
   # 勤怠修正ログ
   get     '/modified_log',        to: 'attendances#modified_log'
 
-# bases
-
 end

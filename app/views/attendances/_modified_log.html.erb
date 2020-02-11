@@ -1,7 +1,16 @@
 <div class="modal-dialog">
   <div class="modal-content" style="padding: 30px;">
     <h3 style="text-align:center;">勤怠ログ</h3>
-    <%= button_to 'リセット', modified_log_path(@user, params:{id: @user.id}),{class: "btn btn-attendance btn-default"} %>
+    <%= form_tag modified_log_path(@user, params:{id: @user.id}), :remote => true, method: :get do %>
+      <table class="table-bordered table-striped table-condensed users_show-table">
+        <tr>
+          <td>年月</td>
+          <td><%= select_tag :first_day, options_for_select(@first_days, :selected => @first_day) %></td>
+          <%= hidden_field_tag :id, @user.id %>
+          <%= submit_tag "リセット" %>
+        </tr>
+      </table>
+    <% end %>
     <table class="table table-bordered table-striped table-condensed users_show-table">
       <thead>
         <tr>

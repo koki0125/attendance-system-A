@@ -1,4 +1,5 @@
 require "time"
+require "date"
 
 class AttendancesController < ApplicationController
   before_action :correct_user,   only: %i[edit]
@@ -186,6 +187,16 @@ class AttendancesController < ApplicationController
   # 勤怠修正ログ
   def modified_log
     @user = User.find(params[:id])
+    @attendances = @user.attendances
+    @first_days = {}
+    # hashの形に
+    @attendances.each do |a|
+      if a.attendance_day == a.attendance_day.beginning_of_month
+        value = a.attendance_day
+        key = a.attendance_day.strftime("%Y年%m月")
+        @first_days.store(key, value)
+      end
+    end
     @first_day = Date.parse(params[:first_day])
     # @first_day = @first_day[:attendance_day]
     @last_day = @first_day.end_of_month
