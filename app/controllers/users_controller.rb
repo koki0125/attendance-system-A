@@ -212,8 +212,8 @@ class UsersController < ApplicationController
     # 当月を昇順で取得し@daysへ代入
     @days = @user.attendances.where('attendance_day >= ? and attendance_day <= ?', \
     @first_day, @last_day).order('attendance_day')
-    flash[:success] = "CSV出力しました"
-    redirect_to @user
+    # flash[:success] = "CSV出力しました"
+    # redirect_to @user
   end
 
   private
