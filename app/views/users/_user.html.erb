@@ -1,6 +1,7 @@
-<li>
-  <%= user.name %>
+<li style= "list-style:none;">
+
   <% if current_user.admin? && !current_user?(user) %>
+  <%= user.name %>
   <%# if admin_user__current_user これ使えると思う　テストしたら上と入れ替え%> 
       <!--削除ボタン-->
       <div>
