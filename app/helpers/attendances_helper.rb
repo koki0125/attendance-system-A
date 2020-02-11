@@ -22,18 +22,18 @@ module AttendancesHelper
   # 表示用 for modified_log
   def fixed_started_time(d)
     if d.modified_started_time.present?
-      return d.modified_started_time.strftime("%H:%M")
+      return d.modified_started_time&.strftime("%H:%M")
     else
-      return d.started_time.strftime("%H:%M")
+      return d.started_time&.strftime("%H:%M")
     end 
   end
   
   # 表示用 for modified_log
   def fixed_finished_time(d)
     if d.modified_finished_time.present?
-      return d.modified_finished_time.strftime("%H:%M")
+      return d.modified_finished_time&.strftime("%H:%M")
     else
-      return d.expected_finish_time.strftime("%H:%M")
+      return d.expected_finish_time&.strftime("%H:%M")
     end 
   end
   
