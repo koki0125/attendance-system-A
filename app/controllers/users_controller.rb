@@ -176,9 +176,9 @@ class UsersController < ApplicationController
   
   #出勤中社員一覧
   def working_employees_index
-    @users = User.all.paginate(page: params[:page])
+    @users = User.all
     # @user = User.find(params[:id])
-    @we = {}
+    @we = []
     @users.each do |user|
       if user.attendances.any?{ |a|
           (a.attendance_day == Date.today &&
@@ -187,9 +187,10 @@ class UsersController < ApplicationController
         }
         ##空の@weハッシュに追加する、下記両方とも同じ意味
         # @we[user.name] = user.employee_number
-        @we.store(user.name, user.employee_number)
+        @we.push(user.id)
       end
     end
+    @we = Kaminari.paginate_array(@we).page(params[:page]).per(10)
   end
   
   # CSV入力
@@ -223,7 +224,8 @@ class UsersController < ApplicationController
       params.require(:user).permit(:name, :email, :department, :password,
                                    :basic_time, :specified_working_time,
                                    :password_confirmation, :employee_number,
-                                   :designated_start_time, :designated_finish_time)
+                                   :designated_start_time, :designated_finish_time,
+                                   :card_id)
     end
     
     def search_params
