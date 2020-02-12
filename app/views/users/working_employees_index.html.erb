@@ -1,7 +1,7 @@
 <% provide(:title, '出勤中社員一覧') %>
 <h1>出勤中社員一覧</h1>
 <div class="row">
-  <%= will_paginate(:previous_label => '前', :next_label => '次') %>
+  <%= paginate @we %>
   <!-- ヘッドのテーブル部分 -->    
   <table class="table table-bordered table-striped table-condensed">
     <thead>
@@ -12,13 +12,13 @@
     </thead>
     <tbody>
     <!--each文-->
-    <% @we.each do |name, employee_number| %>
+    <% @we.each do |we| %>
       <tr>
-        <td><%= employee_number %></td>
-        <td><%= name %></td>
+        <td><%= we.employee_number %></td>
+        <td><%= we.name %></td>
       </tr>
     <% end %>
     </tbody>
   </table>
-  <%= will_paginate(:previous_label => '前', :next_label => '次') %>
+  <%= paginate @we %>
 </div>

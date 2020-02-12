@@ -177,6 +177,7 @@ class UsersController < ApplicationController
   #出勤中社員一覧
   def working_employees_index
     @users = User.all
+    # @users = User.all.paginate(page: params[:page])
     # @user = User.find(params[:id])
     @we = []
     @users.each do |user|
@@ -187,10 +188,11 @@ class UsersController < ApplicationController
         }
         ##空の@weハッシュに追加する、下記両方とも同じ意味
         # @we[user.name] = user.employee_number
-        @we.push(user.id)
+        @we.push(user)
       end
     end
-    @we = Kaminari.paginate_array(@we).page(params[:page]).per(10)
+    @we = Kaminari.paginate_array(@we).page(params[:page]).per(20)
+    # @we.paginate(page: params[:page])
   end
   
   # CSV入力
