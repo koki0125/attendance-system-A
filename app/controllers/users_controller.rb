@@ -3,7 +3,7 @@ require "csv"
 class UsersController < ApplicationController
   include UsersHelper
   before_action :logged_in_user, only: %i[index edit update destroy]
-  before_action :correct_user,   only: %i[show edit]
+  before_action :correct_user,   only: %i[show]
   before_action :admin_user,     only: %i[index basic_info destroy 
                                           working_employees_index 
                                           basic_info_edit csv_import]
