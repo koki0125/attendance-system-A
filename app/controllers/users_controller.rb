@@ -177,22 +177,17 @@ class UsersController < ApplicationController
   #出勤中社員一覧
   def working_employees_index
     @users = User.all
-    # @users = User.all.paginate(page: params[:page])
-    # @user = User.find(params[:id])
     @we = []
     @users.each do |user|
       if user.attendances.any?{ |a|
-          (a.attendance_day == Date.today &&
+          (a.attendance_day == Date.current &&
           !a.started_time.blank? && a.finished_time.blank? 
           )
         }
-        ##空の@weハッシュに追加する、下記両方とも同じ意味
-        # @we[user.name] = user.employee_number
         @we.push(user)
       end
     end
     @we = Kaminari.paginate_array(@we).page(params[:page]).per(20)
-    # @we.paginate(page: params[:page])
   end
   
   # CSV入力
