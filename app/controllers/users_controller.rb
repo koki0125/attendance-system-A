@@ -143,8 +143,8 @@ class UsersController < ApplicationController
       if @user == current_user
         redirect_to @user and return
       end
-      render 'edit'
     end
+    render 'edit'
   end
   
   def destroy
