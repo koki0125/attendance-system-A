@@ -102,13 +102,19 @@ class AttendancesController < ApplicationController
     # userに紐づく残業申請日
     @attendance = Attendance.where(id: params[:user][:attendances][:id])
     # フォーマットされたovertime_paramsを更新
-    if @attendance.update(Attendance.fmt_overtime_params(overtime_params,params))
-      flash[:success] = '残業申請をしました。'
-      redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:user][:attendances][:first_day]})
+    if params[:user][:attendances][:expected_finish_time].present?
+      if @attendance.update(Attendance.fmt_overtime_params(overtime_params,params))
+        flash[:success] = '残業申請をしました。'
+        redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:user][:attendances][:first_day]})
+      # else
+      #   flash[:danger] = "残業申請に失敗しました。"
+      #   # redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+      #   render :form_overtime
+      end
     else
-      flash[:danger] = "残業申請に失敗しました。"
-      # redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
-      render :form_overtime
+        flash[:danger] = "残業申請に失敗しました、必要事項を入力してください。"
+        # redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:first_day]})
+        redirect_to user_url(@user, params:{ id: @user.id, first_day: params[:user][:attendances][:first_day]})
     end
   end
 
