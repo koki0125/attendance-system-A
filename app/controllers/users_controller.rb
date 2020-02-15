@@ -196,7 +196,7 @@ class UsersController < ApplicationController
       flash[:danger] = "読み込むCSVファイルをセットしてください"
     else
       message = User.import(params[:csv_file])
-      flash[:notice] = message
+      # flash[:notice] = message
       flash[:success] = "ユーザーが追加されました。"
     end
     redirect_to users_path
