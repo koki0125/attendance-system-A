@@ -17,7 +17,7 @@
       <%= f.password_field :password_confirmation, class: 'form-control' %>
 
       <!-- 基本情報（新規登録なら） -->
-      <% if @user.name.nil? %>
+      <% if @user.basic_time.nil? %>
         <%= f.hidden_field :designated_start_time,  :value => Time.zone.parse("10:00"), class: 'form-control' %>
         <%= f.hidden_field :designated_finish_time, :value => Time.zone.parse("18:00"), class: 'form-control' %>
         <%= f.hidden_field :basic_time,             :value => Time.zone.parse("7:30"),  class: 'form-control' %>
