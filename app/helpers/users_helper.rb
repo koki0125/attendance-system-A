@@ -28,11 +28,9 @@ module UsersHelper
   
   # 時間外時間計上用
   def overtime_hours(a,b)
-    if a.present?
-      expected_finish_time = Time.mktime(a.year, a.month, a.day, a.hour, a.min, 0, 0)
-      designated_finish_time = Time.mktime(b.year, b.month, b.day, b.hour, b.min, 0, 0)
-      return ( ( (expected_finish_time - designated_finish_time) / 60) / 60).truncate(2)
-    end
+    expected_finish_time = Time.mktime(a.year, a.month, a.day, a.hour, a.min, 0, 0)
+    designated_finish_time = Time.mktime(b.year, b.month, b.day, b.hour, b.min, 0, 0)
+    return ( ( (expected_finish_time - designated_finish_time) / 60) / 60).truncate(2)
   end
   
   # 上長ステータスの表示用（残業申請>勤怠編集申請）残業申請の方が優先
